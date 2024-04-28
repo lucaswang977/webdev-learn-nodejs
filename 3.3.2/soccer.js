@@ -1,5 +1,10 @@
 document.onmousedown = (event) => {
   const elem = event.target.closest(".draggable");
+  const moveTo = (elem, x, y) => {
+    elem.style.left = x + "px";
+    elem.style.top = y + "px";
+  };
+
   if (elem) {
     elem.ondragstart = () => false;
     event.preventDefault();
@@ -13,23 +18,66 @@ document.onmousedown = (event) => {
     elem.style.position = "absolute";
     document.body.append(elem);
 
-    elem.style.left = event.pageX - deltaX + "px";
-    elem.style.top = event.pageY - deltaY + "px";
+    moveTo(elem, event.pageX - deltaX, event.pageY - deltaY);
 
     const onMouseMove = (event) => {
-      if (event.clientY - deltaY < 0 && event.pageY - deltaY > 0) {
-        window.scrollBy(0, -10);
+      const [elemPageLeft, elemPageTop] = [
+        event.pageX - deltaX,
+        event.pageY - deltaY,
+      ];
+
+      const [elemViewLeft, elemViewTop] = [
+        event.clientX - deltaX,
+        event.clientY - deltaY,
+      ];
+
+      if (elemViewTop < 0 && elemPageTop > 0) {
+        window.scrollBy(0, elemViewTop);
       }
-      console.log(event.clientY, event.pageY - deltaY);
+      if (elemViewLeft < 0 && elemPageLeft > 0) {
+        window.scrollBy(elemViewLeft, 0);
+      }
       if (
-        event.clientY - deltaY + elem.offsetHeight >
+        elemPageTop + elem.offsetHeight >
         document.documentElement.clientHeight
       ) {
-        window.scrollBy(0, 10);
+        if (
+          elemPageTop + elem.offsetHeight >=
+          document.documentElement.scrollHeight
+        )
+          elemPageTop =
+            document.documentElement.clientHeight - elem.offsetHeight;
+        else
+          window.scrollBy(
+            0,
+            elemPageTop +
+              elem.offsetHeight -
+              document.documentElement.clientHeight
+          );
+      }
+      if (
+        elemPageLeft + elem.offsetWidth >
+        document.documentElement.clientWidth
+      ) {
+        if (
+          elemPageLeft + elem.offsetWidth >=
+          document.documentElement.scrollWidth
+        )
+          elemPageLeft =
+            document.documentElement.clientWidth - elem.offsetWidth;
+        else
+          window.scrollBy(
+            elemPageLeft +
+              elem.offsetWidth -
+              document.documentElement.clientWidth,
+            0
+          );
       }
 
-      elem.style.left = event.pageX - deltaX + "px";
-      elem.style.top = event.pageY - deltaY + "px";
+      if (elemPageLeft <= 0) elemPageLeft = 0;
+      if (elemPageTop <= 0) elemPageTop = 0;
+
+      moveTo(elem, elemPageLeft, elemPageTop);
     };
 
     document.onmouseup = () => {
