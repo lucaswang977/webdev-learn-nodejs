@@ -1,6 +1,8 @@
 # Web development learning project
 
 ## VSCode setup
+### Settings
+  * "remote.restoreForwardedPorts": false
 ### Shortcuts
   * Ctrl/Cmd + K, V: Preview markdown
   * Ctrl/Cmd + K, Ctrl/Cmd + &larr; / &rarr;: Window focus move left/right
@@ -17,24 +19,20 @@
   * Set zsh and its default theme in post-create.sh
 ### Pure frontend projects - Vite
   ```bash
-  $ npm create vite@latest . --template vanilla
+  $ npm create vite@latest my-app --template vanilla
   ```
 ### Fullstack projects - Nextjs
   ```bash
   $ npx create-next-app@latest
   ```
-## CSS/Tailwind
-### CSS
-  * [Master CSS by learning from Kevin Powell](css/README.md)
-### Tailwind
+### Documents
+  * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+  * [Tailwind docs](https://v2.tailwindcss.com/docs)
+  * [The Modern JavaScript Tutorial](https://javascript.info/)
+  * [The Typescript Handbook](https://www.typescriptlang.org/)
+  * [Learn React](https://react.dev/learn)
+  * [Next.js document](https://nextjs.org/docs)
+  * [Framer Motion document](https://www.framer.com/motion/)
 
-## Javascript/Typescript
-### Javascript
-  * Language
-  * DOM
-  * Other
-### Typescript
-
-## React/Nextjs
-### React
-### Nextjs
+### Projects for Practice
+  * A landing page with stunning scrolling animation [Apple TV+](https://www.apple.com/apple-tv-plus/)
