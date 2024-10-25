@@ -66,7 +66,7 @@
     Now you have a triangle pointing upwards!
 
 ## The flex model
-![the flex model](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox/flex_terms.png)
+![the flex model](https://css-tricks.com/wp-content/uploads/2018/11/00-basic-terminology.svg)
 
 When elements are laid out as flex items, they are laid out along two axes:
   * The __main axis__ is the axis running in the direction the flex items are laid out in (for example, as a row across the page, or a column down the page.) The start and end of this axis are called the main start and main end. The length from the __main-start__ edge to the __main-end__ edge is the main size.

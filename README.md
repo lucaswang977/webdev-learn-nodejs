@@ -26,7 +26,7 @@
   $ npx create-next-app@latest
   ```
 ### Documents
-  * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/LearningNotes.md)
+  * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/CSSLearningNotes.md)
   * [Learn Sass](https://sass-lang.com/guide/)
   * [Tailwind docs](https://tailwindcss.com/docs/installation)
   * [The Modern JavaScript Tutorial](https://javascript.info/)
