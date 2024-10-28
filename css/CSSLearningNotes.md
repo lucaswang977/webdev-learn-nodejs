@@ -34,6 +34,10 @@
     * Contain internal floats
     * Exclude external floats
     * Prevent margin collapsing
+  * Create by (not limited to those):
+    * display: flow-root
+    * Inline-blocks
+    * Table cells
 
 ## Explain [CSS Arrow Please](https://cssarrowplease.com/)
 
@@ -73,3 +77,13 @@ When elements are laid out as flex items, they are laid out along two axes:
   * The __cross axis__ is the axis running perpendicular to the direction the flex items are laid out in. The start and end of this axis are called the __cross start__ and __cross end__. The length from the cross-start edge to the cross-end edge is the __cross size__.
   * The parent element that has display: flex set on it is called the __flex container__.
   * The items laid out as flexible boxes inside the flex container are called __flex items__.
+
+## CSS animations
+
+## Transitions
+
+@starting-style
+allow-discrete
+
+
+https://devinterview.io/
