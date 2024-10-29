@@ -79,11 +79,41 @@ When elements are laid out as flex items, they are laid out along two axes:
   * The items laid out as flexible boxes inside the flex container are called __flex items__.
 
 ## CSS animations
+```CSS
+animation: @keyframes duration | easing-function | delay | iteration-count | direction | fill-mode | play-state | name;
+
+animation: @keyframes duration | easing-function | delay | name;
+
+@keyframes slide-in {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+```
+## Animation types
+* Not animatable
+* Discrete
+* By computed value
+* Repeatable list
+
+## Transforms
+
 
 ## Transitions
+```CSS
+transition: <property> <duration> <timing-function> <delay>;
 
-@starting-style
-allow-discrete
+```
+
+Transitioning display and content-visibility
+* transition-behavior: allow-discrete
+* @starting-style
+
 
 
 https://devinterview.io/
+https://scroll-driven-animations.style/
