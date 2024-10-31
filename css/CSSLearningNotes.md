@@ -100,9 +100,6 @@ animation: @keyframes duration | easing-function | delay | name;
 * By computed value
 * Repeatable list
 
-## Transforms
-
-
 ## Transitions
 ```CSS
 transition: <property> <duration> <timing-function> <delay>;
@@ -113,7 +110,53 @@ Transitioning display and content-visibility
 * transition-behavior: allow-discrete
 * @starting-style
 
+https://scroll-driven-animations.style/
+
+## Transforms
+&lt;transform-function&gt;
+* matrix, matrix3d
+* perspective
+* rotate, rotate3d, rotateX, rotateY, rotateZ
+* scale, scale3d, scaleX, scaleY, scaleZ
+* skew, skewX, skewY
+* translate, translate3d, translateX, translateY, translateZ
+
+https://3dtransforms.desandro.com/
+
+## Background Image
+* background-size: contain / cover
+* multiple backgrounds
+
+  ```CSS
+  .multi-bg-example {
+    width: 100%;
+    height: 400px;
+    background-image: url(firefox.png), url(bubbles.png),
+      linear-gradient(to right, rgb(30 75 115 / 100%), rgb(255 255 255 / 0%));
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position:
+      bottom right,
+      left,
+      right;
+  }
+  ```
+
+## CSS Box Alignment
+Block layout
+* one of the fundamental layout models, used for laying out content in a linear, top-to-bottom manner. It’s often the default for elements like &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;, and other block-level elements, creating a “block flow” of elements on the page. 
+* Box alignment in block layout is not supported. Horizontal center: margin auto, table cell center: vertical-align.
+
+Two dimensions of alignment
+* When aligning items on the inline axis you will use the properties which begin with justify-: justify-items, justify-self, justify-content
+* When aligning items on the block axis you will use the properties that begin align-: align-items, align-self, align-content
+
+Types of alignment
+* Positional alignment: center, start, end, self-start, self-end, flex-start for flexbox only, flex-end for flexbox only, left, right
+* Baseline alignment: baseline, first baseline, last baseline
+* Distributed alignment: stretch, space-between, space-around, space-evenly
+
 
 
 https://devinterview.io/
-https://scroll-driven-animations.style/
+
+
