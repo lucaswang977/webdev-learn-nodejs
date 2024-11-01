@@ -142,9 +142,14 @@ https://3dtransforms.desandro.com/
   ```
 
 ## CSS Box Alignment
-Block layout
-* one of the fundamental layout models, used for laying out content in a linear, top-to-bottom manner. It’s often the default for elements like &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;, and other block-level elements, creating a “block flow” of elements on the page. 
-* Box alignment in block layout is not supported. Horizontal center: margin auto, table cell center: vertical-align.
+| Method | Block | Absolute | Float | Table | Flexbox | Grid |
+|:--|:--:|:--:|:--:|:--:|:--:|--:|
+|justify-content|not apply|not apply|not apply|not apply|||
+|justify-self|inline axis|inline axis|inline axis|not apply|||
+|justify-items|inline axis|inline axis|inline axis|not apply|||
+|align-content|block axis|block axis|block axis|not apply|||
+|align-items|not apply|not apply|not apply|not apply|||
+|align-self|not apply|not apply|not apply|not apply|||
 
 Two dimensions of alignment
 * When aligning items on the inline axis you will use the properties which begin with justify-: justify-items, justify-self, justify-content
