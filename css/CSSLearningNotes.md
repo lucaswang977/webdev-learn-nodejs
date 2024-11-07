@@ -7,9 +7,26 @@
   - Universal selector (*), combinators (+, >, ~), and negation pseudo-class (:not()) do not affect specificity.
 
 ## Margin collapsing
-  - Two positive margins will combine to become one margin. Its size will be equal to the largest individual margin.
-  - Two negative margins will collapse and the smallest (furthest from zero) value will be used.
-  - If one margin is negative, its value will be subtracted from the total.
+  - Collapsing rule
+    - Two positive margins will combine to become one margin. Its size will be equal to the largest individual margin.
+    - Two negative margins will collapse and the smallest (furthest from zero) value will be used.
+    - If one margin is negative, its value will be subtracted from the total.
+  - Cases
+    - Adjacent siblings
+      ```HTML    
+        <div class="sibling1" style="margin: 20px 0;">Sibling 1</div>
+        <div class="sibling2" style="margin: 20px 0;">Sibling 2</div>
+      ```
+    - No content separating parent and descendants
+      ```HTML
+      <div class="parent" style="margin-top: 30px;">
+         <div class="child" style="margin-top: 30px;">Child</div>
+      </div>
+      ```
+    - Empty blocks
+      ```HTML
+      <div class="empty-block" style="margin: 40px 0;"></div>
+      ```
 
 ## Display type (Box model)
   * display: block
@@ -142,26 +159,53 @@ https://3dtransforms.desandro.com/
   ```
 
 ## CSS Box Alignment
-| Method | Block | Absolute | Float | Table | Flexbox | Grid |
-|:--|:--:|:--:|:--:|:--:|:--:|--:|
-|justify-content|not apply|not apply|not apply|not apply|||
-|justify-self|inline axis|inline axis|inline axis|not apply|||
-|justify-items|inline axis|inline axis|inline axis|not apply|||
-|align-content|block axis|block axis|block axis|not apply|||
-|align-items|not apply|not apply|not apply|not apply|||
-|align-self|not apply|not apply|not apply|not apply|||
-
 Two dimensions of alignment
 * When aligning items on the inline axis you will use the properties which begin with justify-: justify-items, justify-self, justify-content
 * When aligning items on the block axis you will use the properties that begin align-: align-items, align-self, align-content
+* The place-* CSS shorthand property allows you to align content along both the block and inline directions at once.
 
 Types of alignment
 * Positional alignment: center, start, end, self-start, self-end, flex-start for flexbox only, flex-end for flexbox only, left, right
 * Baseline alignment: baseline, first baseline, last baseline
 * Distributed alignment: stretch, space-between, space-around, space-evenly
 
-
+| Method | Block | Absolute | Float | Table | Flexbox | Grid |
+|:--|:--:|:--:|:--:|:--:|:--:|--:|
+|justify-content|not apply|not apply|not apply|not apply|main axis|inline axis|
+|justify-self|inline axis|inline axis|inline axis|not apply|not apply|inline axis|
+|justify-items|inline axis|inline axis|inline axis|not apply|not apply|inline axis|
+|align-content|block axis|block axis|block axis|not apply|cross axis|block axis|
+|align-items|not apply|not apply|not apply|not apply|cross axis|block axis|
+|align-self|not apply|not apply|not apply|not apply|cross axis|block axis|
 
 https://devinterview.io/
 
 
+## Using relative colors
+```CSS
+color-function(from origin-color channel1 channel2 channel3)
+color-function(from origin-color channel1 channel2 channel3 / alpha)
+
+/* color space included in the case of color() functions */
+color(from origin-color colorspace channel1 channel2 channel3)
+color(from origin-color colorspace channel1 channel2 channel3 / alpha)
+```
+
+Example:
+```CSS
+:root {
+  --base-color: orange;
+}
+
+#one {
+  background-color: lch(from var(--base-color) calc(l + 20) c h);
+}
+
+#two {
+  background-color: var(--base-color);
+}
+
+#three {
+  background-color: lch(from var(--base-color) calc(l - 20) c h);
+}
+```
