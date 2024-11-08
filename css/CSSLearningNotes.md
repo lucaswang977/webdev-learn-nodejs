@@ -209,3 +209,88 @@ Example:
   background-color: lch(from var(--base-color) calc(l - 20) c h);
 }
 ```
+
+## CSS conditional rules
+### Feature queries
+```CSS
+/* `@supports` at-rule */
+@supports (color: red) {
+  CSS rules to apply
+}
+
+/* A `selector()` query within a `supports()` function */
+@import `/css/webkitShadowStyles.css`
+  supports(selector(::-webkit-inner-spin-button));
+```
+
+### Media queries
+Media queries are used for the following:
+- To conditionally apply styles with the CSS @media and @import at-rules.
+- To target specific media for the &lt;style&gt;, &lt;link&gt;, &lt;source&gt;, and other HTML elements with the media= or sizes=" attributes.
+- To test and monitor media states using the Window.matchMedia() and EventTarget.addEventListener() methods.
+
+**Media types** define the broad category of device for which the media query applies: all, print, screen.
+
+[Media features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#media_features) describe a specific characteristic of the user agent, output device, or environment.
+
+Examples:
+```CSS
+@media (min-height: 680px), screen and (orientation: portrait) {
+  /* … */
+}
+```
+
+Testing media queries programmatically:
+```Javascript
+// Create the query list.
+const mediaQueryList = window.matchMedia("(orientation: portrait)");
+
+// Define a callback function for the event listener.
+function handleOrientationChange(mql) {
+  // …
+}
+
+// Run the orientation change handler once.
+handleOrientationChange(mediaQueryList);
+
+// Add the callback function as a listener to the query list.
+mediaQueryList.addEventListener("change", handleOrientationChange);
+```
+
+Using a print style sheet:
+```CSS
+<link href="/path/to/print.css" media="print" rel="stylesheet" />
+```
+
+## CSS containment
+CSS containment improves the **performance** of web pages by allowing the browser to isolate a subtree of the page from the rest of the page.
+
+Four types of containment:
+- layout
+  - Ensures that layout changes within the element (such as resizing or reflowing) don’t affect the outside elements.
+  - Useful when you want to make sure that the positioning or resizing of an element won’t trigger reflows in the rest of the document.
+  - Example: Imagine a component that expands when clicked. With contain: layout;, the expansion won’t cause surrounding elements to adjust their positions.
+- paint
+  - Restricts the painting (or visual rendering) of an element to its own boundary, meaning that it won’t spill over into other parts of the page visually.
+  - Beneficial for performance, as it confines the area that the browser needs to redraw.
+  - Example: This is particularly useful if you have animations or effects within an element that you don’t want to impact the visual rendering of other elements.
+- size
+  - Prevents the size of an element from being influenced by the size of its children.
+  - When you apply contain: size;, the element is essentially "self-contained" in terms of its dimensions, so it won’t resize based on its children.
+  - Example: A card component that should always be a specific size regardless of the size of its child elements.
+- style
+  - Ensures that style changes within an element do not affect elements outside of it.
+  - This containment type limits the reach of style recalculations, meaning that style changes within an element won’t cause recalculations outside of it.
+  - Example: If you dynamically change styles (like colors or fonts) on elements within a container, those updates won’t trigger style recalculations for the entire document.
+
+Special values:
+- content: layout, paint, style *(equals to content-visibility: auto)*
+- strict: size layout paint style
+
+An element becomes "relevant to the user" if any of the following are true:
+- The element appears in the viewport, or a user-agent-defined margin around the viewport (50% of the viewport dimensions, to give the app time to prepare for when the element visibility changes).
+- The element or its contents receive focus.
+- The element or its contents are selected, for example by dragging over the text with the mouse cursor or by some other highlight operation.
+- The element or its contents are placed in the top layer.
+
+## CSS container queries
