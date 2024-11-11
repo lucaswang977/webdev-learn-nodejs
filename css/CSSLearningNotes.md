@@ -1,10 +1,31 @@
 # CSS Learning Notes
 
+## Display type (Box model)
+  * display: block
+    - The box will break onto a new line.
+    - The width and height properties are respected.
+    - Padding, margin and border will cause other elements to be pushed away from the box.
+    - If width is not specified, the box will extend in the inline direction to fill the space available in its container. In most cases, the box will become as wide as its container, filling up 100% of the space available.
+
+  * display: inline
+    - The box will not break onto a new line.
+    - The width and height properties will not apply.
+    - Top and bottom padding, margins, and borders will apply but will not cause other inline boxes to move away from the box.
+    - Left and right padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
+
+  * display: inline-block
+    - The width and height properties are respected.
+    - padding, margin, and border will cause other elements to be pushed away from the box.
+
 ## Specificity
   - Inline styles have the highest priority.
   - ID selectors are stronger than class selectors.
   - Class selectors are stronger than element selectors.
   - Universal selector (*), combinators (+, >, ~), and negation pseudo-class (:not()) do not affect specificity.
+
+## box-sizing
+  - content-box: If you set an element's width to 100 pixels, then the element's content box will be 100 pixels wide, and the width of any border or padding will be added to the final rendered width, making the element wider than 100px.
+  - border-box: If you set an element's width to 100 pixels, that 100 pixels will include any border or padding you added, and the content box will shrink to absorb that extra width.
 
 ## Margin collapsing
   - Collapsing rule
@@ -28,22 +49,12 @@
       <div class="empty-block" style="margin: 40px 0;"></div>
       ```
 
-## Display type (Box model)
-  * display: block
-    - The box will break onto a new line.
-    - The width and height properties are respected.
-    - Padding, margin and border will cause other elements to be pushed away from the box.
-    - If width is not specified, the box will extend in the inline direction to fill the space available in its container. In most cases, the box will become as wide as its container, filling up 100% of the space available.
-
-  * display: inline
-    - The box will not break onto a new line.
-    - The width and height properties will not apply.
-    - Top and bottom padding, margins, and borders will apply but will not cause other inline boxes to move away from the box.
-    - Left and right padding, margins, and borders will apply and will cause other inline boxes to move away from the box.
-
-  * display: inline-block
-    - The width and height properties are respected.
-    - padding, margin, and border will cause other elements to be pushed away from the box.
+## Standard CSSOM coordinate systems
+There are four standard coordinate systems used by the CSS object model.
+- Offset
+- Viewport (client)
+- Page
+- Screen
 
 ## Block formatting context
   * It's the region in which the layout of block boxes occurs and in which floats interact with other elements.
@@ -90,10 +101,18 @@
 ![the flex model](https://css-tricks.com/wp-content/uploads/2018/11/00-basic-terminology.svg)
 
 When elements are laid out as flex items, they are laid out along two axes:
-  * The __main axis__ is the axis running in the direction the flex items are laid out in (for example, as a row across the page, or a column down the page.) The start and end of this axis are called the main start and main end. The length from the __main-start__ edge to the __main-end__ edge is the main size.
+  * The __main axis__ is defined by the *flex-direction* property, and it is the axis running in the direction the flex items are laid out in (for example, as a row across the page, or a column down the page.) The start and end of this axis are called the main start and main end. The length from the __main-start__ edge to the __main-end__ edge is the main size.
   * The __cross axis__ is the axis running perpendicular to the direction the flex items are laid out in. The start and end of this axis are called the __cross start__ and __cross end__. The length from the cross-start edge to the cross-end edge is the __cross size__.
   * The parent element that has display: flex set on it is called the __flex container__.
   * The items laid out as flexible boxes inside the flex container are called __flex items__.
+
+flex shorthand:
+  - flex: flex-grow, flex-shrink, flex-basis
+  - flex: initial == flex: 0 1 auto
+  - flex: auto == flex: 1 1 auto;
+  - flex: none == flex: 0 0 auto;
+  - flex: 1 == flex: 1 1 0;
+  - flex: 2 == flex: 2 1 0;
 
 ## CSS animations
 ```CSS
@@ -262,8 +281,15 @@ Using a print style sheet:
 <link href="/path/to/print.css" media="print" rel="stylesheet" />
 ```
 
-## CSS containment
+## CSS containment (for performance optimization)
 CSS containment improves the **performance** of web pages by allowing the browser to isolate a subtree of the page from the rest of the page.
+
+```CSS
+article {
+  contain: size layout paint style;
+  contain-intrinsic-size: 80vw auto;
+}
+```
 
 Four types of containment:
 - layout
@@ -293,4 +319,28 @@ An element becomes "relevant to the user" if any of the following are true:
 - The element or its contents are selected, for example by dragging over the text with the mouse cursor or by some other highlight operation.
 - The element or its contents are placed in the top layer.
 
-## CSS container queries
+## CSS container queries (for reponsive design)
+```CSS
+.post {
+  container-type: inline-size;
+  container-name: sidebar;
+}
+
+@container sidebar (min-width: 700px) {
+  .card h2 {
+    font-size: max(1.5em, 1.23em + 2cqi);
+  }
+}
+
+@container card (orientation: landscape) {
+  /* styles */
+}
+
+@container style(color: green) and style(background-color: transparent),
+    not style(background-color: red),
+    style(--themeBackground),
+    style(--themeColor: blue) or style(--themeColor: purple),
+    (max-width: 100vw) and style(max-width: 600px) {
+  /* <stylesheet> */
+}
+```
