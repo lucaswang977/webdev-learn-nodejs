@@ -17,6 +17,10 @@
     - The width and height properties are respected.
     - padding, margin, and border will cause other elements to be pushed away from the box.
 
+  * display: content
+    - Structuring elements logically without affecting the visual layout.
+    - Making an element's box disappear while keeping its children in the DOM and layout flow.
+
 ## Specificity
   - Inline styles have the highest priority.
   - ID selectors are stronger than class selectors.
@@ -56,46 +60,22 @@ There are four standard coordinate systems used by the CSS object model.
 - Page
 - Screen
 
-## Block formatting context
-  * It's the region in which the layout of block boxes occurs and in which floats interact with other elements.
-  * Create [BFC](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_display/Block_formatting_context) for:
-    * Contain internal floats
-    * Exclude external floats
-    * Prevent margin collapsing
-  * Create by (not limited to those):
-    * display: flow-root
-    * Inline-blocks
-    * Table cells
-
-## Explain [CSS Arrow Please](https://cssarrowplease.com/)
-
-  - Start with an element that has no width or height:
-    ```javascript
-    cssCopy.triangle {
-      width: 0;
-      height: 0;
-    }
-    ```
-- Add a thick border to all sides:
-    ```javascript
-    cssCopy.triangle {
-      width: 0;
-      height: 0;
-      border: 50px solid;
-    }
-    ```
-    At this point, you'd see a square shape formed by the four borders meeting.
-
-- Make three of the borders transparent, leaving only one visible:
-    ```javascript
-    cssCopy.triangle {
-      width: 0;
-      height: 0;
-      border: 50px solid transparent;
-      border-bottom-color: black;
-    }
-    ```
-    Now you have a triangle pointing upwards!
+## Visual formatting model
+  - Block formatting context: "In a block formatting context, boxes are laid out one after the other, vertically, beginning at the top of a containing block. The vertical distance between two sibling boxes is determined by the 'margin' properties. Vertical margins between adjacent block-level boxes in a block formatting context collapse. In a block formatting context, each box's left outer edge touches the left edge of the containing block (for right-to-left formatting, right edges touch)."
+  - Inline formatting context: "In an inline formatting context, boxes are laid out horizontally, one after the other, beginning at the top of a containing block. Horizontal margins, borders, and padding are respected between these boxes. The boxes may be aligned vertically in different ways: their bottoms or tops may be aligned, or the baselines of text within them may be aligned. The rectangular area that contains the boxes that form a line is called a line box."
+  - Anonymous boxes: they inherit styles from their direct parent, but you cannot change how they look by targeting the anonymous box.
+  - Line boxes: the boxes that wrap each line of text. You can see the difference between line boxes and their containing block if you float an item and then follow it by a block that has a background color.
+  - An element is called **out of flow** if it is floated, absolutely/fixed positioned, or is the root element. An element is called **in-flow** if it is not out of the flow.
+  - Independent formatting context:
+    * Independent formatting contexts contain floats, and margins do not collapse across formatting context boundaries. Therefore, creating a new block formatting context can ensure that floats and margins remain inside a box.
+    * Create [BFC](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_display/Block_formatting_context) for:
+      * Contain internal floats
+      * Exclude external floats
+      * Prevent margin collapsing
+    * Create by (not limited to those):
+      * display: flow-root
+      * Inline-blocks
+      * Table cells
 
 ## The flex model
 ![the flex model](https://css-tricks.com/wp-content/uploads/2018/11/00-basic-terminology.svg)
@@ -113,6 +93,38 @@ flex shorthand:
   - flex: none == flex: 0 0 auto;
   - flex: 1 == flex: 1 1 0;
   - flex: 2 == flex: 2 1 0;
+
+auto magin for main axis alignment:
+```CSS
+.box {
+  display: flex;
+  border: 2px dotted rgb(96 139 168);
+}
+
+.box > * {
+  padding: 20px;
+  border: 2px solid rgb(96 139 168);
+  border-radius: 5px;
+  background-color: rgb(96 139 168 / 0.2);
+}
+.push {
+  margin-left: auto;
+}
+```
+![main axis alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Aligning_items_in_a_flex_container/align7.png)
+
+flex-basis:
+- Is flex-basis set to auto, and does the item have a width set? If so, the size will be based on that width.
+- Is flex-basis set to auto, but the item doesn't have a width set? If so, the size will be based on the item's content size.
+- Is flex-basis a length or a percentage, but not zero? If so, this will be the size of the item (floored at min-content).
+- Is flex-basis set to 0? If so, the item's size will not be taken into consideration for the space-sharing calculation.
+
+grow and shrink:
+- If we add up the widths of all the items (or heights if working in a column), is that total less than the total width (or height) of the container? If so, there will be positive free space, and flex-grow will come into play.
+- If we add up the widths of all the items (or heights if working in a column), is that total more than the total width (or height) of the container? If so, there will be negative free space, and flex-shrink will come into play.
+
+visibility: collapse
+- Specifying visibility:collapse on a flex item causes it to become a collapsed flex item, producing an effect similar to visibility:collapse on a table-row or table-column: the collapsed flex item is removed from rendering entirely, but leaves behind a "strut" that keeps the flex line's cross-size stable. Thus, if a flex container has only one flex line, dynamically collapsing or uncollapsing items may change the flex container's main size, but is guaranteed to have no effect on its cross size and won't cause the rest of the page's layout to "wobble". Flex line wrapping is re-done after collapsing, however, so the cross-size of a flex container with multiple lines might or might not change.
 
 ## CSS animations
 ```CSS
@@ -344,3 +356,51 @@ An element becomes "relevant to the user" if any of the following are true:
   /* <stylesheet> */
 }
 ```
+
+## Wrapping text
+  - Breaking a word once it is too long to fit on a line by itself: "overflow-wrap: break-word"
+  - Breaking the word at the point it overflows: "word-break: break-all;"
+  - Adding hyphens: "hyphens: manual;"
+  - You know where you want a long string to break, add &lt;wbr&gt;
+
+## Font
+## Grid
+## Images
+## Lists and counters
+## Logical properties
+## Math functions
+## Nesting style rules
+## z-index
+## Scroll snap
+## Shapes
+
+
+## Explain [CSS Arrow Please](https://cssarrowplease.com/)
+
+  - Start with an element that has no width or height:
+    ```javascript
+    cssCopy.triangle {
+      width: 0;
+      height: 0;
+    }
+    ```
+- Add a thick border to all sides:
+    ```javascript
+    cssCopy.triangle {
+      width: 0;
+      height: 0;
+      border: 50px solid;
+    }
+    ```
+    At this point, you'd see a square shape formed by the four borders meeting.
+
+- Make three of the borders transparent, leaving only one visible:
+    ```javascript
+    cssCopy.triangle {
+      width: 0;
+      height: 0;
+      border: 50px solid transparent;
+      border-bottom-color: black;
+    }
+    ```
+    Now you have a triangle pointing upwards!
