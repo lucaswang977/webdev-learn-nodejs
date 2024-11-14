@@ -29,6 +29,7 @@
   * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/CSSLearningNotes.md)
   * [Learn Sass](https://sass-lang.com/guide/)
   * [TailwindCSS](https://tailwindcss.com/docs/installation)
+  * [Vite](https://vite.dev/guide/)
   * [The Modern JavaScript Tutorial](https://javascript.info/)
   * [The Typescript Handbook](https://www.typescriptlang.org/)
   * [Learn React](https://react.dev/learn)
@@ -37,3 +38,4 @@
 
 ### Projects for Practice
   * A landing page with stunning scrolling animation [Apple TV+](https://www.apple.com/apple-tv-plus/)
+  * Modern scroll snapping spa with interactions and animations [Monaspace](https://monaspace.githubnext.com/)

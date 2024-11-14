@@ -65,7 +65,7 @@ There are four standard coordinate systems used by the CSS object model.
   - Inline formatting context: "In an inline formatting context, boxes are laid out horizontally, one after the other, beginning at the top of a containing block. Horizontal margins, borders, and padding are respected between these boxes. The boxes may be aligned vertically in different ways: their bottoms or tops may be aligned, or the baselines of text within them may be aligned. The rectangular area that contains the boxes that form a line is called a line box."
   - Anonymous boxes: they inherit styles from their direct parent, but you cannot change how they look by targeting the anonymous box.
   - Line boxes: the boxes that wrap each line of text. You can see the difference between line boxes and their containing block if you float an item and then follow it by a block that has a background color.
-  - An element is called **out of flow** if it is floated, absolutely/fixed positioned, or is the root element. An element is called **in-flow** if it is not out of the flow.
+  - An element is called **out of flo** if it is floated, absolutely/fixed positioned, or is the root element. An element is called **in-flow** if it is not out of the flow.
   - Independent formatting context:
     * Independent formatting contexts contain floats, and margins do not collapse across formatting context boundaries. Therefore, creating a new block formatting context can ensure that floats and margins remain inside a box.
     * Create [BFC](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_display/Block_formatting_context) for:
@@ -125,6 +125,30 @@ grow and shrink:
 
 visibility: collapse
 - Specifying visibility:collapse on a flex item causes it to become a collapsed flex item, producing an effect similar to visibility:collapse on a table-row or table-column: the collapsed flex item is removed from rendering entirely, but leaves behind a "strut" that keeps the flex line's cross-size stable. Thus, if a flex container has only one flex line, dynamically collapsing or uncollapsing items may change the flex container's main size, but is guaranteed to have no effect on its cross size and won't cause the rest of the page's layout to "wobble". Flex line wrapping is re-done after collapsing, however, so the cross-size of a flex container with multiple lines might or might not change.
+
+
+## Grid
+* Concepts
+  - container: display: grid;
+  - tracks: grid-template-columns, grid-template-rows, the fr unit, repeat() notation, grid-auto-rows, grid-auto-columns, minmax()
+  - lines: grid-column-start, grid-column-end, grid-row-start and grid-row-end, grid-row, grid-column
+  - cells: Conceptually it is like a table cell.
+  - areas: Items can span one or more cells both by row or by column, and this creates a grid area.
+  - gutters: column-gap, row-gap; In terms of line-based positioning, the gap acts like a thick line.
+  - nesting grid: subgrid; grid-template-columns: subgrid; grid-template-rows: subgrid;
+  - z-index: Grid items can occupy the same cell.
+* Relationships with other layout
+  - with flexbox: Content out or layout in; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  - with absolutely positioned elements: grid container with/without "position: relative"; grid area as the parent
+  - display: content; : get items nested into the grid to act as if they are part of the grid
+* Positioning
+  - line based: grid-area shorthand(grid-row-start, grid-column-start, grid-row-end, grid-column-end), grid-area: 1 / 1 / 4 / 2; counting backward; using the "span" keyword; 
+  - named lines: Multiple lines with the same name with repeat(), grid-template-columns: repeat(12, [col-start] 1fr);
+  - areas: leaving grid cell empty; grid-template shorthand; grid shorthand
+  - auto-placement: grid-auto-flow, grid-auto-row, grid-auto-columns; The auto-placed items will place themselves before the placed items in DOM order, they don't start after the position of a placed item that comes before them.
+* Alignment
+  - block axis: align-items, align-self
+  - inline axis: justify-items, justify-self
 
 ## CSS animations
 ```CSS
@@ -364,13 +388,68 @@ An element becomes "relevant to the user" if any of the following are true:
   - You know where you want a long string to break, add &lt;wbr&gt;
 
 ## Font
-## Grid
-## Images
+  - OpenType font features: font-kerning, font-variant-alternates, font-variant-ligatures, font-variant-position, font-variant-caps, font-variant-numeric, font-variant-east-asian, font-variant(short hand), font-feature-settings(lower level syntax)
+    - Use feature detection for implementation
+      ```CSS
+      .small-caps {
+        font-feature-settings: "smcp", "c2sc";
+      }
+
+      @supports (font-variant-caps: all-small-caps) {
+        .small-caps {
+          font-feature-settings: normal;
+          font-variant-caps: all-small-caps;
+        }
+      }  
+      ```
+
+  - Variable fonts
+    - @font-face: load font from remote or local
+      ```CSS
+      @font-face {
+        font-family: "MyVariableFontName";
+        src: url("path/to/font/file/my-variable-font.woff2")
+          format("woff2-variations");
+        font-weight: 125 950;
+        font-stretch: 75% 125%;
+        font-style: italic;
+      }
+      ```
+    - font-weight, font-stretch, font-style, font-style, font-optical-sizing, font-synthesisfont-variation-settings(lower level syntax)
+
+## CSS gradients
+  - linear gradients: 
+    - color stops: linear-gradient(to left, lime 28px, red 77%, cyan);
+    - hard lines: background: linear-gradient(to bottom left, cyan 50%, palegoldenrod 50%);
+    - gradient hints: background: linear-gradient(blue, 10%, pink);
+  - Overlaying gradients by stacking multiple backgrounds.
+    - blending gradients: background-blend-mode: screen/overlay/difference;
+  - radial gradients:
+    - color stops: radial-gradient(red 10px, yellow 30%, #1e90ff 50%);
+    - positioning the center: radial-gradient(at 0% 30%, red 10px, yellow 30%, #1e90ff 50%);
+    - sizing: closest-corner, closest-side, farthest-corner, and farthest-side 
+  - conic gradients:
+    - basic: background: conic-gradient(red, blue);
+    - positioning the center: background: conic-gradient(at 0% 30%, red 10%, yellow 30%, #1e90ff 50%);
+    - changing the angle: background: conic-gradient(from 45deg, red, orange 50%, yellow 85%, green);
+  - repeating gradients: 
+    - repeating-linear-gradient(-45deg, red, red 5px, blue 5px, blue 10px);
+    - repeating-radial-gradient(black, black 5px, white 5px, white 10px);
+
+## Math functions
+  - property: calc(expression);
+  - property: min(&lt;first value&gt;, &lt;second value&gt;, &lt;third value&gt;, ...);
+  - property: max(&lt;first value&gt;, &lt;second value&gt;, &lt;third value&gt;, ...);
+  - property: clamp(&lt;minimum value&gt;, &lt;value to be clamped&gt;, &lt;maximum value&gt;);
+  - Stepped value functions: round(), mod(), rem()
+  - Trigonometric functions: sin(), cos(), tan(), asin(), acos(), atan(), atan2()
+  - Exponential functions: pow(), sqrt(), hypot(), log(), exp()
+  - Sign functions: abs(), sign()
+
+## z-index
 ## Lists and counters
 ## Logical properties
-## Math functions
 ## Nesting style rules
-## z-index
 ## Scroll snap
 ## Shapes
 
