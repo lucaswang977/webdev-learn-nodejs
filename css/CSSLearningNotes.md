@@ -1,5 +1,36 @@
 # CSS Learning Notes
 
+## Selectors
+  - Simple selector
+    - a single type selector, attribute selector, or pseudo-class
+  - Compound selector
+    - A compound selector is a sequence of simple selectors that are not separated by a combinator. A compound selector represents a set of simultaneous conditions on a single element.
+    - No whitespace is allowed between the simple selectors that make up a compound selector
+    - a#selected {}
+  - Combinator
+    - Child combinator: selector1 &gt; selector2 {}
+    - Descendant combinator: selector1 selector2 {}
+    - Namespace separator: namespace|element { style properties }
+    - Next-sibling (immediately follow) combinator: former_element + target_element {} 
+    - Subsequent-sibling (follow the first and share parent) combinator: former_element ~ target_element {}
+  - Selector list
+    - #main, article.heading {}
+    - A downside to using a selector list is that a single unsupported selector in the selector list invalidates the entire rule.
+  - Forgiving selector list
+    - A way to remedy the invalid selector list problem is to use the :is() or the :where() pseudo-class, which accept a forgiving selector list.
+    - :where()(not adding specific weight), :is()(most specific)
+  - Relative selector & selector list
+    - h1:has(+ h2) {}
+    - h2:has(+ p, + ul.red) {}
+
+## Specificity
+  - Inline styles have the highest priority. 
+  - ID selectors such as #example. :is(), :has(), and negation (:not()) pseudo-classes. 1-0-0
+  - Class selectors such as .myClass, attribute selectors like [type="radio"] and [lang|="fr"], and pseudo-classes, such as :hover, :nth-of-type(3n), and :required. 0-1-0
+  - Type selectors such as p, h1, and td, and pseudo-elements like ::before, ::placeholder, and all other selectors with double-colon notation. 0-0-1
+  - Universal selector (*), combinators (+, >, ~), and negation pseudo-class (:not()) do not affect specificity. 0-0-0
+  - Combinator and nesting combinator(&) do not add weight.
+
 ## Display type (Box model)
   * display: block
     - The box will break onto a new line.
@@ -20,12 +51,6 @@
   * display: content
     - Structuring elements logically without affecting the visual layout.
     - Making an element's box disappear while keeping its children in the DOM and layout flow.
-
-## Specificity
-  - Inline styles have the highest priority.
-  - ID selectors are stronger than class selectors.
-  - Class selectors are stronger than element selectors.
-  - Universal selector (*), combinators (+, >, ~), and negation pseudo-class (:not()) do not affect specificity.
 
 ## box-sizing
   - content-box: If you set an element's width to 100 pixels, then the element's content box will be 100 pixels wide, and the width of any border or padding will be added to the final rendered width, making the element wider than 100px.
@@ -446,13 +471,54 @@ An element becomes "relevant to the user" if any of the following are true:
   - Exponential functions: pow(), sqrt(), hypot(), log(), exp()
   - Sign functions: abs(), sign()
 
-## z-index
-## Lists and counters
-## Logical properties
-## Nesting style rules
-## Scroll snap
-## Shapes
+## Counters
+  - counter-reset: section page 3 topic;  (always create a new counter)
+  - counter-reset: reversed(section);
+  - counter-set: section 20; (only update an existing counter)
+  - counter-increment: section
+  - counter(&lt;counter-name&gt;, &lt;counter-style&gt;)
+  - counters(&lt;counter-name&gt;, &lt;separator&gt;, &lt;counter-style&gt;)
 
+## z-index
+Default stacking order without setting z-index:
+  - The background and borders of the root element.
+  - Descendant non-positioned elements, in order of appearance in the HTML.
+  - Floating elements.
+  - Descendant non-positioned inline elements.
+  - Descendant positioned elements, in order of appearance in the HTML.
+
+[Stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context) is a three-dimensional conceptualization of HTML elements along an imaginary z-axis relative to the user, who is assumed to be facing the viewport or the webpage. HTML elements occupy this space in priority order based on element attributes.
+
+## Logical properties
+  - inset-inline-start(left), inset-inline-end(right), inset-block-start(top), inset-block-end(bottom)
+  - border-inline-start(border-left), border-inline-end(border-right), border-block-start(border-top), border-block-end(border-bottom)
+  - inline-size(width), block-size(right)
+
+## Nesting style rules
+  - Compound selectors: In order to target an element with class="a b" the & nesting selector is needed otherwise the whitespace will break the compound selector.
+    ```CSS
+    .a {
+      /* styles for element with class="a" */
+      .b {
+        /* styles for element with class="b" which is a descendant of class="a" */
+      }
+      &.b {
+        /* styles for element with class="a b" */
+      }
+    }    
+    ```
+  - Appended nesting selector: The & nesting selector can also be appended to a nested selector which has the effect of reversing the context.
+    ```CSS
+    .foo {
+      /* .foo styles */
+      .bar & {
+        /* .bar .foo styles */
+      }
+    }
+    ```
+
+## Shapes
+## Scroll snap
 
 ## Explain [CSS Arrow Please](https://cssarrowplease.com/)
 
