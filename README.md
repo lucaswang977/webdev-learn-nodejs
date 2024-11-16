@@ -27,13 +27,13 @@
   ```
 ### Documents
   * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/CSSLearningNotes.md)
+  * [The Modern JavaScript Tutorial](https://javascript.info/) [📔](javascript/the-modern-javascript-tutorial/TMJT.md)
+  * [The Typescript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+  * [Learn React](https://react.dev/learn)
+  * [Next.js document](https://nextjs.org/docs)
   * [Learn Sass](https://sass-lang.com/guide/)
   * [TailwindCSS](https://tailwindcss.com/docs/installation)
   * [Vite](https://vite.dev/guide/)
-  * [The Modern JavaScript Tutorial](https://javascript.info/)
-  * [The Typescript Handbook](https://www.typescriptlang.org/)
-  * [Learn React](https://react.dev/learn)
-  * [Next.js document](https://nextjs.org/docs)
   * [Framer Motion document](https://www.framer.com/motion/)
 
 ### Projects for Practice

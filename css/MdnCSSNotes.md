@@ -1,4 +1,4 @@
-# CSS Learning Notes
+# MDN CSS Learning Notes
 
 ## Selectors
   - Simple selector
