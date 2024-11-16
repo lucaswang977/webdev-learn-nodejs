@@ -207,8 +207,6 @@ Transitioning display and content-visibility
 * transition-behavior: allow-discrete
 * @starting-style
 
-https://scroll-driven-animations.style/
-
 ## Transforms
 &lt;transform-function&gt;
 * matrix, matrix3d
@@ -518,7 +516,47 @@ Default stacking order without setting z-index:
     ```
 
 ## Shapes
+  - shape-outside: Allows definition of basic shapes. 
+    - shape-outside: &lt;basic-shape&gt;
+      - shape-outside: inset(20px 50px 10px 0 round 50px) margin-box;
+      - shape-outside: circle(50% at 30%);
+      - shape-outside: ellipse(40% 50% at left);
+      - shape-outside: ellipse(closest-side farthest-side at 30%);
+      - shape-outside: polygon(0px 0px, 0px 189px, 100.48% 94.71%, 200px 120px, 80.67% 37.17%);
+    - shape-outside: border-box; (border-box, padding-box, content-box, margin-box)
+    - shape-outside: circle(50%) margin-box; (default is [margin-box](http://razvancaliman.com/writing/css-shapes-reference-boxes/), can be modified)
+    - shape-outside: url(../images/round-balloon-transparent.png); (must be CORS compatible)
+    - shape-outside: linear-gradient(45deg, rebeccapurple, transparent 80%, transparent);
+  - shape-image-threshold: set the threshold of image transparency used to define the area of the image used for the shape.
+    - shape-image-threshold: 0.4;
+  - shape-margin: adds a margin to shape-outside. 
+    - shape-margin: 5px;
+  - relationship to clip-path: if you want to create a shape using an image, and also clip away part of that image, you can use the same values.
+
 ## Scroll snap
+  - scroll-snap-type: scrollable, axis, mandatory / proximity
+  - scroll-snap-align: start, end, center, and none
+  - scroll-padding: snap position to be slightly offset
+  - scroll-margin: longhand scroll margin values can be set on child elements, defining an outset from the defined box
+  - scroll-snap-stop: normal / always
+
+https://scroll-driven-animations.style/
+
+## CSS generated content
+You can use CSS to add content when a document is displayed. You modify your stylesheet to add text content or images.
+
+```CSS
+.ref::before {
+  font-weight: bold;
+  color: navy;
+  content: "Reference ";
+}
+
+a.glossary::after {
+  content: " " url("glossary-icon.gif");
+}
+
+```
 
 ## Explain [CSS Arrow Please](https://cssarrowplease.com/)
 
