@@ -1,4 +1,5 @@
 # MDN CSS Learning Notes
+https://developer.mozilla.org/en-US/docs/Web/CSS/
 
 ## Selectors
   - Simple selector
