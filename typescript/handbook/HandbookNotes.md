@@ -23,3 +23,9 @@ pnpm create vite x.x.x --template vanilla-ts
 * strictNullChecks: The strictNullChecks flag makes handling null and undefined more explicit, and spares us from worrying about whether we forgot to handle null and undefined.
 
 ## Everyday Types
+* Differences Between Type Aliases and Interfaces
+* TypeScript only allows type assertions which convert to a more specific or less specific version of a type.
+* The as const suffix acts like const but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like string or number.
+* Literal Types and Literal Inference
+* strictNullChecks
+* Non-null Assertion Operator (Postfix!)

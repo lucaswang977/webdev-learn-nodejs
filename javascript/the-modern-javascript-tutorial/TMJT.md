@@ -28,9 +28,16 @@ pnpm create vite x.x.x --template vanilla
   * AND "&&" finds the first falsy value, if all operands have been evaluated (i.e. all were truthy), returns the last operand : alert( null && 5 ); // null
   * A double NOT !! is sometimes used for converting a value to boolean type: alert( !!"non-empty string" ); // true;; alert( !!null ); // false
   * The precedence of AND && operator is higher than OR ||. So the code a && b || c && d is essentially the same as if the && expressions were in parentheses: (a && b) || (c && d).
-  * The result of a ?? b is: if a is defined, then a, if a isn’t defined (null/undefined), then b.
+  * nullish coalescing operator: The result of a ?? b is: if a is defined, then a, if a isn’t defined (null/undefined), then b.
   * || doesn’t distinguish between false, 0, an empty string "" and null/undefined. They are all the same – falsy values.
   * The precedence of the ?? operator is the same as ||. 
+  * Variables declared outside of any function are called global. It’s a good practice to minimize the use of global variables.
+  * Default parameters in old JavaScript code: text = text || 'no text given';
+  * Function Declaration: a function, declared as a separate statement. Function Expression: a function, created inside an expression or inside another syntax construct.
+  * A Function Expression is created when the execution reaches it and is usable only from that moment.
+  * A Function Declaration can be called earlier than it is defined.
+  * In strict mode, when a Function Declaration is within a code block, it’s visible everywhere inside that block. But not outside of it.
+  * Arrow functions: let func = (arg1, arg2, ..., argN) => expression;
 
 ### Code quality
 ### Objects: the basics
