@@ -28,8 +28,8 @@
 ### Documents
   * [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/CSSLearningNotes.md)
   * [The Modern JavaScript Tutorial](https://javascript.info/) [📔](javascript/the-modern-javascript-tutorial/TMJT.md)
-  * [The Typescript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-  * [Learn React](https://react.dev/learn)
+  * [The Typescript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](typescript/handbook/HandbookNotes.md)
+  * [Learn React](https://react.dev/learn) [📔](reactjs/react.dev/ReactLearn.md)
   * [Next.js document](https://nextjs.org/docs)
   * [Learn Sass](https://sass-lang.com/guide/)
   * [TailwindCSS](https://tailwindcss.com/docs/installation)
