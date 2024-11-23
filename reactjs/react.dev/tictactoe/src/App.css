@@ -33,3 +33,7 @@
     border-color: black;
   }
 }
+
+.win {
+  color: red;
+}
