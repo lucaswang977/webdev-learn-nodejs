@@ -60,6 +60,9 @@ pnpm create vite x.x.x --template vanilla
 
 ### Data types
 
+- There are 7 primitive types: string, number, bigint, boolean, symbol, null and undefined.
+- The “object wrappers” are different for each primitive type and are called: String, Number, Boolean, Symbol and BigInt.
+
 ### Advanced working with functions
 
 ### Object properties configuration
