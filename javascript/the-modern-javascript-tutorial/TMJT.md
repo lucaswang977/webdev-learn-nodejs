@@ -62,6 +62,38 @@ pnpm create vite x.x.x --template vanilla
 
 - There are 7 primitive types: string, number, bigint, boolean, symbol, null and undefined.
 - The “object wrappers” are different for each primitive type and are called: String, Number, Boolean, Symbol and BigInt.
+- Numbers:
+  - How to represent Hex, binary and octal numbers? toString(base)
+  - Rounding: Math.floor, Math.ceil, Math.round, Math.trunc, num.toFixed(precision)
+  - Imprecise calculation of 64bit format IEEE-754
+  - isFinite and isNaN, Number.isNaN and Number.isFinite
+  - Object.is and ===
+  - parseInt and parseFloat
+- Strings:
+  - Quotes: single quotes and double qoutes and backticks
+  - Special characters
+  - String length is a read-write property: If we increase it manually, nothing interesting happens. But if we decrease it, the array is truncated.
+  - Accessing characters: string[index], str.at(pos)
+  - Strings are immutable
+  - Searching for a substring: str.indexOf, str.lastIndexOf(substr, position), str.includes(substr, pos), str.startsWith, str.endsWith
+  - Getting a substring: str.slice(start [, end]), str.substring(start [, end]), str.substr(start [, length])
+  - Comparing strings: str.codePointAt(pos), String.fromCodePoint(code), str.localeCompare(str2)
+- Arrays:
+  - Declaration: let arr = new Array(); let arr = [];
+  - Get last elements with "at": arr.at(-1), arr[arr.length - 1]
+  - Methods pop/push, shift/unshift: arr.pop(), arr.push(), arr.shift(), arr.unshift()
+  - Loops: for (let i = 0; i < arr.length; i++) {}; for (let fruit of fruits) {}; Difference between for..in and for..of?
+  - new Array(2): it creates an array without items, but with the given length.
+  - Multidimensional arrays
+  - Arrays do not have Symbol.toPrimitive, neither a viable valueOf, they implement only toString conversion, so here [] becomes an empty string, [1] becomes "1" and [1,2] becomes "1,2".
+  - Don’t compare arrays with ==: if we compare arrays with ==, they are never the same, unless we compare two variables that reference exactly the same array.
+  - Add/remove items: arr.push(...items), arr.pop(), arr.unshift(...items), arr.shift()
+  - Delete an element: arr.splice(start[, deleteCount, elem1, ..., elemN]) , returns the array of removed elements
+  - Getting a part of array: arr.slice([start], [end])
+  - Concatenation: arr.concat(arr2, arr3, ...)
+  - Iterate: forEach: arr.forEach(callback, thisArg)
+  - Searching in array: arr.indexOf(item, from); arr.includes(item, from); arr.lastIndexOf(item)
+  - Sorting: arr.sort([compareFunction])
 
 ### Advanced working with functions
 
