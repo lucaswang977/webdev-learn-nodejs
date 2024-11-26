@@ -92,8 +92,19 @@ pnpm create vite x.x.x --template vanilla
   - Getting a part of array: arr.slice([start], [end])
   - Concatenation: arr.concat(arr2, arr3, ...)
   - Iterate: forEach: arr.forEach(callback, thisArg)
-  - Searching in array: arr.indexOf(item, from); arr.includes(item, from); arr.lastIndexOf(item)
-  - Sorting: arr.sort([compareFunction])
+  - Searching in array: arr.indexOf(item, from); arr.includes(item, from); arr.lastIndexOf(item); arr.find(fn); arr.findIndex; arr.findLastIndex; arr.filter(fn)
+  - Transform an array: Map: arr.map([fn]); Sorting: arr.sort([fn]); Reverse: arr.reverse(); Split and Join: arr.join(separator), str.split(separator, limit); reduce/reduceRight: arr.reduce(function(accumulator, item, index, array)
+  - Array.isArray()
+  - thisArg: arr.find(func, thisArg); arr.filter(func, thisArg); ...
+- Iterables:
+  - Use Symbol.iterator to make range iterable: range = { from: 1, to: 5 }
+  - String is iterable and works correctly with surrogate pairs.
+  - Array.from() is surrogate-aware, but string.slice() is not.
+- Map and Set:
+  - map: new Map(), map.set(key, value), map.get(key), map.has(key), map.delete(key), map.clear(), map.size, map.keys(), map.values(), map.entries(), map.forEach()
+  - Map can also use objects as keys, while object can't use objects as keys.
+  - Map from/to object: Object.entries, Object.fromEntries
+  - set: new Set(), set.add(value), set.delete(value), set.has(value), set.clear(), set.size, set.keys(), set.values(), set.entries(), set.forEach()
 
 ### Advanced working with functions
 
