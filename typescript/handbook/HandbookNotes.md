@@ -99,3 +99,72 @@ pnpm create vite x.x.x --template vanilla-ts
     }
   }
   ```
+
+## More on Functions
+
+- Use a type alias to name a function type.
+- What is Call Signature of a Typescript function? What is Constructor Signature?
+- Write good generic functions:
+  - Push type parameters down
+  - Use fewer type parameters
+  - Type parameters should appear twice
+- When writing a function type for a callback, never write an optional parameter unless you intend to call the function without passing that argument
+- What is Function Overload Signatures and the Implementation Signature?
+- Always prefer parameters with union types instead of overloads when possible.
+- Understand those additional types: void, object, unknown, never, Function
+- Understand rest parameters and rest arguments
+- Use "as const" to make arrays immutable:
+  ```Typescript
+  const args = [8, 5] as const;
+  const angle = Math.atan2(...args); // OK
+  ```
+- Try to understand this code piece on "this" in a function:
+
+  ```Typescript
+  interface DB {
+    filterUsers(filter: (this: User) => boolean): User[];
+  }
+
+  class DBImpl implements DB {
+    private users: User[];
+
+    constructor(users: User[]) {
+      this.users = users;
+    }
+
+    filterUsers(filter: (this: User) => boolean): User[] {
+      return this.users.filter(filter.bind(this));
+    }
+  }
+
+  const db = new DBImpl([/* some users */]);
+  const admins = db.filterUsers(function (this: User) {
+    return this.admin;
+  });
+  ```
+
+- Return of void:
+  - A contextual function type is a function type that provides type information for a function based on where it is assigned.
+  - A contextual function type (type is inferred by compiler) with a void return type (type voidFunc = () => void), when implemented, can return any other value, but it will be ignored.
+
+    ```Typescript
+    type voidFunc = () => void;
+
+    const f1: voidFunc = () => {
+      return true;
+    };
+    ```
+
+  - But when a literal function definition has a void return type, that function must not return anything.
+
+    ```Typescript
+    function f2(): void {
+      // @ts-expect-error
+      return true;
+    }
+
+    const f3 = function (): void {
+      // @ts-expect-error
+      return true;
+    };
+    ```
