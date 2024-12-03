@@ -105,6 +105,30 @@ pnpm create vite x.x.x --template vanilla
   - Map can also use objects as keys, while object can't use objects as keys.
   - Map from/to object: Object.entries, Object.fromEntries
   - set: new Set(), set.add(value), set.delete(value), set.has(value), set.clear(), set.size, set.keys(), set.values(), set.entries(), set.forEach()
+- WeakMap and WeakSet
+  - WeakMap is Map-like collection that allows only objects as keys and removes them together with associated value once they become inaccessible by other means.
+  - WeakSet is Set-like collection that stores only objects and removes them once they become inaccessible by other means.
+  - Their main advantages are that they have weak reference to objects, so they can easily be removed by garbage collector.
+  - That comes at the cost of not having support for clear, size, keys, values…
+- Object.keys, values, entries
+  - Object.keys(obj) – returns an array of keys. Object.values(obj) – returns an array of values. Object.entries(obj) – returns an array of [key, value] pairs. Object.fromEntries(arr) – returns an object created from an array of [key, value] pairs.
+  - Object.getOwnPropertySymbols that returns an array of only symbolic keys. Also, there exist a method Reflect.ownKeys(obj) that returns all keys.
+- Destructuring assignment
+  Examples:
+
+  ```Typescript
+  let [a, b, c] = "abc"; // ["a", "b", "c"]
+  let [one, two, three] = new Set([1, 2, 3]);
+  for (let [key, value] of Object.entries(user)) {}
+  [guest, admin] = [admin, guest]; // Swap guest and admin
+  let [name = "Guest", surname = "Anonymous"] = ["Julius"]; // default values
+
+  let {height, width, title} = { title: "Menu", height: 200, width: 100 }
+  let {width: w = 100, height: h = 200, title} = options;
+  let {title, ...rest} = options;
+  ({title, width, height} = {title: "Menu", width: 200, height: 100}); // without let
+  function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {} // default values
+  ```
 
 ### Advanced working with functions
 

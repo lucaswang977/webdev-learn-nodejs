@@ -28,12 +28,18 @@ pnpm create vite x.x.x --template vanilla-ts
 
 ## Everyday Types
 
-- Differences Between Type Aliases and Interfaces
-- TypeScript only allows type assertions which convert to a more specific or less specific version of a type.
-- The "as const" suffix acts like const but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like string or number.
-- Literal Types and Literal Inference
-- strictNullChecks
-- Non-null Assertion Operator (Postfix!)
+- The primitives: string, number, and boolean, bigint, symbol
+- Arrays: Array<number>, number[]
+- any: noImplicitAny
+- Type Annotations on Variables: automatically infer the types
+- Functions: Parameter Type Annotations, Return Type Annotations, Anonymous Functions, contextual typing
+- Object Types
+- Union Types
+- Type Aliases and Interfaces: the differences
+- Type Assertions: TypeScript only allows type assertions which convert to a more specific or less specific version of a type.
+- Literal Types: Literal Inference; The "as const" suffix acts like const but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like string or number.
+- null and undefined: strictNullChecks, Non-null Assertion Operator (Postfix !)
+- Enums
 
 ## Narrowing
 
@@ -144,6 +150,7 @@ pnpm create vite x.x.x --template vanilla-ts
   ```
 
 - Return of void:
+
   - A contextual function type is a function type that provides type information for a function based on where it is assigned.
   - A contextual function type (type is inferred by compiler) with a void return type (type voidFunc = () => void), when implemented, can return any other value, but it will be ignored.
 
@@ -168,3 +175,60 @@ pnpm create vite x.x.x --template vanilla-ts
       return true;
     };
     ```
+
+## Object Types
+
+- Property Modifiers
+  - Optional Properties
+  ```Typescript
+  function paintShape({ shape, xPos = 0, yPos = 0 }: PaintOptions) {}
+  ```
+  - readonly Properties
+  ```Typescript
+  interface ReadonlyPerson {
+    readonly name: string;
+    readonly age: number;
+  }
+  ```
+  - Index Signatures
+  ```Typescript
+  interface ReadonlyStringArray {
+    readonly [index: number]: string;
+  }
+  ```
+- Excess Property Checks
+
+  ```Typescript
+  interface SquareConfig {
+    color?: string;
+    width?: number;
+    [propName: string]: unknown;
+  }
+  ```
+
+- Extending Types and Intersection Types
+
+  ```Typescript
+  // Intersection
+  interface Colorful {
+    color: string;
+  }
+  interface Circle {
+    radius: number;
+  }
+
+  type ColorfulCircle = Colorful & Circle;
+
+  // Extending
+  interface Colorful {
+    color: string;
+  }
+
+  interface Circle {
+    radius: number;
+  }
+
+  interface ColorfulCircle extends Colorful, Circle {}
+  ```
+
+- Generic Object Types: The Array Type, The ReadonlyArray Type, Tuple Types, readonly Tuple Types
