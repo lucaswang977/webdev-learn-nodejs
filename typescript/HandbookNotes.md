@@ -232,3 +232,24 @@ pnpm create vite x.x.x --template vanilla-ts
   ```
 
 - Generic Object Types: The Array Type, The ReadonlyArray Type, Tuple Types, readonly Tuple Types
+
+## tsconfig.json
+
+- The presence of a tsconfig.json file in a directory indicates that the directory is the root of a TypeScript project.
+- The tsconfig.json file specifies the root files and the compiler options required to compile the project.
+- By invoking tsc with no input files, in which case the compiler searches for the tsconfig.json file starting in the current directory and continuing up the parent directory chain.
+- By invoking tsc with no input files and a --project (or just -p) command line option that specifies the path of a directory containing a tsconfig.json file, or a path to a valid .json file containing the configurations.
+- When input files are specified on the command line, tsconfig.json files are ignored.
+- There may be a base configuration which you can use at [here](https://github.com/tsconfig/bases).
+- Root fields
+  - **files**: Specifies an allowlist of files to include in the program.
+  - **extends**: The value of extends is a string which contains a path to another configuration file to inherit from.
+  - **include**: Specifies an array of filenames or patterns to include in the program.
+  - **exclude**: Specifies an array of filenames or patterns that should be skipped when resolving include.
+  - **references**: Project references are a way to structure your TypeScript programs into smaller pieces.
+  - **compilerOptions**: These options make up the bulk of TypeScript’s configuration and it covers how the language should work.
+- Important compiler options:
+  - target: ES5, ES6/ES2015, ES2016, ES2017, ES2018, ES2019, ES2020, ESNext
+  - lib: dom, dom.iterable, esnext
+  - strict: true
+  - module:

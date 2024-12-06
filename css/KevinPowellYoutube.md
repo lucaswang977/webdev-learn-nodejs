@@ -121,6 +121,7 @@
 - [Write less code with these Sass mixins](https://www.youtube.com/watch?v=7ruDsUN4-iA)
 - [Stop using @import with Sass | @use and @forward explained](https://www.youtube.com/watch?v=CR-a8upNjJ0)
 - [Get your stylesheets more organized with Sass partials](https://www.youtube.com/watch?v=9Ld-aOKsEDk)
+- [Generate custom props & utility classes with Sass](https://www.youtube.com/watch?v=gP8yFWCTr7Q)
 
 ### CSS Tips and Tricks
 
