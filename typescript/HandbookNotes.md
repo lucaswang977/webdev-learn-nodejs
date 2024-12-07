@@ -233,6 +233,29 @@ pnpm create vite x.x.x --template vanilla-ts
 
 - Generic Object Types: The Array Type, The ReadonlyArray Type, Tuple Types, readonly Tuple Types
 
+## Modules - Theory
+
+- This document will focus on two of the most important module systems today: ECMAScript modules (ESM) and CommonJS (CJS).
+- TypeScript detects that a file is a CommonJS or ECMAScript module, it starts by assuming that file will have its own scope.
+- Who is the host? the system that ultimately consumes the output code to direct its module loading behavior.
+- Understand the rules of the host enough, to compile files into a valid **output module format**, to ensure that imports in those **outputs** will **resolve successfully**, and to know what **type** to assign to **imported names**.
+- The module compiler option (the compiler needs an accurate understanding of the module system so it can type check properly)
+  - control the module format of any JavaScript that gets emitted during compilation
+  - serves to inform the compiler about how the module kind of each file should be detected
+  - how different module kinds are allowed to import each other
+  - whether features like import.meta and top-level await are available
+- Node.js understands both ES modules and CJS modules, but the format of each file is determined by its file extension and the type field of the first package.json file.
+- TypeScript applies this same algorithm to the project’s input files to determine the module kind of each corresponding output file.
+- ESM and CJS interoperability
+  - ESM-only. Some runtimes, like browser engines, only support what’s actually a part of the language: ECMAScript Modules.
+  - Bundler-like. ESM-transpiled-to-CJS files interacted with hand-written-CJS files implied a set of permissive interoperability rules.
+  - Node.js. CommonJS modules cannot load ES modules synchronously, they can only load them asynchronously with dynamic import() calls. ES modules can default-import CJS modules, which always binds to exports.
+- Module resolution is host-defined (moduleResolution). TypeScript imitates the host’s module resolution, but with types.
+- The role of declaration files: the compiler assumes that wherever it sees a declaration file, there is a corresponding JavaScript file that is perfectly described by the type information in the declaration file.
+  - The compiler always looks for TypeScript and declaration files first, and if it finds one, it doesn’t continue looking for the corresponding JavaScript file.
+  - If it finds a TypeScript input file, it knows a JavaScript file will exist after compilation.
+  - If it finds a declaration file, it knows a compilation (perhaps someone else’s) already happened and created a JavaScript file at the same time as the declaration file.
+
 ## tsconfig.json
 
 - The presence of a tsconfig.json file in a directory indicates that the directory is the root of a TypeScript project.
@@ -249,7 +272,7 @@ pnpm create vite x.x.x --template vanilla-ts
   - **references**: Project references are a way to structure your TypeScript programs into smaller pieces.
   - **compilerOptions**: These options make up the bulk of TypeScript’s configuration and it covers how the language should work.
 - Important compiler options:
-  - target: ES5, ES6/ES2015, ES2016, ES2017, ES2018, ES2019, ES2020, ESNext
+  - **module**: You very likely want "nodenext" for modern Node.js projects and preserve or esnext for code that will be bundled.
+  - **target**: Modern browsers support all ES6 features, so ES6 is a good choice.
   - lib: dom, dom.iterable, esnext
   - strict: true
-  - module:
