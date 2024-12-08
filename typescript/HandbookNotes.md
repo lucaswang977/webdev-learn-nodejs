@@ -233,6 +233,10 @@ pnpm create vite x.x.x --template vanilla-ts
 
 - Generic Object Types: The Array Type, The ReadonlyArray Type, Tuple Types, readonly Tuple Types
 
+## Classes
+
+## Creating Types from Types
+
 ## Modules - Theory
 
 - This document will focus on two of the most important module systems today: ECMAScript modules (ESM) and CommonJS (CJS).
@@ -273,6 +277,7 @@ pnpm create vite x.x.x --template vanilla-ts
   - **compilerOptions**: These options make up the bulk of TypeScript’s configuration and it covers how the language should work.
 - Important compiler options:
   - **module**: You very likely want "nodenext" for modern Node.js projects and preserve or esnext for code that will be bundled.
+  - **moduleResolution**: nodenext (import and require are both supported), bundler (never requires file extensions on relative paths in imports)
   - **target**: Modern browsers support all ES6 features, so ES6 is a good choice.
-  - lib: dom, dom.iterable, esnext
-  - strict: true
+  - **lib**: dom, dom.iterable, esnext
+  - **strict related**: strictPropertyInitialization,
