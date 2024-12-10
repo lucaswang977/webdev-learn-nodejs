@@ -1,24 +1,35 @@
+import { useState } from "react";
 import "./App.css";
 
-const AnimatedInput = () => {
+const AnimatedInput = ({ visible }) => {
   return (
-    <div className="input-container">
+    <div key={visible} className="input-container">
       <input
-        type="text"
-        placeholder="Type here..."
+        type={visible ? "text" : "password"}
+        placeholder="Password"
         className="animated-input"
       />
       <svg className="flash" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100%" cy="0" r="0" />
+        <circle
+          className={visible ? "circle-animation" : "circle-animation-reverse"}
+          cx="100%"
+          cy="0"
+          r="0"
+          fill="#65d6ce"
+        />
       </svg>
     </div>
   );
 };
 
 function App() {
+  const [visible, setVisible] = useState(false);
   return (
     <>
-      <AnimatedInput />
+      <AnimatedInput visible={visible} />
+      <button onClick={() => setVisible(!visible)}>
+        {visible ? "Hide" : "Show"}
+      </button>
     </>
   );
 }
