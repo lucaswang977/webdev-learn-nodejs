@@ -71,3 +71,12 @@ https://react.dev/learn
 - Render trees represent the nested relationship between React components across a single render. Dependency trees represent the module dependencies in a React app.
 
 ## Adding Interactivity
+
+- Responding to Events
+  - Events propagate upwards. Call e.stopPropagation() on the first argument to prevent that.
+  - Events may have unwanted default browser behavior. Call e.preventDefault() to prevent that.
+  - Explicitly calling an event handler prop from a child handler is a good alternative to propagation
+- State: A Component's Memory
+  - Hooks might remind you of imports: they need to be called unconditionally. Calling Hooks, including useState, is only valid at the top level of a component or another Hook.
+  - You can have more than one state variable. Internally, React matches them up by their order.
+  - State is private to the component. If you render it in two places, each copy gets its own state.
