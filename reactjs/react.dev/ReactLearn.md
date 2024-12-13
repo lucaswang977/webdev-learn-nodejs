@@ -111,3 +111,58 @@ https://react.dev/learn
   - avoid (mutates the array): push, unshift, pop, shift, splice, arr[i] = ... assignment, reverse, sort
   - prefer (returns a new array): concat, [...arr] spread syntax, filter, slice, map, copy the array first
   - Generally, you shouldn’t need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
+
+## Managing State
+
+- Reacting to Input with State
+  - Declarative UI compares to imperative: you describe what you want to happen, not how to do it.
+  - Thinking about UI declaratively:
+    - Identify your component’s different visual states.
+    - Determine what triggers those state changes.
+    - Represent the state in memory using useState.
+    - Remove any non-essential state variables.
+    - Connect the event handlers to set the state.
+  - If a component has a lot of visual states, it can be convenient to show them all on one page.
+  - To prevent the cases where the state in memory doesn’t represent any valid UI that you’d want a user to see.
+    - Does this state cause a paradox?
+    - Is the same information available in another state variable already?
+    - Can you get the same information from the inverse of another state variable?
+- Choosing the State Structure
+  - Group related state: if some two state variables always change together, it might be a good idea to unify them into a single state variable.
+  - Avoid contradictions in state: when the state is structured in a way that several pieces of state may contradict and “disagree” with each other, you leave room for mistakes.
+  - Avoid redundant state: If you can calculate some information from the component’s props or its existing state variables during rendering, you should not put that information into that component’s state.
+  - Avoid duplication in state: when the same data is duplicated between multiple state variables, or within nested objects, it is difficult to keep them in sync. Reduce duplication when you can.
+  - Avoid deeply nested state: deeply hierarchical state is not very convenient to update. When possible, prefer to structure state in a flat way.
+- Sharing State Between Components
+  - Controlled and uncontrolled components: It is common to call a component with some local state “uncontrolled”. In contrast, you might say a component is “controlled” when the important information in it is driven by props rather than its own local state.
+  - Lifting state up:
+    - Step 1: Remove state from the child components.
+    - Step 2: Pass hardcoded data from the common parent.
+    - Step 3: Add state to the common parent.
+  - For each unique piece of state, you will choose the component that “owns” it. This principle is also known as having a “single source of truth”.
+- Preserving and Resetting State
+  - If you want to preserve the state between re-renders, the structure of your tree needs to “match up” from one render to another. If the structure is different, the state gets destroyed because React destroys state when it removes a component from the tree.
+  - Always declare component functions at the top level, and don’t nest their definitions. Because changing the state will render a different component in the same position, and React will reset all state below. This leads to bugs and performance problems.
+  - Specifying a key tells React to use the key itself as part of the position, instead of their order within the parent.
+- Extracting State Logic into a Reducer
+  - To convert from useState to useReducer:
+    - Dispatch actions from event handlers.
+    - Write a reducer function that returns the next state for a given state and action.
+    - Replace useState with useReducer.
+  - Reducers require you to write a bit more code, but they help with debugging and testing.
+  - Reducers must be pure.
+  - Each action describes a single user interaction, even if that leads to multiple changes in the data.
+- Passing Data Deeply with Context
+  - Context lets a parent component provide data to the entire tree below it.
+    - Create a context.
+    - Use that context from the component that needs the data.
+    - Provide that context from the component that specifies the data.
+  - Context lets you write components that "adapt to their surroundings" and display themselves differently depending on where (or, in other words, in which context) they are being rendered.
+  - In React, the only way to override some context coming from above is to wrap children into a context provider with a different value. Different React contexts don't override each other.
+  - A few alternatives you should consider before using context:
+    - Start by passing props.
+    - Extract components and pass JSX as children to them.
+  - Use cases for context: theming, current account, routing, managing state
+- Scaling Up with Reducer and Context
+
+## Escape Hatches
