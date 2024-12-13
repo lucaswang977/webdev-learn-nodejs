@@ -166,3 +166,10 @@ https://react.dev/learn
 - Scaling Up with Reducer and Context
 
 ## Escape Hatches
+
+- Referencing Values with Refs
+  - When a piece of information is used for rendering, keep it in state. When a piece of information is only needed by event handlers and changing it doesn’t require a re-render, using a ref may be more efficient.
+  - You can modify and update current’s value outside of the rendering process. You shouldn’t read (or write) the current value during rendering.
+  - React provides a built-in version of useRef because it is common enough in practice. But you can think of it as a regular state variable without a setter.
+  - Refs are useful when you work with external systems or browser APIs. If much of your application logic and data flow relies on refs, you might want to rethink your approach.
+- Manipulating the DOM with Refs

@@ -63,6 +63,13 @@ const TaskList = () => {
               >
                 Save
               </button>
+              <button
+                onClick={() => {
+                  setEditTask(null);
+                }}
+              >
+                Cancel
+              </button>
             </>
           ) : (
             <>
