@@ -173,3 +173,79 @@ https://react.dev/learn
   - React provides a built-in version of useRef because it is common enough in practice. But you can think of it as a regular state variable without a setter.
   - Refs are useful when you work with external systems or browser APIs. If much of your application logic and data flow relies on refs, you might want to rethink your approach.
 - Manipulating the DOM with Refs
+  - The useRef Hook can be used for storing other things outside React, like timer IDs. Similarly to state, refs remain between renders. Refs are like state variables that don’t trigger re-renders when you set them.
+  - Hooks must only be called at the top-level of your component. You can’t call useRef in a loop, in a condition, or inside a map() call.
+  - A **ref callback** is to pass a function to the ref attribute. React will call your ref callback with the DOM node when it’s time to set the ref, and with null when it’s time to clear it.
+  - Components that want to expose their DOM nodes have to opt in to that behavior. A component can specify that it “forwards” its ref to one of its children. In uncommon cases, you may want to restrict the exposed functionality. You can do that with useImperativeHandle.
+  - React sets ref.current during the commit. Before updating the DOM, React sets the affected ref.current values to null. So you don’t want to access refs during rendering.
+  - flushSync will instruct React to update the DOM synchronously right after the code wrapped in in executes.
+- Synchronizing with Effects
+
+  - Unlike events, Effects are caused by rendering itself rather than a particular interaction.
+  - Effects let you synchronize a component with some external system (third-party API, network, etc).
+  - By default, Effects run after every render (including the initial one).
+  - React will skip the Effect if all of its dependencies have the same values as during the last render.
+  - You can’t “choose” your dependencies. They are determined by the code inside the Effect.
+  - Empty dependency array ([]) corresponds to the component “mounting”, i.e. being added to the screen.
+  - In Strict Mode, React mounts components twice (in development only!) to stress-test your Effects.
+  - If your Effect breaks because of remounting, you need to implement a cleanup function.
+  - React will call your cleanup function before the Effect runs next time, and during the unmount.
+  - Why was the ref omitted from the dependency array? This is because the ref object has a stable identity: React guarantees you’ll always get the same object from the same useRef call on every render. It never changes, so it will never by itself cause the Effect to re-run. Therefore, it does not matter whether you include it or not.
+  - If your Effect fetches something, the cleanup function should either abort the fetch or ignore its result:
+
+    ```js
+    useEffect(() => {
+      let ignore = false; // to avoid memory leaks
+
+      async function startFetching() {
+        const json = await fetchTodos(userId);
+        if (!ignore) {
+          setTodos(json);
+        }
+      }
+
+      startFetching();
+
+      return () => {
+        ignore = true; // abort the fetch
+      };
+    }, [userId]);
+    ```
+
+  - In production, there will only be one request. If the second request in development is bothering you, the best approach is to use a solution that deduplicates requests and caches their responses between components
+  - Significant downsides when writing fetch calls inside Effects:
+    - Effects don’t run on the server.
+    - Fetching directly in Effects makes it easy to create “network waterfalls”.
+    - Fetching directly in Effects usually means you don’t preload or cache data.
+    - It’s not very ergonomic. (race conditions)
+  - Recommended approaches on fetching data:
+    - If you use a framework, use its built-in data fetching mechanism. (Next.js)
+    - Otherwise, consider using or building a client-side cache. (useSWR)
+  - Not an Effect: Initializing the application
+
+    ```js
+    if (typeof window !== "undefined") {
+      // Check if we're running in the browser.
+      checkAuthToken();
+      loadDataFromLocalStorage();
+    }
+    function App() {
+      // ...
+    }
+    ```
+
+- You Might Not Need an Effect
+
+  - There are two common cases in which you don’t need Effects:
+    - You don’t need Effects to transform data for rendering.
+    - You don’t need Effects to handle user events.
+  - When something can be calculated from the existing props or state, don’t put it in state. Instead, calculate it during rendering.
+  - useMemo won’t make the first render faster. It only helps you skip unnecessary work on updates.
+
+    ```js
+    const [newTodo, setNewTodo] = useState("");
+    const visibleTodos = useMemo(
+      () => getFilteredTodos(todos, filter), // When getFilteredTodos is expensive
+      [todos, filter]
+    );
+    ```
