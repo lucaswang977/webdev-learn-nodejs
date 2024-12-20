@@ -94,7 +94,7 @@ https://react.dev/learn
 - State as a Snapshot
   - When React re-renders a component: React calls your function again. Your function returns a new JSX snapshot. React then updates the screen to match the snapshot your function returned.
   - Setting state only changes it for the next render.
-  - A state variable's value never changes within a render, even if its event handler's code is asynchronous. React keeps the state values “fixed” within one render’s event handlers.
+  - A state variable's value never changes within a render, even if its event handler's code is asynchronous. React keeps the state values “fixed” within one render's event handlers.
 - Queueing a Series of State Updates
   - React does not batch across multiple intentional events like clicks—each click is handled separately.
   - When you pass an **updater function** to a state setter: React queues this function to be processed after all the other code in the event handler has run. During the next render, React goes through the queue and gives you the final updated state.
@@ -105,32 +105,32 @@ https://react.dev/learn
   - Instead of mutating an object, create a new version of it, and trigger a re-render by setting state to it.
   - You can use the {...obj, something: 'newValue'} object spread syntax to create copies of objects.
   - Spread syntax is shallow: it only copies one level deep.
-  - To update a nested object, you need to create copies all the way up from the place you’re updating.
+  - To update a nested object, you need to create copies all the way up from the place you're updating.
   - To reduce repetitive copying code, use Immer.
 - Updating Arrays in State
   - avoid (mutates the array): push, unshift, pop, shift, splice, arr[i] = ... assignment, reverse, sort
   - prefer (returns a new array): concat, [...arr] spread syntax, filter, slice, map, copy the array first
-  - Generally, you shouldn’t need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
+  - Generally, you shouldn't need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
 
 ## Managing State
 
 - Reacting to Input with State
   - Declarative UI compares to imperative: you describe what you want to happen, not how to do it.
   - Thinking about UI declaratively:
-    - Identify your component’s different visual states.
+    - Identify your component's different visual states.
     - Determine what triggers those state changes.
     - Represent the state in memory using useState.
     - Remove any non-essential state variables.
     - Connect the event handlers to set the state.
   - If a component has a lot of visual states, it can be convenient to show them all on one page.
-  - To prevent the cases where the state in memory doesn’t represent any valid UI that you’d want a user to see.
+  - To prevent the cases where the state in memory doesn't represent any valid UI that you'd want a user to see.
     - Does this state cause a paradox?
     - Is the same information available in another state variable already?
     - Can you get the same information from the inverse of another state variable?
 - Choosing the State Structure
   - Group related state: if some two state variables always change together, it might be a good idea to unify them into a single state variable.
   - Avoid contradictions in state: when the state is structured in a way that several pieces of state may contradict and “disagree” with each other, you leave room for mistakes.
-  - Avoid redundant state: If you can calculate some information from the component’s props or its existing state variables during rendering, you should not put that information into that component’s state.
+  - Avoid redundant state: If you can calculate some information from the component's props or its existing state variables during rendering, you should not put that information into that component's state.
   - Avoid duplication in state: when the same data is duplicated between multiple state variables, or within nested objects, it is difficult to keep them in sync. Reduce duplication when you can.
   - Avoid deeply nested state: deeply hierarchical state is not very convenient to update. When possible, prefer to structure state in a flat way.
 - Sharing State Between Components
@@ -142,7 +142,7 @@ https://react.dev/learn
   - For each unique piece of state, you will choose the component that “owns” it. This principle is also known as having a “single source of truth”.
 - Preserving and Resetting State
   - If you want to preserve the state between re-renders, the structure of your tree needs to “match up” from one render to another. If the structure is different, the state gets destroyed because React destroys state when it removes a component from the tree.
-  - Always declare component functions at the top level, and don’t nest their definitions. Because changing the state will render a different component in the same position, and React will reset all state below. This leads to bugs and performance problems.
+  - Always declare component functions at the top level, and don't nest their definitions. Because changing the state will render a different component in the same position, and React will reset all state below. This leads to bugs and performance problems.
   - Specifying a key tells React to use the key itself as part of the position, instead of their order within the parent.
 - Extracting State Logic into a Reducer
   - To convert from useState to useReducer:
@@ -168,16 +168,16 @@ https://react.dev/learn
 ## Escape Hatches
 
 - Referencing Values with Refs
-  - When a piece of information is used for rendering, keep it in state. When a piece of information is only needed by event handlers and changing it doesn’t require a re-render, using a ref may be more efficient.
-  - You can modify and update current’s value outside of the rendering process. You shouldn’t read (or write) the current value during rendering.
+  - When a piece of information is used for rendering, keep it in state. When a piece of information is only needed by event handlers and changing it doesn't require a re-render, using a ref may be more efficient.
+  - You can modify and update current's value outside of the rendering process. You shouldn't read (or write) the current value during rendering.
   - React provides a built-in version of useRef because it is common enough in practice. But you can think of it as a regular state variable without a setter.
   - Refs are useful when you work with external systems or browser APIs. If much of your application logic and data flow relies on refs, you might want to rethink your approach.
 - Manipulating the DOM with Refs
-  - The useRef Hook can be used for storing other things outside React, like timer IDs. Similarly to state, refs remain between renders. Refs are like state variables that don’t trigger re-renders when you set them.
-  - Hooks must only be called at the top-level of your component. You can’t call useRef in a loop, in a condition, or inside a map() call.
-  - A **ref callback** is to pass a function to the ref attribute. React will call your ref callback with the DOM node when it’s time to set the ref, and with null when it’s time to clear it.
+  - The useRef Hook can be used for storing other things outside React, like timer IDs. Similarly to state, refs remain between renders. Refs are like state variables that don't trigger re-renders when you set them.
+  - Hooks must only be called at the top-level of your component. You can't call useRef in a loop, in a condition, or inside a map() call.
+  - A **ref callback** is to pass a function to the ref attribute. React will call your ref callback with the DOM node when it's time to set the ref, and with null when it's time to clear it.
   - Components that want to expose their DOM nodes have to opt in to that behavior. A component can specify that it “forwards” its ref to one of its children. In uncommon cases, you may want to restrict the exposed functionality. You can do that with useImperativeHandle.
-  - React sets ref.current during the commit. Before updating the DOM, React sets the affected ref.current values to null. So you don’t want to access refs during rendering.
+  - React sets ref.current during the commit. Before updating the DOM, React sets the affected ref.current values to null. So you don't want to access refs during rendering.
   - flushSync will instruct React to update the DOM synchronously right after the code wrapped in in executes.
 - Synchronizing with Effects
 
@@ -185,12 +185,12 @@ https://react.dev/learn
   - Effects let you synchronize a component with some external system (third-party API, network, etc).
   - By default, Effects run after every render (including the initial one).
   - React will skip the Effect if all of its dependencies have the same values as during the last render.
-  - You can’t “choose” your dependencies. They are determined by the code inside the Effect.
+  - You can't “choose” your dependencies. They are determined by the code inside the Effect.
   - Empty dependency array ([]) corresponds to the component “mounting”, i.e. being added to the screen.
   - In Strict Mode, React mounts components twice (in development only!) to stress-test your Effects.
   - If your Effect breaks because of remounting, you need to implement a cleanup function.
   - React will call your cleanup function before the Effect runs next time, and during the unmount.
-  - Why was the ref omitted from the dependency array? This is because the ref object has a stable identity: React guarantees you’ll always get the same object from the same useRef call on every render. It never changes, so it will never by itself cause the Effect to re-run. Therefore, it does not matter whether you include it or not.
+  - Why was the ref omitted from the dependency array? This is because the ref object has a stable identity: React guarantees you'll always get the same object from the same useRef call on every render. It never changes, so it will never by itself cause the Effect to re-run. Therefore, it does not matter whether you include it or not.
   - If your Effect fetches something, the cleanup function should either abort the fetch or ignore its result:
 
     ```js
@@ -214,10 +214,10 @@ https://react.dev/learn
 
   - In production, there will only be one request. If the second request in development is bothering you, the best approach is to use a solution that deduplicates requests and caches their responses between components
   - Significant downsides when writing fetch calls inside Effects:
-    - Effects don’t run on the server.
+    - Effects don't run on the server.
     - Fetching directly in Effects makes it easy to create “network waterfalls”.
-    - Fetching directly in Effects usually means you don’t preload or cache data.
-    - It’s not very ergonomic. (race conditions)
+    - Fetching directly in Effects usually means you don't preload or cache data.
+    - It's not very ergonomic. (race conditions)
   - Recommended approaches on fetching data:
     - If you use a framework, use its built-in data fetching mechanism. (Next.js)
     - Otherwise, consider using or building a client-side cache. (useSWR)
@@ -236,16 +236,74 @@ https://react.dev/learn
 
 - You Might Not Need an Effect
 
-  - There are two common cases in which you don’t need Effects:
-    - You don’t need Effects to transform data for rendering.
-    - You don’t need Effects to handle user events.
-  - When something can be calculated from the existing props or state, don’t put it in state. Instead, calculate it during rendering.
-  - useMemo won’t make the first render faster. It only helps you skip unnecessary work on updates.
+  - There are two common cases in which you don't need Effects:
+    - You don't need Effects to transform data for rendering.
+    - You don't need Effects to handle user events.
+  - Updating state based on props or state: when something **can be calculated** from the existing props or state, don't put it in state. Instead, calculate it during rendering.
+  - Caching expensive calculations:
+
+    - useMemo won't make the first render faster. It only helps you skip unnecessary work on updates.
+
+      ```js
+      const [newTodo, setNewTodo] = useState("");
+      const visibleTodos = useMemo(
+        () => getFilteredTodos(todos, filter), // When getFilteredTodos is expensive
+        [todos, filter]
+      );
+      ```
+
+    - How to tell if a calculation is expensive?
+
+      ```js
+      console.time("filter array");
+      const visibleTodos = getFilteredTodos(todos, filter);
+      console.timeEnd("filter array");
+      ```
+
+  - Resetting all state when a prop changes: pass a "key" attribute from the outer component to the inner one.
+  - Adjusting some state when a prop changes: you can store information from previous renders or calculate everything during rendering.
+  - Use Effects only for code that should run because the **component was displayed** to the user.
+  - When you choose whether to put some logic into an event handler or an Effect, the main question you need to answer is what kind of logic it is from the user's perspective. If this logic is caused by a particular interaction, keep it in the event handler. If it's caused by the user seeing the component on the screen, keep it in the Effect.
+  - In React, data flows from the parent components to their children. When child components update the state of their parent components in Effects, the data flow becomes very difficult to trace.
+  - React has a purpose-built Hook for subscribing to an external store: useSyncExternalStore.
 
     ```js
-    const [newTodo, setNewTodo] = useState("");
-    const visibleTodos = useMemo(
-      () => getFilteredTodos(todos, filter), // When getFilteredTodos is expensive
-      [todos, filter]
-    );
+    function subscribe(callback) {
+      window.addEventListener("online", callback);
+      window.addEventListener("offline", callback);
+      return () => {
+        window.removeEventListener("online", callback);
+        window.removeEventListener("offline", callback);
+      };
+    }
+
+    function useOnlineStatus() {
+      return useSyncExternalStore(
+        subscribe,
+        () => navigator.onLine,
+        () => true
+      );
+    }
+
+    function ChatIndicator() {
+      const isOnline = useOnlineStatus();
+      // ...
+    }
     ```
+
+  - While this component is visible, you want to keep "results" synchronized with data from the network for the current "page" and "query". This is why it's an Effect.
+
+- Lifecycle of Reactive Effects
+
+  - Every React component goes through the same lifecycle:
+    - A component mounts when it's added to the screen.
+    - A component updates when it receives new props or state, usually in response to an interaction.
+    - A component unmounts when it's removed from the screen.
+  - It's a good way to think about components, but not about Effects. Instead, try to think about each Effect independently from your component's lifecycle. An Effect describes how to synchronize an external system to the current props and state. As your code changes, synchronization will need to happen more or less often.
+  - Always focus on a single start/stop cycle at a time. It shouldn't matter whether a component is mounting, updating, or unmounting. All you need to do is to describe how to start synchronization and how to stop it. If you do it well, your Effect will be resilient to being started and stopped as many times as it's needed.
+  - Each Effect in your code should represent a separate and independent synchronization process. When splitting Effects, you should think whether the processes are same or separate, not whether the code looks cleaner.
+  - Props, state, and other values declared inside the component are reactive because they're calculated during rendering and participate in the React data flow.
+  - All values inside the component (including props, state, and variables in your component's body) are reactive. Any reactive value can change on a re-render, so you need to include reactive values as Effect's dependencies.
+  - Effects are reactive blocks of code. They re-synchronize when the values you read inside of them change.
+
+- Separating Events from Effects
