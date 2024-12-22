@@ -307,3 +307,45 @@ https://react.dev/learn
   - Effects are reactive blocks of code. They re-synchronize when the values you read inside of them change.
 
 - Separating Events from Effects
+
+  - Event handlers and Effects respond to changes differently:
+    - Logic inside event handlers is not reactive. It will not run again unless the user performs the same interaction (e.g. a click) again. Event handlers can read reactive values without "reacting" to their changes.
+    - Logic inside Effects is reactive. If your Effect reads a reactive value, you have to specify it as a dependency. Then, if a re-render causes that value to change, React will re-run your Effect's logic with the new value.
+  - Choose between Event Handlers and Effects:
+    - Event handlers run in response to specific interactions.
+    - Effects run whenever synchronization is needed.
+  - You can think of Effect Events as being very similar to event handlers. The main difference is that event handlers run in response to a user interactions, whereas Effect Events are triggered by you from Effects. Effect Events let you “break the chain” between the reactivity of Effects and code that should not be reactive.
+  - eslint-disable-next-line react-hooks/exhaustive-deps
+  - If you never suppress the linter, you will never see problems with stale values.
+  - Effect Events are very limited in how you can use them:
+    - Only call them from inside Effects.
+    - Never pass them to other components or Hooks.
+  - Effect Events are non-reactive “pieces” of your Effect code. They should be next to the Effect using them.
+
+- Removing Effect Dependencies
+
+  - Should this code move to an event handler?
+  - Is your Effect doing several unrelated things?
+  - Are you reading some state to calculate the next state? (use updater function instead)
+    - Do you want to read a value without "reacting" to its changes? (useEffectEvent)
+    - Wrapping an event handler from the props (useEffectEvent)
+    - Separating reactive and non-reactive code (useEffectEvent)
+  - Does some reactive value change unintentionally?
+    - Object and function dependencies can make your Effect re-synchronize more often than you need.
+    - Move static objects and functions outside your component
+    - Move dynamic objects and functions inside your Effect
+    - Read primitive values from objects
+    - Calculate primitive values from functions
+
+- Reusing Logic with Custom Hooks
+  - You must follow these naming conventions:
+    - React component names must start with a capital letter, like StatusBar and SaveButton.
+    - Hook names must start with "use" followed by a capital letter, like useState or useOnlineStatus.
+  - Should all functions called during rendering start with the use prefix? No. Functions that don't call Hooks don't need to be Hooks.
+  - Custom Hooks let you share stateful logic but not state itself. Each call to a Hook is completely independent from every other call to the same Hook. But when you need to share the state itself between multiple components, lift it up and pass it down instead.
+  - If you're writing an Effect, it means that you need to "step outside React" to synchronize with some external system or to do something that React doesn't have a built-in API for. Wrapping it into a custom Hook lets you precisely communicate your intent and how the data flows through it. With time, most of your app's Effects will be in custom Hooks.
+  - A good custom Hook makes the calling code more declarative by constraining what it does.
+  - Why wrapping Effects in custom Hooks is often beneficial:
+    - You make the data flow to and from your Effects very explicit.
+    - You let your components focus on the intent rather than on the exact implementation of your Effects.
+    - When React adds new features, you can remove those Effects without changing any of your components.
