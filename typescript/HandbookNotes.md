@@ -235,6 +235,125 @@ pnpm create vite x.x.x --template vanilla-ts
 
 ## Classes
 
+- Class Members
+
+  - Fields (readonly)
+  - Methods (Getters / Setters, Index Signatures)
+  - Constructor (super call: before using any this members)
+  - Visibility: public, protected (base and derived, visibility can be increased), private (only base, visibility cannot be increased)
+  - Cross-instance private access: TypeScript does allow cross-instance private access:
+
+    ```Typescript
+    class A {
+      private x = 10;
+
+      public sameAs(other: A) {
+        // No error
+        return other.x === this.x;
+      }
+    }
+    ```
+
+  - static members: not associated with a particular instance, can be accessed through the class constructor object itself, also inherited.
+  - Function properties like name, length, and call aren't valid to define as static members.
+  - Static blocks: Static blocks allow you to write a sequence of statements with their own scope that can access private fields within the containing class.
+  - Parameter Properties: turning a constructor parameter into a class property with the same name and value.
+
+    ```Typescript
+    class Params {
+      constructor(
+        public readonly x: number,
+        protected y: number,
+        private z: number
+      ) {
+        // No body necessary
+      }
+    }
+    const a = new Params(1, 2, 3);
+    console.log(a.x); // (property) Params.x: number
+    console.log(a.z); // Error: Property 'z' is private and only accessible within class 'Params'.
+    ```
+
+  - Constructor Signatures: Given the type of a class itself, the InstanceType utility type models this operation.
+  - Abstract: An abstract method or abstract field is one that hasn’t had an implementation provided. These members must exist inside an abstract class, which cannot be directly instantiated.
+
+- Class Expressions: Class expressions are very similar to class declarations. The only real difference is that class expressions don't need a name.
+
+  ```Typescript
+  const someClass = class<Type> {
+    content: Type;
+    constructor(value: Type) {
+      this.content = value;
+    }
+  };
+
+  const m = new someClass("Hello, world");
+  ```
+
+- Class Heritage
+  - implements: check that a class satisfies a particular interface
+  - extends: A derived class has all the properties and methods of its base class, and can also define additional members.
+  - Overriding methods: A derived class must follow the same method signature as the base class, or it will throw a compile-time error.
+  - Type-only field declaration: only want to re-declare a more accurate type for an inherited field, there should be no runtime effect for this field declaration.
+  - The order of class initialization, as defined by JavaScript, is:
+    - The base class fields are initialized
+    - The base class constructor runs
+    - The derived class fields are initialized
+    - The derived class constructor runs
+- Generic Class
+  - The static members of a generic class can never refer to the class’s type parameters.
+- this at Runtime in Class
+
+  - In Javascript, by default, the value of "this" inside a function depends on how the function was called.
+  - Using arrow function as class method, and passing "this" as parameter, will provide a correct context.
+  - "this" type: In classes, a special type called this refers dynamically to the type of the current class.
+
+    ```Typescript
+    class Box {
+      content: string = "";
+      sameAs(other: this) {
+        return other.content === this.content;
+      }
+    }
+    ```
+
+  - this-based type guards: You can use this is Type in the return position for methods in classes and interfaces. When mixed with a type narrowing (e.g. if statements) the type of the target object would be narrowed to the specified Type.
+
+    ```Typescript
+    class Box<T> {
+      value?: T;
+
+      hasValue(): this is { value: T } {
+        return this.value !== undefined;
+      }
+    }
+
+    const box = new Box<string>();
+    box.value = "Gameboy";
+    box.value;    // (property) Box<string>.value?: string
+
+    if (box.hasValue()) {
+      box.value;  // (property) value: string
+    }
+    ```
+
+- Relationships Between Classes
+
+  - Empty classes have no members. In a structural type system, a type with no members is generally a supertype of anything else.
+
+    ```Typescript
+    class Empty {}
+
+    function fn(x: Empty) {
+      // can't do anything with 'x', so I won't
+    }
+
+    // All OK!
+    fn(window);
+    fn({});
+    fn(fn);
+    ```
+
 ## Creating Types from Types
 
 ## Modules - Theory
