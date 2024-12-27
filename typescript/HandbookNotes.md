@@ -19,7 +19,7 @@ pnpm create vite x.x.x --template vanilla-ts
 
 ## The Basics
 
-- Over time, you may want to be a bit more defensive against mistakes, and make TypeScript act a bit more strictly. In that case, you can use the noEmitOnError compiler option.
+- Over time, you may want to be a bit more defensive against mistakes, and make TypveScript act a bit more strictly. In that case, you can use the noEmitOnError compiler option.
 - Type annotations never change the runtime behavior of your program.
 - This process of moving from a newer or “higher” version of ECMAScript down to an older or “lower” one is sometimes called **downleveling**.
 - "strict": true in a tsconfig.json
@@ -45,7 +45,7 @@ pnpm create vite x.x.x --template vanilla-ts
 
 - Truthiness narrowing: equality narrowing, the in operator narrowing, instanceof narrowing, assignments narrowing,
 - Beware of truthiness narrowing on coercing primitives such as 0, NaN, "", 0n, null, undefined, they are all coerced to false.
-- Checking whether something == null actually not only checks whether it is specifically the value null - it also checks whether it’s potentially undefined. The same applies to == undefined: it checks whether a value is either null or undefined.
+- Checking whether something == null actually not only checks whether it is specifically the value null - it also checks whether it's potentially undefined. The same applies to == undefined: it checks whether a value is either null or undefined.
 - Analysis of code based on reachability is called control flow analysis, and TypeScript uses this flow analysis to narrow types as it encounters type guards and assignments.
 - Type predicate:
   ```Typescript
@@ -109,7 +109,34 @@ pnpm create vite x.x.x --template vanilla-ts
 ## More on Functions
 
 - Use a type alias to name a function type.
-- What is Call Signature of a Typescript function? What is Constructor Signature?
+- What is Call Signature of a Typescript function? (describe something callable with properties) What is Constructor Signature?
+
+  ```Typescript
+  // Call signature
+  type DescribableFunction = {
+    description: string;
+    (someArg: number): boolean;
+  };
+  function doSomething(fn: DescribableFunction) {
+    console.log(fn.description + " returned " + fn(6));
+  }
+
+  function myFunc(someArg: number) {
+    return someArg > 3;
+  }
+  myFunc.description = "default description";
+
+  doSomething(myFunc);
+
+  // Constructor signature
+  type SomeConstructor = {
+    new (s: string): SomeObject;
+  };
+  function fn(ctor: SomeConstructor) {
+    return new ctor("hello");
+  }
+  ```
+
 - Write good generic functions:
   - Push type parameters down
   - Use fewer type parameters
@@ -275,7 +302,7 @@ pnpm create vite x.x.x --template vanilla-ts
     ```
 
   - Constructor Signatures: Given the type of a class itself, the InstanceType utility type models this operation.
-  - Abstract: An abstract method or abstract field is one that hasn’t had an implementation provided. These members must exist inside an abstract class, which cannot be directly instantiated.
+  - Abstract: An abstract method or abstract field is one that hasn't had an implementation provided. These members must exist inside an abstract class, which cannot be directly instantiated.
 
 - Class Expressions: Class expressions are very similar to class declarations. The only real difference is that class expressions don't need a name.
 
@@ -301,8 +328,8 @@ pnpm create vite x.x.x --template vanilla-ts
     - The derived class fields are initialized
     - The derived class constructor runs
 - Generic Class
-  - The static members of a generic class can never refer to the class’s type parameters.
-- this at Runtime in Class
+  - The static members of a generic class can never refer to the class's type parameters.
+- "this" at Runtime in Class
 
   - In Javascript, by default, the value of "this" inside a function depends on how the function was called.
   - Using arrow function as class method, and passing "this" as parameter, will provide a correct context.
@@ -354,7 +381,137 @@ pnpm create vite x.x.x --template vanilla-ts
     fn(fn);
     ```
 
-## Creating Types from Types
+## Type manipulation
+
+- Keyof Type Operator
+
+  - The keyof operator takes an object type and produces a string or numeric literal union of its keys.
+
+  ```Typescript
+  type Point = { x: number; y: number };
+  type P = keyof Point; // type P = "x" | "y"
+  ```
+
+  - If the type has a string or number index signature, keyof will return those types instead:
+
+    ```Typescript
+    type Arrayish = { [n: number]: unknown };
+    type A = keyof Arrayish; // type A = number
+    ```
+
+- Typeof Type Operator
+
+  - This isn't very useful for basic types, but combined with other type operators, you can use typeof to conveniently express many patterns.
+    ```Typescript
+    function f() {
+      return { x: 10, y: 3 };
+    }
+    type P = ReturnType<typeof f>;
+    ```
+
+- Indexed Access Types
+
+  - Indexing type itself is a type too.
+
+  ```Typescript
+  type Person = { age: number; name: string; alive: boolean };
+  type Age = Person["age"]; // type Age = number
+  type I1 = Person["age" | "name"]; // type I1 = number | string
+  type I2 = Person[keyof Person]; // type I2 = number | string | boolean
+  type AliveOrName = "alive" | "name";
+  type I3 = Person[AliveOrName]; // type I3 = boolean | string
+  ```
+
+  - Using "number" to get the type of an array's elements
+
+  ```Typescript
+  const MyArray = [
+    { name: "Alice", age: 15 },
+    { name: "Bob", age: 23 },
+    { name: "Eve", age: 38 },
+  ];
+  type Person = typeof MyArray[number]; // type Person = { name: string; age: number }
+  type Age = typeof MyArray[number]["age"]; // type Age = number
+  type Age2 = Person["age"]; // type Age2 = number
+  ```
+
+  - Only use types when indexing, use a type alias instead
+
+  ```Typescript
+  const key = "age";
+  type Age = Person[key]; // Error: Type 'key' cannot be used as an index type.
+
+  type key = "age";
+  type Age = Person[key]; // OK
+  ```
+
+- Generic Types
+
+  ```Typescript
+  interface GenericIdentityFn<Type> {
+    (arg: Type): Type;
+  }
+
+  function identity<Type>(arg: Type): Type {
+    return arg;
+  }
+
+  let myIdentity: GenericIdentityFn<number> = identity;
+  ```
+
+- Generic Classes
+
+  ```Typescript
+  class GenericNumber<NumType> {
+    zeroValue: NumType;
+    add: (x: NumType, y: NumType) => NumType;
+  }
+  ```
+
+- Generic Constraints
+
+  - Using "extends" keyword to specify a constraint
+
+    ```Typescript
+    interface Lengthwise {
+      length: number;
+    }
+
+    function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+      console.log(arg.length);
+      return arg;
+    }
+    ```
+
+  - Using Type Parameters in Generic Constraints
+
+    ```Typescript
+    function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+      return obj[key];
+    }
+
+    let x = { a: 1, b: 2, c: 3, d: 4 };
+
+    getProperty(x, "a");
+    getProperty(x, "m"); // Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c" | "d"'.
+    ```
+
+- Class Types in generics (often used in Mixins)
+
+  ```Typescript
+  function create<Type>(c: { new (): Type }): Type {
+    return new c();
+  }
+  ```
+
+- Generic Parameter Defaults
+
+  ```Typescript
+  declare function create<T extends HTMLElement = HTMLDivElement, U extends HTMLElement[] = T[]>(
+    element?: T,
+    children?: U
+  ): Container<T, U>;
+  ```
 
 ## Modules - Theory
 
@@ -368,16 +525,16 @@ pnpm create vite x.x.x --template vanilla-ts
   - how different module kinds are allowed to import each other
   - whether features like import.meta and top-level await are available
 - Node.js understands both ES modules and CJS modules, but the format of each file is determined by its file extension and the type field of the first package.json file.
-- TypeScript applies this same algorithm to the project’s input files to determine the module kind of each corresponding output file.
+- TypeScript applies this same algorithm to the project's input files to determine the module kind of each corresponding output file.
 - ESM and CJS interoperability
-  - ESM-only. Some runtimes, like browser engines, only support what’s actually a part of the language: ECMAScript Modules.
+  - ESM-only. Some runtimes, like browser engines, only support what's actually a part of the language: ECMAScript Modules.
   - Bundler-like. ESM-transpiled-to-CJS files interacted with hand-written-CJS files implied a set of permissive interoperability rules.
   - Node.js. CommonJS modules cannot load ES modules synchronously, they can only load them asynchronously with dynamic import() calls. ES modules can default-import CJS modules, which always binds to exports.
-- Module resolution is host-defined (moduleResolution). TypeScript imitates the host’s module resolution, but with types.
+- Module resolution is host-defined (moduleResolution). TypeScript imitates the host's module resolution, but with types.
 - The role of declaration files: the compiler assumes that wherever it sees a declaration file, there is a corresponding JavaScript file that is perfectly described by the type information in the declaration file.
-  - The compiler always looks for TypeScript and declaration files first, and if it finds one, it doesn’t continue looking for the corresponding JavaScript file.
+  - The compiler always looks for TypeScript and declaration files first, and if it finds one, it doesn't continue looking for the corresponding JavaScript file.
   - If it finds a TypeScript input file, it knows a JavaScript file will exist after compilation.
-  - If it finds a declaration file, it knows a compilation (perhaps someone else’s) already happened and created a JavaScript file at the same time as the declaration file.
+  - If it finds a declaration file, it knows a compilation (perhaps someone else's) already happened and created a JavaScript file at the same time as the declaration file.
 
 ## tsconfig.json
 
@@ -393,10 +550,191 @@ pnpm create vite x.x.x --template vanilla-ts
   - **include**: Specifies an array of filenames or patterns to include in the program.
   - **exclude**: Specifies an array of filenames or patterns that should be skipped when resolving include.
   - **references**: Project references are a way to structure your TypeScript programs into smaller pieces.
-  - **compilerOptions**: These options make up the bulk of TypeScript’s configuration and it covers how the language should work.
+  - **compilerOptions**: These options make up the bulk of TypeScript's configuration and it covers how the language should work.
 - Important compiler options:
   - **module**: You very likely want "nodenext" for modern Node.js projects and preserve or esnext for code that will be bundled.
   - **moduleResolution**: nodenext (import and require are both supported), bundler (never requires file extensions on relative paths in imports)
   - **target**: Modern browsers support all ES6 features, so ES6 is a good choice.
   - **lib**: dom, dom.iterable, esnext
   - **strict related**: strictPropertyInitialization,
+
+## Decorators
+
+- A Decorator is a special kind of declaration that can be attached to a class declaration, method, accessor, property, or parameter.
+- Decorators use the form @expression, where expression must evaluate to a function that will be called at runtime with information about the decorated declaration.
+- Class Decorators
+
+  ```Typescript
+  @sealed
+  class BugReport {
+    type = "report";
+    title: string;
+
+    constructor(t: string) {
+      this.title = t;
+    }
+  }
+
+  function sealed(constructor: Function) {
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
+  }
+  ```
+
+  - The decorator doesn't modify the original class directly but instead creates a subclass that inherits its behavior and adds new functionality.
+
+- Method Decorators
+
+  ```Typescript
+  class Greeter {
+    greeting: string;
+    constructor(message: string) {
+      this.greeting = message;
+    }
+
+    @enumerable(false)
+    greet() {
+      return "Hello, " + this.greeting;
+    }
+  }
+
+  function enumerable(value: boolean) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+      descriptor.enumerable = value;
+    };
+  }
+  ```
+
+- Accessor Decorators
+
+  ```Typescript
+  class Point {
+    private _x: number;
+    private _y: number;
+    constructor(x: number, y: number) {
+      this._x = x;
+      this._y = y;
+    }
+
+    @configurable(false)
+    get x() {
+      return this._x;
+    }
+
+    @configurable(false)
+    get y() {
+      return this._y;
+    }
+  }
+
+  function configurable(value: boolean) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+      descriptor.configurable = value;
+    };
+  }
+  ```
+
+- Property Decorators
+
+  ```Typescript
+  class Greeter {
+    @format("Hello, %s")
+    greeting: string;
+    constructor(message: string) {
+      this.greeting = message;
+    }
+    greet() {
+      let formatString = getFormat(this, "greeting");
+      return formatString.replace("%s", this.greeting);
+    }
+  }
+
+  import "reflect-metadata";
+  const formatMetadataKey = Symbol("format");
+  function format(formatString: string) {
+    return Reflect.metadata(formatMetadataKey, formatString);
+  }
+  function getFormat(target: any, propertyKey: string) {
+    return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
+  }
+  ```
+
+- Parameter Decorators
+
+  ```Typescript
+  class BugReport {
+    type = "report";
+    title: string;
+
+    constructor(t: string) {
+      this.title = t;
+    }
+
+    @validate
+    print(@required verbose: boolean) {
+      if (verbose) {
+        return `type: ${this.type}\ntitle: ${this.title}`;
+      } else {
+      return this.title;
+      }
+    }
+  }
+
+  import "reflect-metadata";
+  const requiredMetadataKey = Symbol("required");
+
+  function required(target: Object, propertyKey: string | symbol, parameterIndex: number) {
+    let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || [];
+    existingRequiredParameters.push(parameterIndex);
+    Reflect.defineMetadata( requiredMetadataKey, existingRequiredParameters, target, propertyKey);
+  }
+
+  function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
+    let method = descriptor.value!;
+
+    descriptor.value = function () {
+      let requiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyName);
+      if (requiredParameters) {
+        for (let parameterIndex of requiredParameters) {
+          if (parameterIndex >= arguments.length || arguments[parameterIndex] === undefined) {
+            throw new Error("Missing required argument.");
+          }
+        }
+      }
+      return method.apply(this, arguments);
+    };
+  }
+
+  ```
+
+## Mixin
+
+- Class as a type
+
+  ```Typescript
+  // Declare a passed in type is a class
+  type Constructor = new (...args: any[]) => {};
+
+  // Declare a passed in type is a generic class and return the same generic type
+  type GConstructor<T = {}> = new (...args: any[]) => T;
+  ```
+
+````
+
+- Create mixins which only work when you have a particular base to build on:
+
+  ```Typescript
+  type Positionable = GConstructor<{ setPos: (x: number, y: number) => void }>;
+
+  function Jumpable<TBase extends Positionable>(Base: TBase) {
+    return class Jumpable extends Base {
+      jump() {
+        // This mixin will only work if it is passed a base
+        // class which has setPos defined because of the
+        // Positionable constraint.
+        this.setPos(0, 20);
+      }
+    };
+  }
+  ```
+````
