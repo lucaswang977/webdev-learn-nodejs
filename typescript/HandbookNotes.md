@@ -435,7 +435,7 @@ pnpm create vite x.x.x --template vanilla-ts
   type Age2 = Person["age"]; // type Age2 = number
   ```
 
-  - Only use types when indexing, use a type alias instead
+  - Only use types when indexing, use a type alias instead of a constant/variable.
 
   ```Typescript
   const key = "age";
@@ -459,59 +459,235 @@ pnpm create vite x.x.x --template vanilla-ts
   let myIdentity: GenericIdentityFn<number> = identity;
   ```
 
-- Generic Classes
-
-  ```Typescript
-  class GenericNumber<NumType> {
-    zeroValue: NumType;
-    add: (x: NumType, y: NumType) => NumType;
-  }
-  ```
-
-- Generic Constraints
-
-  - Using "extends" keyword to specify a constraint
+  - Generic Classes
 
     ```Typescript
-    interface Lengthwise {
-      length: number;
-    }
-
-    function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
-      console.log(arg.length);
-      return arg;
+    class GenericNumber<NumType> {
+      zeroValue: NumType;
+      add: (x: NumType, y: NumType) => NumType;
     }
     ```
 
-  - Using Type Parameters in Generic Constraints
+  - Generic Constraints
+
+    - Using "extends" keyword to specify a constraint
+
+      ```Typescript
+      interface Lengthwise {
+        length: number;
+      }
+
+      function loggingIdentity<Type extends Lengthwise>(arg: Type): Type {
+        console.log(arg.length);
+        return arg;
+      }
+      ```
+
+    - Using Type Parameters in Generic Constraints
+
+      ```Typescript
+      function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+        return obj[key];
+      }
+
+      let x = { a: 1, b: 2, c: 3, d: 4 };
+
+      getProperty(x, "a");
+      getProperty(x, "m"); // Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c" | "d"'.
+      ```
+
+  - Class Types in generics (often used in Mixins)
 
     ```Typescript
-    function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
-      return obj[key];
+    function create<Type>(c: { new (): Type }): Type {
+      return new c();
     }
-
-    let x = { a: 1, b: 2, c: 3, d: 4 };
-
-    getProperty(x, "a");
-    getProperty(x, "m"); // Argument of type '"m"' is not assignable to parameter of type '"a" | "b" | "c" | "d"'.
     ```
 
-- Class Types in generics (often used in Mixins)
+  - Generic Parameter Defaults
 
-  ```Typescript
-  function create<Type>(c: { new (): Type }): Type {
-    return new c();
-  }
-  ```
+    ```Typescript
+    declare function create<T extends HTMLElement = HTMLDivElement, U extends HTMLElement[] = T[]>(
+      element?: T,
+      children?: U
+    ): Container<T, U>;
+    ```
 
-- Generic Parameter Defaults
+- Conditional Types
 
-  ```Typescript
-  declare function create<T extends HTMLElement = HTMLDivElement, U extends HTMLElement[] = T[]>(
-    element?: T,
-    children?: U
-  ): Container<T, U>;
-  ```
+  - Conditional types take a form that looks a little like conditional expressions: SomeType extends OtherType ? TrueType : FalseType;
+  - Example:
+
+    ```Typescript
+    type NameOrId<T extends number | string> = T extends number ? IdLabel　: NameLabel;
+    function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {
+      throw "unimplemented";
+    }
+    let a = createLabel("typescript");  // type a = NameLabel
+    let b = createLabel(2.8);  // type b = IdLabel
+    let c = createLabel(Math.random() ? "hello" : 42);  // type c = NameLabel | IdLabel
+    ```
+
+  - Conditional Type Constraints
+
+    ```Typescript
+    type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+
+    interface Email {
+      message: string;
+    }
+
+    interface Dog {
+      bark(): void;
+    }
+
+    type EmailMessageContents = MessageOf<Email>;  // type EmailMessageContents = string
+    type DogMessageContents = MessageOf<Dog>;  // type DogMessageContents = never
+    ```
+
+  - Flatten array types
+
+    ```Typescript
+    type Flatten<T> = T extends any[] ? T[number] : T;
+    type Str = Flatten<string[]>;  // type Str = string
+    type Num = Flatten<number>;  // type Num = number
+
+    type FlattenWithInfer<Type> = Type extends Array<infer Item> ? Item : Type;
+    ```
+
+  - Using infer to extract the return type
+
+    ```Typescript
+    type GetReturnType<Type> = Type extends (...args: never[]) => infer ReturnType
+      ? ReturnType
+      : never;
+    type Num = GetReturnType<() => number>; // type Num = number
+    type Str = GetReturnType<(x: string) => string>;  // type Str = string
+    type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>;  // type Bools = boolean[]
+    ```
+
+  - Distributive Conditional Types
+
+    ```Typescript
+    type ToArray<Type> = Type extends any ? Type[] : never;
+    type StrArrOrNumArr = ToArray<string | number>;  // type StrArrOrNumArr = string[] | number[]
+
+    type ToArrayNonDistCond<Type> = [Type] extends [any] ? Type[] : never;
+    type StrArrOrNumArrNonDistCond = ToArrayNonDistCond<string | number>;  // type StrArrOrNumArrNonDistCond = string[] | number[]
+    ```
+
+- Mapped Types
+
+  - Mapped types build on the syntax for index signatures.
+
+    ```Typescript
+    type OptionsFlags<Type> = {
+      [Property in keyof Type]: boolean;
+    };
+    type Features = {
+      darkMode: () => void;
+      newUserProfile: () => void;
+    };
+    type FeatureOptions = OptionsFlags<Features>;  // type FeatureOptions = { darkMode: boolean; newUserProfile: boolean; }
+    ```
+
+  - Mapping Modifiers: There are two additional modifiers which can be applied during mapping: readonly and ?
+
+    ```Typescript
+    type CreateMutable<Type> = {
+      -readonly [Property in keyof Type]: Type[Property];
+    };
+    type Concrete<Type> = {
+      [Property in keyof Type]-?: Type[Property];
+    };
+    ```
+
+  - Key Remapping via "as"
+
+    ```Typescript
+    type MappedTypeWithNewProperties<Type> = {
+        [Properties in keyof Type as NewKeyType]: Type[Properties]
+    };
+    type Getters<Type> = {
+        [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+    };
+    type RemoveKindField<Type> = {
+        [Property in keyof Type as Exclude<Property, "kind">]: Type[Property]
+    };
+
+    // map over unions
+    type EventConfig<Events extends { kind: string }> = {
+        [E in Events as E["kind"]]: (event: E) => void;
+    }
+    ```
+
+- Template Literal Types
+
+  - They have the same syntax as template literal strings in JavaScript, but are used in type positions.
+
+    ```Typescript
+    type World = "world";
+    type Greeting = `hello ${World}`;  // type Greeting = "hello world"
+    ```
+
+  - For each interpolated position in the template literal, the unions are cross multiplied.
+
+    ```Typescript
+    type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs}_id`;
+    type Lang = "en" | "ja" | "pt";
+
+    type LocaleMessageIDs = `${Lang}_${AllLocaleIDs}`;  // type LocaleMessageIDs = "en_welcome_email_id" | "en_email_heading_id" | "en_footer_title_id" | "en_footer_sendoff_id" | "ja_welcome_email_id" | "ja_email_heading_id" | "ja_footer_title_id" | "ja_footer_sendoff_id" | "pt_welcome_email_id" | "pt_email_heading_id" | "pt_footer_title_id" | "pt_footer_sendoff_id"
+    ```
+
+  - Defining a new string based on information inside a type.
+
+    ```Typescript
+    type PropEventSource<Type> = {
+        on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;
+    };
+
+    declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
+
+    const person = makeWatchedObject({
+      firstName: "Saoirse",
+      lastName: "Ronan",
+      age: 26
+    });
+
+    person.on("firstNameChanged", () => {});
+    person.on("firstName", () => {});  // Prevent easy human error
+    person.based("frstNameChanged", () => {}); // typo-resistant
+    ```
+
+  - Inference with Template Literals
+
+    ```Typescript
+    type PropEventSource<Type> = {
+        on<Key extends string & keyof Type>
+            (eventName: `${Key}Changed`, callback: (newValue: Type[Key]) => void): void;
+    };
+
+    declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
+
+    const person = makeWatchedObject({
+      firstName: "Saoirse",
+      lastName: "Ronan",
+      age: 26
+    });
+
+    person.on("firstNameChanged", newName => {
+      console.log(`new name is ${newName.toUpperCase()}`);
+    });
+
+    person.on("ageChanged", newAge => {
+      if (newAge < 0) {
+        console.warn("warning! negative age");
+      }
+    })
+    ```
+
+  - Intrinsic String Manipulation Types
+    - Uppercase&lt;StringType&gt;, Lowercase&lt;StringType&gt;, Capitalize&lt;StringType&gt;, Uncapitalize&lt;StringType&gt;
 
 ## Modules - Theory
 
