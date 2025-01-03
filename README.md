@@ -1,5 +1,48 @@
 # Web development learning project
 
+## Core concepts learning
+
+- Learn CSS by reading [MDN documents](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](core/css/CSSLearningNotes.md)
+- Learn React by reading [React official documents](https://react.dev/learn) [📔](core/reactjs/react.dev/ReactLearn.md)
+- Learn Javascript by reading documents from [javascript.info](https://javascript.info/) [📔](core/javascript/the-modern-javascript-tutorial/TMJT.md)
+- Learn Typescript by reading [official handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](core/typescript/HandbookNotes.md)
+
+## Utitlities learning
+
+- [ESLint](https://eslint.org/docs/latest/use/getting-started) & [Prettier](https://prettier.io/docs/en/) [📔](eslint/README.md)
+- [Learn Sass](https://sass-lang.com/guide/) [📔](sass/README.md)
+- [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction)
+- [TailwindCSS](https://tailwindcss.com/docs/installation)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
+- [Next.js document](https://nextjs.org/docs)
+- [React Router](https://reactrouter.com/home)
+- [React Redux](https://react-redux.js.org/introduction/getting-started)
+
+### Quiz and challenges
+
+- [Advent of CSS](https://www.adventofcss.com/)
+- [Advent of JS](https://adventofjs.com/)
+- [Typehero](https://typehero.dev/)
+
+### Projects for Practice
+
+- [Frontend Mentor](https://www.frontendmentor.io/)
+- Website cloning ideas:
+  - https://choooodoii.com/
+  - https://sankoudesign.com/
+
+## Tips and tricks accumulating
+
+- [Kevin Powell Video on CSS](https://www.youtube.com/@KevinPowell/videos) [📔](css/KevinPowellYoutube.md)
+- [Matt Pocock Video on Typescript](https://www.youtube.com/@mattpocock/videos) [📔](typescript/matt-pocock.md)
+- https://www.smashingmagazine.com/
+- https://css-tricks.com/
+- [Essential Typescript for React](https://www.jacobparis.com/content/react-ts)
+- https://egghead.io/
+
+## Opensource project code reading
+
 ## VSCode setup
 
 ### Settings
@@ -37,28 +80,3 @@ $ npm create vite@latest my-app --template vanilla
 ```bash
 $ npx create-next-app@latest
 ```
-
-### Documents
-
-- [MDN web docs on CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](css/CSSLearningNotes.md)
-- [Kevin Powell Video on CSS](https://www.youtube.com/@KevinPowell/videos) [📔](css/KevinPowellYoutube.md)
-- [The Modern JavaScript Tutorial](https://javascript.info/) [📔](javascript/the-modern-javascript-tutorial/TMJT.md)
-- [The Typescript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](typescript/HandbookNotes.md)
-- [Matt Pocock Video on Typescript](https://www.youtube.com/@mattpocock/videos) [📔](typescript/matt-pocock.md)
-- [ESLint](https://eslint.org/docs/latest/use/getting-started) [📔](eslint/README.md)
-- [Learn React](https://react.dev/learn) [📔](reactjs/react.dev/ReactLearn.md)
-- [Learn Sass](https://sass-lang.com/guide/) [📔](sass/README.md)
-- [Next.js document](https://nextjs.org/docs)
-- [TailwindCSS](https://tailwindcss.com/docs/installation)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Vite](https://vite.dev/guide/)
-
-### Challenges
-
-- [CSS Battle](https://cssbattle.dev/)
-- [Frontend Mentor](https://www.frontendmentor.io/)
-
-### Projects for Practice
-
-- A landing page with stunning scrolling animation [Apple TV+](https://www.apple.com/apple-tv-plus/)
-- Modern scroll snapping spa with interactions and animations [Monaspace](https://monaspace.githubnext.com/)
