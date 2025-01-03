@@ -9,14 +9,14 @@
 
 ## Utitlities learning
 
-- [ESLint](https://eslint.org/docs/latest/use/getting-started) & [Prettier](https://prettier.io/docs/en/) [📔](eslint/README.md)
+- [ESLint](https://eslint.org/docs/latest/use/getting-started)[📔](utilities/eslint-prettier/EslintNotes.md) & [Prettier](https://prettier.io/docs/en/) [📔](utilities/eslint-prettier/PrettierNotes.md)
 - [Learn Sass](https://sass-lang.com/guide/) [📔](sass/README.md)
 - [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction)
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 - [Framer Motion](https://www.framer.com/motion/)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
 - [Next.js document](https://nextjs.org/docs)
-- [React Router](https://reactrouter.com/home)
+- [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
 
 ### Quiz and challenges
@@ -34,8 +34,8 @@
 
 ## Tips and tricks accumulating
 
-- [Kevin Powell Video on CSS](https://www.youtube.com/@KevinPowell/videos) [📔](css/KevinPowellYoutube.md)
-- [Matt Pocock Video on Typescript](https://www.youtube.com/@mattpocock/videos) [📔](typescript/matt-pocock.md)
+- [Kevin Powell Video on CSS](https://www.youtube.com/@KevinPowell/videos) [📔](core/css/KevinPowellYoutube.md)
+- [Matt Pocock Video on Typescript](https://www.youtube.com/@mattpocock/videos) [📔](core/typescript/matt-pocock.md)
 - https://www.smashingmagazine.com/
 - https://css-tricks.com/
 - [Essential Typescript for React](https://www.jacobparis.com/content/react-ts)
