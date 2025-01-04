@@ -1,7 +1,7 @@
-import { Form } from "react-router";
+import { Form, useFetcher } from "react-router";
 
 import type { ContactRecord } from "../data";
-import { getContact } from "../data";
+import { getContact, updateContact } from "../data";
 import type { Route } from "./+types/contact";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -10,6 +10,13 @@ export async function loader({ params }: Route.LoaderArgs) {
     throw new Response("Not Found", { status: 404 });
   }
   return { contact };
+}
+
+export async function action({ params, request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true",
+  });
 }
 
 export default function Contact({ loaderData }: Route.ComponentProps) {
@@ -73,10 +80,14 @@ export default function Contact({ loaderData }: Route.ComponentProps) {
 }
 
 function Favorite({ contact }: { contact: Pick<ContactRecord, "favorite"> }) {
-  const favorite = contact.favorite;
+  const fetcher = useFetcher();
+
+  const favorite = fetcher.formData
+    ? fetcher.formData.get("favorite") === "true"
+    : contact.favorite;
 
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
         name="favorite"
@@ -84,6 +95,6 @@ function Favorite({ contact }: { contact: Pick<ContactRecord, "favorite"> }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
