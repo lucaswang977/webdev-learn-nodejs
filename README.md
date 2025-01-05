@@ -16,6 +16,7 @@
 - [Framer Motion](https://www.framer.com/motion/)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
 - [Next.js document](https://nextjs.org/docs)
+- [Remix](https://remix.run/docs/en/main)
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
 
