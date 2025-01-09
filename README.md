@@ -19,6 +19,8 @@
 - [Remix](https://remix.run/docs/en/main)
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
+- Other great utilities:
+  - [FontSource](https://fontsource.org/)
 
 ### Quiz and challenges
 
