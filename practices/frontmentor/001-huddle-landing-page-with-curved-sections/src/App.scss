@@ -6,6 +6,8 @@ $light-red: hsl(0, 100%, 63%);
 $light-pink-shadow: hsl(321, 100%, 90%);
 $very-dark-cyan: hsl(192, 100%, 9%);
 $very-pale-blue: hsl(207, 100%, 98%);
+$light-gray: hsl(0, 0%, 60%);
+$light-blue: hsl(207, 100%, 98%);
 
 $font-family-heading: 'Poppins', sans-serif;
 $font-family-body: 'Open Sans', sans-serif;
@@ -118,6 +120,69 @@ main {
 
     img {
       width: 80%;
+    }
+  }
+
+  .numbers {
+    display: flex;
+    flex-direction: row;
+    gap: 6em;
+    @include respond-to(small) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__item {
+      width: 50%;
+      &__icon {
+        width: 50px;
+        img {
+          width: 100%;
+        }
+      }
+      &__number {
+        @include font-style(
+          $font-family-heading,
+          $font-weight-bold,
+          100px,
+          1.4
+        );
+      }
+
+      &__description {
+        @include font-style($font-family-body, $font-weight-regular, 24px, 1.4);
+        color: $light-gray;
+        text-align: center;
+        margin-top: 16px;
+      }
+    }
+  }
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+
+    &__item {
+      width: 100%;
+      background-color: $light-blue;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &__item::after {
+      content: '';
+      display: block;
+      height: 100px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='#{$light-blue}' d='M0,32L80,53.3C160,75,320,117,480,112C640,107,800,53,960,37.3C1120,21,1280,43,1360,53.3L1440,64L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+
+      background-size: cover;
+    }
+
+    &__item:nth-child(2) {
+      background-color: white;
     }
   }
 }

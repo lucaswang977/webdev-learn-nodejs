@@ -1,6 +1,11 @@
 import './App.scss';
 import logo from './assets/logo.svg';
 import screenMockups from './assets/screen-mockups.svg';
+import iconCommunities from './assets/icon-communities.svg';
+import iconMessages from './assets/icon-messages.svg';
+import illustratorGrowTogether from './assets/illustration-grow-together.svg';
+import illustratorFlowingConversations from './assets/illustration-flowing-conversation.svg';
+import illustratorYourUsers from './assets/illustration-your-users.svg';
 
 const App = () => {
   return (
@@ -26,19 +31,27 @@ const App = () => {
         </section>
         <section className="numbers">
           <div className="numbers__item">
-            <div className="numbers__item__icon"></div>
+            <div className="numbers__item__icon">
+              <img src={iconCommunities} alt="" />
+            </div>
             <div className="numbers__item__number">1.4k+</div>
             <div className="numbers__item__description">Communities Formed</div>
           </div>
           <div className="numbers__item">
-            <div className="numbers__item__icon"></div>
+            <div className="numbers__item__icon">
+              <img src={iconMessages} alt="" />
+            </div>
             <div className="numbers__item__number">2.7m+</div>
             <div className="numbers__item__description">Messages Sent</div>
           </div>
         </section>
         <section className="features">
           <div className="features__item">
-            <img className="features__item__img" src="./" alt="" />
+            <img
+              className="features__item__img"
+              src={illustratorGrowTogether}
+              alt=""
+            />
             <p className="features__item__title">Grow Together</p>
             <p className="features__item__description">
               Generate meaningful discussions with your audience and build a
@@ -47,7 +60,11 @@ const App = () => {
             </p>
           </div>
           <div className="features__item">
-            <img className="features__item__img" src="./" alt="" />
+            <img
+              className="features__item__img"
+              src={illustratorFlowingConversations}
+              alt=""
+            />
             <p className="features__item__title">Flowing Conversations</p>
             <p className="features__item__description">
               You wouldn&apos;t paginate a conversation in real life, so why do
@@ -56,7 +73,11 @@ const App = () => {
             </p>
           </div>
           <div className="features__item">
-            <img className="features__item__img" src="./" alt="" />
+            <img
+              className="features__item__img"
+              src={illustratorYourUsers}
+              alt=""
+            />
             <p className="features__item__title">Your Users</p>
             <p className="features__item__description">
               It takes no time at all to integrate Huddle with your app&apos;s
