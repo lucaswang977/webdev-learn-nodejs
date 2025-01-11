@@ -6,6 +6,11 @@ import iconMessages from './assets/icon-messages.svg';
 import illustratorGrowTogether from './assets/illustration-grow-together.svg';
 import illustratorFlowingConversations from './assets/illustration-flowing-conversation.svg';
 import illustratorYourUsers from './assets/illustration-your-users.svg';
+import iconEmail from './assets/icon-email.svg';
+import iconPhone from './assets/icon-phone.svg';
+import IconFacebook from './assets/icon-facebook.svg?react';
+import IconInstagram from './assets/icon-instagram.svg?react';
+import IconTwitter from './assets/icon-twitter.svg?react';
 
 const App = () => {
   return (
@@ -93,33 +98,39 @@ const App = () => {
       </main>
       <footer>
         <section className="newsletter">
-          <p className="newletter__title">Newsletter</p>
+          <p className="newsletter__title">Newsletter</p>
           <p className="newsletter__description">
             To recieve tips on how to grow your community, sign up to our weekly
             newsletter. We&apos;ll never send you spam or pass on your email
             address
           </p>
-          <input type="text" className="newsletter__email" />
-          <button className="newsletter__button">Subscribe</button>
+          <form action="post" className="newsletter__form">
+            <input type="text" className="newsletter__form__email" />
+            <button className="newsletter__form__submit" type="submit">
+              Subscribe
+            </button>
+          </form>
         </section>
         <section className="contact">
-          <div className="contact__logo"></div>
+          <div className="contact__logo">
+            <img src={logo} alt="" />
+          </div>
           <p className="contact__description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
             nulla quam, hendrerit lacinia vestibulum a, ultrices quis sem.
           </p>
           <div className="contact__item">
-            <img src="" alt="" className="contact__item__left" />
+            <img src={iconPhone} alt="" className="contact__item__left" />
             <p className="contact__item__info">Phone: +1-543-123-4567</p>
           </div>
           <div className="contact__item">
-            <img src="" alt="" className="contact__item__left" />
+            <img src={iconEmail} alt="" className="contact__item__left" />
             <p className="contact__item__info">example@huddle.com</p>
           </div>
           <div className="contact__sns">
-            <img src="" alt="" className="contact__sns__item" />
-            <img src="" alt="" className="contact__sns__item" />
-            <img src="" alt="" className="contact__sns__item" />
+            <IconFacebook className="contact__sns__item" />
+            <IconInstagram className="contact__sns__item" />
+            <IconTwitter className="contact__sns__item" />
           </div>
         </section>
       </footer>
