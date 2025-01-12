@@ -24,16 +24,15 @@
 
 ### Quiz and challenges
 
+- [Frontend Mentor](https://www.frontendmentor.io/)
 - [Advent of CSS](https://www.adventofcss.com/)
 - [Advent of JS](https://adventofjs.com/)
 - [Typehero](https://typehero.dev/)
 
-### Projects for Practice
+### Best Practice
 
-- [Frontend Mentor](https://www.frontendmentor.io/)
-- Website cloning ideas:
-  - https://choooodoii.com/
-  - https://sankoudesign.com/
+- Responsive design and implementation
+- Accessibility
 
 ## Tips and tricks accumulating
 

@@ -1,4 +1,17 @@
 @use 'reset';
+@import 'include_media';
+
+///////////////////////
+/// VARIABLES
+///////////////////////
+
+$breakpoints: (
+  'xsm': 480px,
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
 
 $pink: hsl(322, 100%, 66%);
 $light-pink: hsl(321, 100%, 78%);
@@ -16,18 +29,20 @@ $font-weight-semibold: 600;
 $font-weight-regular: 400;
 
 $font-primary: $font-family-body;
+$font-primary-size: 12px;
+$font-primary-line-height: 1.25;
+$font-heading-size: 3rem;
 
-@mixin respond-to($breakpoint) {
-  @if $breakpoint == small {
-    @media (max-width: 768px) {
-      @content;
-    }
-  } @else {
-    @warn "Invalid breakpoint: #{$breakpoint}";
-  }
-}
+///////////////////////
+/// MIXINS
+///////////////////////
 
-@mixin font-style($family, $weight, $size, $line-height) {
+@mixin font-style(
+  $family: $font-primary,
+  $weight: $font-weight-regular,
+  $size: $font-primary-size,
+  $line-height: $font-primary-line-height
+) {
   font-family: $family;
   font-weight: $weight;
   font-size: $size;
@@ -40,10 +55,9 @@ $font-primary: $font-family-body;
   $border-color,
   $shadow-color,
   $radius: 50px,
-  $padding-x: 0.5em,
-  $padding-y: 1.8em
+  $padding-x: 0.5rem,
+  $padding-y: 1.8rem
 ) {
-  @include font-style($font-primary, $font-weight-regular, 18px, 1.25);
   color: $color;
   border: 1px solid $border-color;
   background-color: $bg-color;
@@ -71,40 +85,74 @@ $font-primary: $font-family-body;
   background-color: white;
 }
 
+/////////////////////////
+// STYLES
+/////////////////////////
+// * {
+//   box-sizing: border-box;
+//   border: solid 1px red;
+// }
+
+html {
+  font-size: $font-primary-size;
+
+  @include media('>=xsm', '<sm') {
+    font-size: calc($font-primary-size + 2px);
+  }
+  @include media('>=sm', '<md') {
+    font-size: calc($font-primary-size + 3px);
+  }
+  @include media('>=md', '<lg') {
+    font-size: calc($font-primary-size + 5px);
+  }
+  @include media('>=lg') {
+    font-size: calc($font-primary-size + 7px);
+  }
+}
+
+body {
+  min-width: 320px;
+  margin: 0 auto;
+}
+
 .app {
   color: $very-dark-cyan;
-
-  @include font-style($font-primary, $font-weight-regular, 18px, 1.25);
 }
 
 .header {
   display: flex;
-  margin-top: 3em;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin-top: 3rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
   justify-content: space-between;
   align-items: center;
 
   &__logo {
     img {
-      width: 180px;
+      width: 11rem;
     }
   }
 
   &__button {
     @include button(white, $pink, $pink, $light-pink-shadow);
+    @include font-style($font-family-body, $font-weight-regular, 1.1rem, 1.4);
   }
 }
 
 main {
   .hero {
     display: flex;
-    height: 800px;
+    margin-top: 14rem;
     flex-direction: column;
     justify-content: flex-end;
 
     &__title {
-      @include font-style($font-family-heading, $font-weight-bold, 48px, 1.4);
+      @include font-style(
+        $font-family-heading,
+        $font-weight-bold,
+        $font-heading-size,
+        1.4
+      );
       width: 80%;
       margin-left: auto;
       margin-right: auto;
@@ -112,111 +160,109 @@ main {
     }
 
     &__subtitle {
-      @include font-style($font-family-body, $font-weight-regular, 26px, 1.4);
+      @include font-style($font-family-body, $font-weight-regular, 1.6rem, 1.6);
       width: 80%;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      margin-top: 2em;
+      margin-top: 2rem;
     }
 
     &__button {
-      width: 50%;
+      width: 55%;
       margin-left: auto;
       margin-right: auto;
       @include button($pink, white, $pink, $light-pink-shadow);
-      @include font-style($font-primary, $font-weight-bold, 20px, 1.25);
-      padding: 1.2em 1.8em;
-      margin-top: 6em;
-      margin-bottom: 2em;
+      @include font-style($font-primary, $font-weight-bold, 1.2rem);
+      padding: 1.5rem 0;
+      margin-top: 6rem;
+      margin-bottom: 2rem;
     }
   }
 
   .picture {
-    height: 800px;
-    width: 100%;
-    text-align: center;
-    line-height: 100vh;
-
-    img {
-      width: 80%;
-    }
+    width: 80%;
+    margin-top: 4rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .numbers {
     display: flex;
-    flex-direction: row;
-    gap: 6em;
-    @include respond-to(small) {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+    margin-top: 2rem;
+    gap: 12rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &__item {
-      width: 50%;
       &__icon {
-        width: 50px;
+        width: 3.2rem;
         img {
           width: 100%;
         }
       }
       &__number {
-        @include font-style(
-          $font-family-heading,
-          $font-weight-bold,
-          100px,
-          1.4
-        );
+        @include font-style($font-family-heading, $font-weight-semibold, 7rem);
       }
 
       &__description {
-        @include font-style($font-family-body, $font-weight-regular, 24px, 1.4);
+        @include font-style(
+          $font-family-body,
+          $font-weight-regular,
+          1.5rem,
+          1.4
+        );
         color: $light-gray;
+        margin-top: 1rem;
         text-align: center;
-        margin-top: 16px;
       }
     }
   }
   .features {
     display: flex;
     flex-direction: column;
-    margin-top: 150px;
-    gap: 6em;
+    gap: 6rem;
 
     &__item {
-      width: 100%;
       background-color: $light-blue;
       text-align: center;
 
       img {
-        width: 80%;
-        padding-top: 100px;
+        padding-top: 4rem;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       &__title {
-        @include font-style($font-family-heading, $font-weight-bold, 32px, 1.2);
-        margin-top: 3em;
+        @include font-style($font-family-heading, $font-weight-bold, 2.5rem);
+        margin-top: 8rem;
         width: 80%;
         margin-left: auto;
         margin-right: auto;
       }
 
       &__description {
-        @include font-style($font-family-body, $font-weight-regular, 20px, 1.4);
-        margin-top: 1em;
-        margin-left: 1em;
-        margin-right: 1em;
+        @include font-style(
+          $font-family-body,
+          $font-weight-regular,
+          1.5rem,
+          1.6
+        );
+        margin-top: 2rem;
+        margin-left: 4rem;
+        margin-right: 4rem;
         color: $very-dark-cyan;
-        padding-bottom: 100px;
+        padding-bottom: 7rem;
       }
     }
 
     &__item:nth-of-type(1)::before {
-      @include curve-side('./assets/bg-section-top-mobile-1.svg', 250px);
+      @include curve-side('./assets/bg-section-top-mobile-1.svg', 15rem);
     }
     &__item:nth-of-type(1)::after {
-      @include curve-side('./assets/bg-section-bottom-mobile-1.svg', 120px);
+      @include curve-side('./assets/bg-section-bottom-mobile-1.svg', 15rem);
     }
 
     &__item:nth-of-type(2) {
@@ -224,22 +270,26 @@ main {
     }
 
     &__item:nth-of-type(3)::before {
-      @include curve-side('./assets/bg-section-top-mobile-2.svg', 200px);
+      @include curve-side('./assets/bg-section-top-mobile-2.svg', 15rem);
     }
     &__item:nth-of-type(3)::after {
-      @include curve-side('./assets/bg-section-bottom-mobile-2.svg', 200px);
+      @include curve-side('./assets/bg-section-bottom-mobile-2.svg', 15rem);
     }
   }
 
   .callout {
     display: flex;
-    height: 600px;
+    margin-top: 6rem;
     flex-direction: column;
     justify-content: flex-end;
-    margin-bottom: 400px;
 
     &__title {
-      @include font-style($font-family-heading, $font-weight-bold, 48px, 1.4);
+      @include font-style(
+        $font-family-heading,
+        $font-weight-bold,
+        $font-heading-size,
+        1.4
+      );
       width: 80%;
       margin-left: auto;
       margin-right: auto;
@@ -250,11 +300,10 @@ main {
       width: 50%;
       margin-left: auto;
       margin-right: auto;
+      @include font-style($font-primary, $font-weight-bold, 1.1rem);
       @include button($pink, white, $pink, $light-pink-shadow);
-      @include font-style($font-primary, $font-weight-bold, 20px, 1.25);
-      padding: 1.2em 1.8em;
-      margin-top: 6em;
-      margin-bottom: 2em;
+      padding: 1.5rem 0;
+      margin-top: 5em;
     }
   }
 }
@@ -264,48 +313,49 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 60px;
+  margin-top: 30rem;
+  padding-bottom: 6rem;
 
   &::before {
-    @include curve-side('./assets/bg-footer-top-mobile.svg', 106px);
+    @include curve-side('./assets/bg-footer-top-mobile.svg', 8rem);
   }
 
   .newsletter {
     color: white;
-    width: 80%;
+    width: 85%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
+    margin-top: 6rem;
 
     &__title {
-      @include font-style($font-family-body, $font-weight-bold, 34px, 1.2);
+      @include font-style($font-family-body, $font-weight-bold, 2.2rem);
       text-transform: uppercase;
     }
 
     &__description {
-      @include font-style($font-family-body, $font-weight-regular, 24px, 1.6);
-      margin-top: 40px;
+      @include font-style($font-family-body, $font-weight-regular, 1.5rem, 1.8);
+      margin-top: 2rem;
     }
 
     &__form {
       display: flex;
       flex-direction: column;
-      margin-top: 60px;
+      margin-top: 4rem;
 
       &__email {
-        @include font-style($font-primary, $font-weight-bold, 18px, 1.25);
-        padding: 36px;
-        border-radius: 10px;
+        @include font-style($font-primary, $font-weight-bold, 2.4rem, 1.25);
+        padding: 1.1rem;
+        border-radius: 0.5rem;
         border: none;
         background-color: white;
       }
 
       &__submit {
-        margin-top: 30px;
+        margin-top: 2rem;
         width: 50%;
         align-self: flex-end;
-        @include button($pink, white, $pink, none, 10px, 1.4em, 1.5em);
-        @include font-style($font-primary, $font-weight-bold, 22px, 1.25);
+        @include button($pink, white, $pink, none, 0.5rem, 1.8rem);
+        @include font-style($font-primary, $font-weight-bold, 1.6rem);
       }
     }
   }
@@ -313,7 +363,7 @@ footer {
   .contact {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 12rem;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -321,39 +371,39 @@ footer {
 
     &__logo {
       img {
-        width: 70%;
+        width: 60%;
         filter: grayscale(100%) invert(1) brightness(100%);
       }
     }
 
     &__description {
-      @include font-style($font-family-body, $font-weight-semibold, 22px, 1.8);
+      @include font-style($font-family-body, $font-weight-regular, 1.5rem, 1.8);
       margin-top: 30px;
       margin-bottom: 50px;
     }
 
     &__item {
       display: flex;
-      gap: 2em;
-      margin-top: 40px;
+      gap: 2rem;
+      margin-top: 2rem;
       align-items: center;
 
       img {
-        width: 36px;
+        width: 2.4rem;
       }
 
       &__info {
-        @include font-style($font-family-body, $font-weight-regular, 20px, 1.2);
+        @include font-style($font-family-body, $font-weight-regular, 1.5rem);
       }
     }
 
     &__sns {
       display: flex;
-      gap: 30px;
+      gap: 1.5rem;
 
       &__item {
         color: white;
-        width: 40px;
+        width: 2.5rem;
         cursor: pointer;
       }
     }
