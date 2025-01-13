@@ -57,12 +57,14 @@ const App = () => {
               src={illustratorGrowTogether}
               alt=""
             />
-            <p className="features__item__title">Grow Together</p>
-            <p className="features__item__description">
-              Generate meaningful discussions with your audience and build a
-              strong, loyal community. Think of the insightful conversations you
-              miss out on with a feedback form.
-            </p>
+            <div className="features__item__container">
+              <p className="features__item__title">Grow Together</p>
+              <p className="features__item__description">
+                Generate meaningful discussions with your audience and build a
+                strong, loyal community. Think of the insightful conversations
+                you miss out on with a feedback form.
+              </p>
+            </div>
           </div>
           <div className="features__item">
             <img
@@ -70,12 +72,14 @@ const App = () => {
               src={illustratorFlowingConversations}
               alt=""
             />
-            <p className="features__item__title">Flowing Conversations</p>
-            <p className="features__item__description">
-              You wouldn&apos;t paginate a conversation in real life, so why do
-              it online? Our threads have just-in-time loading for a more
-              natural flow.
-            </p>
+            <div className="features__item__container">
+              <p className="features__item__title">Flowing Conversations</p>
+              <p className="features__item__description">
+                You wouldn&apos;t paginate a conversation in real life, so why
+                do it online? Our threads have just-in-time loading for a more
+                natural flow.
+              </p>
+            </div>
           </div>
           <div className="features__item">
             <img
@@ -83,12 +87,14 @@ const App = () => {
               src={illustratorYourUsers}
               alt=""
             />
-            <p className="features__item__title">Your Users</p>
-            <p className="features__item__description">
-              It takes no time at all to integrate Huddle with your app&apos;s
-              authentication solution. This means, once signed in to your app,
-              your users can start chatting immediately.
-            </p>
+            <div className="features__item__container">
+              <p className="features__item__title">Your Users</p>
+              <p className="features__item__description">
+                It takes no time at all to integrate Huddle with your app&apos;s
+                authentication solution. This means, once signed in to your app,
+                your users can start chatting immediately.
+              </p>
+            </div>
           </div>
         </section>
         <section className="callout">
