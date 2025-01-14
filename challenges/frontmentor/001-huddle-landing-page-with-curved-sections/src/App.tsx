@@ -3,9 +3,9 @@ import logo from './assets/logo.svg';
 import screenMockups from './assets/screen-mockups.svg';
 import iconCommunities from './assets/icon-communities.svg';
 import iconMessages from './assets/icon-messages.svg';
-import illustratorGrowTogether from './assets/illustration-grow-together.svg';
-import illustratorFlowingConversations from './assets/illustration-flowing-conversation.svg';
-import illustratorYourUsers from './assets/illustration-your-users.svg';
+import IllustratorGrowTogether from './assets/illustration-grow-together.svg?react';
+import IllustratorFlowingConversations from './assets/illustration-flowing-conversation.svg?react';
+import IllustratorYourUsers from './assets/illustration-your-users.svg?react';
 import iconEmail from './assets/icon-email.svg';
 import iconPhone from './assets/icon-phone.svg';
 import IconFacebook from './assets/icon-facebook.svg?react';
@@ -52,48 +52,57 @@ const App = () => {
         </section>
         <section className="features">
           <div className="features__item">
-            <img
-              className="features__item__img"
-              src={illustratorGrowTogether}
-              alt=""
-            />
             <div className="features__item__container">
-              <p className="features__item__title">Grow Together</p>
-              <p className="features__item__description">
-                Generate meaningful discussions with your audience and build a
-                strong, loyal community. Think of the insightful conversations
-                you miss out on with a feedback form.
-              </p>
+              <IllustratorGrowTogether
+                className="features__item__container__img"
+                viewBox="0 0 1023.46 837.84"
+              />
+              <div className="features__item__container__wrapper">
+                <p className="features__item__container__wrapper__title">
+                  Grow Together
+                </p>
+                <p className="features__item__container__wrapper__description">
+                  Generate meaningful discussions with your audience and build a
+                  strong, loyal community. Think of the insightful conversations
+                  you miss out on with a feedback form.
+                </p>
+              </div>
             </div>
           </div>
           <div className="features__item">
-            <img
-              className="features__item__img"
-              src={illustratorFlowingConversations}
-              alt=""
-            />
             <div className="features__item__container">
-              <p className="features__item__title">Flowing Conversations</p>
-              <p className="features__item__description">
-                You wouldn&apos;t paginate a conversation in real life, so why
-                do it online? Our threads have just-in-time loading for a more
-                natural flow.
-              </p>
+              <IllustratorFlowingConversations
+                className="features__item__container__img"
+                viewBox="0 0 1125.12 800.94"
+              />
+              <div className="features__item__container__wrapper">
+                <p className="features__item__container__wrapper__title">
+                  Flowing Conversations
+                </p>
+                <p className="features__item__container__wrapper__description">
+                  You wouldn&apos;t paginate a conversation in real life, so why
+                  do it online? Our threads have just-in-time loading for a more
+                  natural flow.
+                </p>
+              </div>
             </div>
           </div>
           <div className="features__item">
-            <img
-              className="features__item__img"
-              src={illustratorYourUsers}
-              alt=""
-            />
             <div className="features__item__container">
-              <p className="features__item__title">Your Users</p>
-              <p className="features__item__description">
-                It takes no time at all to integrate Huddle with your app&apos;s
-                authentication solution. This means, once signed in to your app,
-                your users can start chatting immediately.
-              </p>
+              <IllustratorYourUsers
+                className="features__item__container__img"
+                viewBox="0 0 1077.87 813.02"
+              />
+              <div className="features__item__container__wrapper">
+                <p className="features__item__container__wrapper__title">
+                  Your Users
+                </p>
+                <p className="features__item__container__wrapper__description">
+                  It takes no time at all to integrate Huddle with your
+                  app&apos;s authentication solution. This means, once signed in
+                  to your app, your users can start chatting immediately.
+                </p>
+              </div>
             </div>
           </div>
         </section>

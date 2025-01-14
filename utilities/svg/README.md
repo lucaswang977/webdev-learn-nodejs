@@ -10,6 +10,8 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction
 - https://www.smashingmagazine.com/2021/05/accessible-svg-patterns-comparison/
 - https://www.smashingmagazine.com/2021/03/svg-generators/
 
+- How to Scale SVG: https://css-tricks.com/scale-svg/
+
 ## Position
 
 ```xml

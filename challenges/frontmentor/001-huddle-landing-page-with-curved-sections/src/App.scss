@@ -75,9 +75,8 @@ $font-heading-size: 3rem;
 
 @mixin curve-side($background-img, $padding-top) {
   content: '';
-  position: absolute;
+  display: block;
   width: 100%;
-  top: -$padding-top;
   padding-top: $padding-top;
   background-image: url($background-img);
   background-size: cover;
@@ -261,84 +260,167 @@ main {
       }
     }
   }
+
   .features {
     display: flex;
     flex-direction: column;
     gap: 6rem;
+    width: 100%;
 
     &__item {
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-
-      img {
-        padding-top: 4rem;
-        width: 70%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      &__title {
-        @include font-style($font-family-heading, $font-weight-bold, 2.5rem);
-        margin-top: 8rem;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      &__description {
-        @include font-style(
-          $font-family-body,
-          $font-weight-regular,
-          1.5rem,
-          1.6
-        );
-        margin-top: 2rem;
-        margin-left: 4rem;
-        margin-right: 4rem;
-        color: $very-dark-cyan;
-        padding-bottom: 7rem;
-      }
-    }
-
-    &__item:nth-of-type(1) {
-      $svg-top: 10rem;
-      @include media('>=md') {
-        $svg-top: 16rem;
-      }
-
       background-color: $light-blue;
-      margin-top: $svg-top;
+      margin: 0 auto;
 
-      &::before {
-        @include curve-side('./assets/bg-section-top-mobile-1.svg', $svg-top);
+      &__container {
+        display: flex;
+        flex-direction: column;
+
+        &__img {
+          padding-top: 4rem;
+          width: 70%;
+          height: auto;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        &__wrapper {
+          display: flex;
+          flex-direction: column;
+
+          &__title {
+            @include font-style(
+              $font-family-heading,
+              $font-weight-bold,
+              2.5rem
+            );
+            margin-top: 8rem;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          &__description {
+            @include font-style(
+              $font-family-body,
+              $font-weight-regular,
+              1.5rem,
+              1.6
+            );
+            margin-top: 2rem;
+            margin-left: 4rem;
+            margin-right: 4rem;
+            color: $very-dark-cyan;
+            padding-bottom: 7rem;
+          }
+        }
+
+        @include media('>=md') {
+          flex-direction: row-reverse;
+          max-width: 1200px;
+          gap: 4rem;
+          &__img {
+            padding: 0;
+            margin: 0 4rem 0 0;
+            width: 100%;
+            max-width: 500px;
+          }
+          &__wrapper {
+            text-align: left;
+            margin-left: 4rem;
+            justify-content: center;
+            &__title {
+              @include font-style(
+                $font-family-heading,
+                $font-weight-bold,
+                2rem
+              );
+              margin: 0;
+              padding: 0;
+            }
+
+            &__description {
+              @include font-style(
+                $font-family-body,
+                $font-weight-regular,
+                0.8rem,
+                1.2
+              );
+              margin: 1rem 0 0 0;
+              padding: 0;
+            }
+          }
+        }
       }
     }
 
-    &__item:nth-of-type(2n) {
+    &__item:nth-of-type(2) {
       background-color: white;
+
+      .features__item__container {
+        flex-direction: row;
+        gap: 4rem;
+        &__img {
+          margin: 0 0 0 4rem;
+        }
+
+        &__wrapper {
+          margin: 0 4rem 0 0;
+        }
+      }
     }
 
-    // &__item:nth-of-type(1)::after {
-    //   @include curve-side('./assets/bg-section-bottom-mobile-1.svg', 30%);
-    //   @include media('>=md') {
-    //     @include curve-side('./assets/bg-section-bottom-desktop-1.svg', 15%);
-    //   }
-    // }
+    &__item:nth-of-type(1)::before {
+      @include curve-side(
+        './assets/bg-section-top-mobile-1.svg',
+        calc(100% * 112 / 375)
+      );
+      @include media('>=md') {
+        @include curve-side(
+          './assets/bg-section-top-desktop-1.svg',
+          calc(100% * 165 / 1440)
+        );
+      }
+    }
 
-    // &__item:nth-of-type(3)::before {
-    //   @include curve-side('./assets/bg-section-top-mobile-2.svg', 30%);
-    //   @include media('>=md') {
-    //     @include curve-side('./assets/bg-section-top-desktop-2.svg', 15%);
-    //   }
-    // }
-    // &__item:nth-of-type(3)::after {
-    //   @include curve-side('./assets/bg-section-bottom-mobile-2.svg', 30%);
-    //   @include media('>=md') {
-    //     @include curve-side('./assets/bg-section-bottom-desktop-2.svg', 15%);
-    //   }
-    // }
+    &__item:nth-of-type(1)::after {
+      @include curve-side(
+        './assets/bg-section-bottom-mobile-1.svg',
+        calc(100% * 52 / 375)
+      );
+      @include media('>=md') {
+        @include curve-side(
+          './assets/bg-section-bottom-desktop-1.svg',
+          calc(100% * 139 / 1440)
+        );
+      }
+    }
+
+    &__item:nth-of-type(3)::before {
+      @include curve-side(
+        './assets/bg-section-top-mobile-2.svg',
+        calc(100% * 103 / 375)
+      );
+      @include media('>=md') {
+        @include curve-side(
+          './assets/bg-section-top-desktop-2.svg',
+          calc(100% * 156 / 1440)
+        );
+      }
+    }
+
+    &__item:nth-of-type(3)::after {
+      @include curve-side(
+        './assets/bg-section-bottom-mobile-2.svg',
+        calc(100% * 101 / 375)
+      );
+      @include media('>=md') {
+        @include curve-side(
+          './assets/bg-section-bottom-desktop-2.svg',
+          calc(100% * 139 / 1440)
+        );
+      }
+    }
   }
 
   .callout {
@@ -381,7 +463,16 @@ footer {
   padding-bottom: 6rem;
 
   &::before {
-    @include curve-side('./assets/bg-footer-top-mobile.svg', 20%);
+    @include curve-side(
+      './assets/bg-footer-top-mobile.svg',
+      calc(100% * 53 / 375)
+    );
+    @include media('>=md') {
+      @include curve-side(
+        './assets/bg-footer-top-desktop.svg',
+        calc(100% * 158 / 1440)
+      );
+    }
   }
 
   .newsletter {
