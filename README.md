@@ -21,6 +21,7 @@
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
 - Other great utilities:
   - [FontSource](https://fontsource.org/)
+  - [Gitignore.io](https://www.toptal.com/developers/gitignore)
 
 ### Quiz and challenges
 
