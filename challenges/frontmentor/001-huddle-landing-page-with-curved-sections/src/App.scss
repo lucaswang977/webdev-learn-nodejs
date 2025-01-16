@@ -1,4 +1,5 @@
 @use 'reset';
+@use 'sass:map';
 @import 'include_media';
 
 ///////////////////////
@@ -33,7 +34,7 @@ $font-primary-size: 12px;
 $font-primary-line-height: 1.25;
 $font-heading-size: 3rem;
 
-$max-width: 1200px;
+$max-width: map.get($breakpoints, 'xl');
 
 ///////////////////////
 /// MIXINS
@@ -119,11 +120,11 @@ body {
 
 .header {
   display: flex;
-  margin-top: 3rem;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin: 3rem auto 0 auto;
+  padding: 0 3rem;
   justify-content: space-between;
   align-items: center;
+  max-width: $max-width;
 
   &__logo {
     img {
@@ -135,14 +136,20 @@ body {
     @include button(white, $pink, $pink, $light-pink-shadow);
     @include font-style($font-family-body, $font-weight-regular, 1.1rem, 1.4);
   }
+
+  @include media('>=xl') {
+    max-width: calc($max-width - 6rem);
+    margin: 3rem auto;
+  }
 }
 
 main {
   .hero {
     display: flex;
-    margin-top: 14rem;
     flex-direction: column;
     justify-content: flex-end;
+    max-width: $max-width;
+    margin: 14rem auto 0 auto;
 
     &__title {
       @include font-style(
@@ -197,7 +204,8 @@ main {
 
   .picture {
     width: 100%;
-    margin-top: 4rem;
+    max-width: $max-width;
+    margin: 4rem auto 0 auto;
 
     img {
       width: 80%;
@@ -346,7 +354,7 @@ main {
               @include font-style(
                 $font-family-body,
                 $font-weight-regular,
-                0.8rem,
+                1rem,
                 1.2
               );
               margin: 1rem 0 0 0;
@@ -359,16 +367,17 @@ main {
 
     &__item:nth-of-type(2) {
       background-color: white;
+      @include media('>=md') {
+        .features__item__container {
+          flex-direction: row;
+          gap: 4rem;
+          &__img {
+            margin: 0 0 0 4rem;
+          }
 
-      .features__item__container {
-        flex-direction: row;
-        gap: 4rem;
-        &__img {
-          margin: 0 0 0 4rem;
-        }
-
-        &__wrapper {
-          margin: 0 4rem 0 0;
+          &__wrapper {
+            margin: 0 4rem 0 0;
+          }
         }
       }
     }
@@ -471,13 +480,23 @@ main {
   }
 }
 
-footer {
-  background-color: $very-dark-cyan;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.footer {
   margin-top: 15rem;
   padding-bottom: 6rem;
+  background-color: $very-dark-cyan;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: $max-width;
+    margin: 0 auto;
+
+    @include media('>=md') {
+      flex-direction: row-reverse;
+      margin: 6rem auto 0 auto;
+    }
+  }
 
   &::before {
     @include curve-side(
@@ -492,7 +511,7 @@ footer {
     }
   }
 
-  .newsletter {
+  &__newsletter {
     color: white;
     width: 85%;
     margin-left: auto;
@@ -530,9 +549,42 @@ footer {
         @include font-style($font-primary, $font-weight-bold, 1.6rem);
       }
     }
+
+    @include media('>=md') {
+      margin-top: 0;
+      &__title {
+        @include font-style($font-family-body, $font-weight-bold, 1.2rem);
+      }
+      &__description {
+        @include font-style(
+          $font-family-body,
+          $font-weight-regular,
+          0.9rem,
+          1.5
+        );
+        width: 60%;
+        margin-top: 1rem;
+      }
+      &__form {
+        flex-direction: row;
+        gap: 1rem;
+        margin-top: 3rem;
+        &__email {
+          @include font-style($font-primary, $font-weight-bold, 0.8rem);
+          padding: 0;
+          width: 60%;
+        }
+        &__submit {
+          @include font-style($font-primary, $font-weight-bold, 0.8rem);
+          margin-top: 0;
+          width: fit-content;
+          @include button($pink, white, $pink, none, 0.4rem, 0.8rem);
+        }
+      }
+    }
   }
 
-  .contact {
+  &__contact {
     display: flex;
     flex-direction: column;
     margin-top: 12rem;
@@ -550,8 +602,8 @@ footer {
 
     &__description {
       @include font-style($font-family-body, $font-weight-regular, 1.5rem, 1.8);
-      margin-top: 30px;
-      margin-bottom: 50px;
+      margin-top: 2rem;
+      margin-bottom: 4rem;
     }
 
     &__item {
@@ -572,11 +624,46 @@ footer {
     &__sns {
       display: flex;
       gap: 1.5rem;
+      margin-top: 4rem;
 
       &__item {
         color: white;
         width: 2.5rem;
+        height: auto;
         cursor: pointer;
+      }
+    }
+
+    @include media('>=md') {
+      margin: 0 0 0 5rem;
+
+      &__logo {
+        width: 50%;
+      }
+
+      &__description {
+        @include font-style($font-family-body, $font-weight-regular, 1rem, 1.5);
+        width: 70%;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      &__item {
+        margin-top: 1rem;
+        gap: 1rem;
+        img {
+          width: 1.2rem;
+        }
+        &__info {
+          @include font-style($font-family-body, $font-weight-regular, 1rem);
+        }
+      }
+      &__sns {
+        gap: 1.2rem;
+        &__item {
+          width: 1.8rem;
+          height: auto;
+        }
       }
     }
   }

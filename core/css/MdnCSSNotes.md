@@ -257,9 +257,6 @@ Types of alignment
 |align-items|not apply|not apply|not apply|not apply|cross axis|block axis|
 |align-self|not apply|not apply|not apply|not apply|cross axis|block axis|
 
-https://devinterview.io/
-
-
 ## Using relative colors
 ```CSS
 color-function(from origin-color channel1 channel2 channel3)

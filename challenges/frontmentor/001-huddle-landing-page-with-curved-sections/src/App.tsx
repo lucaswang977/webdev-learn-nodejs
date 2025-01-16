@@ -111,43 +111,58 @@ const App = () => {
           <button className="callout__button">Get Started For Free</button>
         </section>
       </main>
-      <footer>
-        <section className="newsletter">
-          <p className="newsletter__title">Newsletter</p>
-          <p className="newsletter__description">
-            To recieve tips on how to grow your community, sign up to our weekly
-            newsletter. We&apos;ll never send you spam or pass on your email
-            address
-          </p>
-          <form action="post" className="newsletter__form">
-            <input type="text" className="newsletter__form__email" />
-            <button className="newsletter__form__submit" type="submit">
-              Subscribe
-            </button>
-          </form>
-        </section>
-        <section className="contact">
-          <div className="contact__logo">
-            <img src={logo} alt="" />
-          </div>
-          <p className="contact__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-            nulla quam, hendrerit lacinia vestibulum a, ultrices quis sem.
-          </p>
-          <div className="contact__item">
-            <img src={iconPhone} alt="" className="contact__item__left" />
-            <p className="contact__item__info">Phone: +1-543-123-4567</p>
-          </div>
-          <div className="contact__item">
-            <img src={iconEmail} alt="" className="contact__item__left" />
-            <p className="contact__item__info">example@huddle.com</p>
-          </div>
-          <div className="contact__sns">
-            <IconFacebook className="contact__sns__item" />
-            <IconInstagram className="contact__sns__item" />
-            <IconTwitter className="contact__sns__item" />
-          </div>
-        </section>
+      <footer className="footer">
+        <div className="footer__container">
+          <section className="footer__newsletter">
+            <p className="footer__newsletter__title">Newsletter</p>
+            <p className="footer__newsletter__description">
+              To recieve tips on how to grow your community, sign up to our
+              weekly newsletter. We&apos;ll never send you spam or pass on your
+              email address
+            </p>
+            <form action="post" className="footer__newsletter__form">
+              <input type="text" className="footer__newsletter__form__email" />
+              <button
+                className="footer__newsletter__form__submit"
+                type="submit"
+              >
+                Subscribe
+              </button>
+            </form>
+          </section>
+          <section className="footer__contact">
+            <div className="footer__contact__logo">
+              <img src={logo} alt="" />
+            </div>
+            <p className="footer__contact__description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+              nulla quam, hendrerit lacinia vestibulum a, ultrices quis sem.
+            </p>
+            <div className="footer__contact__item">
+              <img
+                src={iconPhone}
+                alt=""
+                className="footer__contact__item__left"
+              />
+              <p className="footer__contact__item__info">
+                Phone: +1-543-123-4567
+              </p>
+            </div>
+            <div className="footer__contact__item">
+              <img
+                src={iconEmail}
+                alt=""
+                className="footer__contact__item__left"
+              />
+              <p className="footer__contact__item__info">example@huddle.com</p>
+            </div>
+            <div className="footer__contact__sns">
+              <IconFacebook className="footer__contact__sns__item" />
+              <IconInstagram className="footer__contact__sns__item" />
+              <IconTwitter className="footer__contact__sns__item" />
+            </div>
+          </section>
+        </div>
       </footer>
     </div>
   );
