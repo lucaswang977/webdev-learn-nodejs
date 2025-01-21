@@ -1,6 +1,7 @@
 # Accessibility
 
-https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility
+- https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility
+- https://www.a11yproject.com/checklist/
 
 ## Concept
 
@@ -16,9 +17,22 @@ https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibilit
 - Web Content Accessibility Guidelines (WCAG)
   - [WCAG 2 at a Glance](https://www.w3.org/WAI/standards-guidelines/wcag/glance/)
   - Perceivable
+    - Provide text alternatives for non-text content.
+    - Provide captions and other alternatives for multimedia.
+    - Create content that can be presented in different ways, including by assistive technologies, without losing meaning.
+    - Make it easier for users to see and hear content.
   - Operable
+    - Make all functionality available from a keyboard.
+    - Give users enough time to read and use content.
+    - Do not use content that causes seizures or physical reactions.
+    - Help users navigate and find content.
+    - Make it easier to use inputs other than keyboard.
   - Understandable
+    - Make text readable and understandable.
+    - Make content appear and operate in predictable ways.
+    - Help users avoid and correct mistakes.
   - Robust
+    - Maximize compatibility with current and future user tools.
 
 ## Accessibility testing checklist
 
@@ -34,12 +48,100 @@ https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibilit
 - Test it with a screen reader.
 - Include an accessibility policy/statement somewhere findable on your site to say what you did.
 
-## HTML: A good basis for accessibility
+## Check your WCAG compliance
 
-- Good semantics
-  - Text content
-  - Using clear language
-  - Page layouts
-  - UI controls
-  - Building keyboard accessibility back in
-  - Meaningful text labels
+- Content: Content is the most important part of your site.
+  - Use plain language and avoid figures of speech, idioms, and complicated metaphors.
+  - Make sure that button, a, and label element content is unique and descriptive. (“click here” and “read more”)
+  - Use left-aligned text for left-to-right (LTR) languages, and right-aligned text for right-to-left (RTL) languages.
+- Global code: Global code is code that affects your entire website or web app.
+  - Validate your HTML.
+  - Use a lang attribute on the html element.
+  - Provide a unique title for each page or view. (the title element, contained in the document's head element)
+  - Ensure that viewport zoom is not disabled.
+  - Use landmark elements to indicate important content regions. (nav element to wrap a site's navigation, and the main element to contain the primary content of a page)
+  - Ensure a linear content flow. (remove tabindex attribute values that aren't either 0 or -1.)
+  - Avoid using the autofocus attribute.
+  - Allow extending session timeouts.
+  - Remove title attribute tooltips.
+- Keyboard: Some people cannot use a mouse, or may be using other assistive technologies that may not allow for hovering or precise clicking.
+  - Make sure there is a visible focus style for interactive elements that are navigated to via keyboard input.
+  - Check to see that keyboard focus order matches the visual layout.
+  - Remove invisible focusable elements.
+- Images: Help make sure they can be enjoyed by all.
+  - Make sure that all img elements have an alt attribute.
+  - Make sure that decorative images use null alt (empty) attribute values.
+  - Provide a text alternative for complex images such as charts, graphs, and maps.
+  - For images containing text, make sure the alt description includes the image's text.
+- Headings: Heading elements help break up the content of the page into related “chunks” of information.
+  - Use heading elements to introduce content.
+  - Use only one h1 element per page or view.
+  - Heading elements should be written in a logical sequence. (eg. a h4 element should not appear on a page before the first h3 element declaration)
+  - Don't skip heading levels. (eg. don't jump from a h2 to a h4, skipping a h3 element)
+- Lists: Lists elements let people know a collection of items are related and if they are sequential, and how many items are present in the list grouping.
+  - Use list elements (ol, ul, and dl elements) for list content.
+- Controls: Controls are interactive elements such as links and buttons that let a person navigate to a destination or perform an action.
+  - Use the a element for links.
+  - Ensure that links are recognizable as links. (Underlines are a popular and commonly-understood way to communicate the presence of link content.)
+  - Ensure that controls have :focus states.
+  - Use the button element for buttons.
+  - Provide a skip link and make sure that it is visible when focused. (A skip link can be used to provide quick access to the main content of a page or view.)
+  - Identify links that open in a new tab or window. (Ideally, avoid links that open in a new tab or window.)
+- Tables: Tables are a structured set of data that help people understand the relationships between different types of information.
+  - Use the table element to describe tabular data.
+  - Use the th element for table headers (with appropriate scope attributes).
+  - Use the caption element to provide a title for the table.
+- Forms: Forms allow people to enter information into a site for processing and manipulation.
+  - All inputs in a form are associated with a corresponding label element.
+  - Use fieldset and legend elements where appropriate.
+  - Inputs use autocomplete where appropriate.
+  - Make sure that form input errors are displayed in list above the form after submission. (Make sure that each reported error also has a link to the corresponding field with invalid input.)
+  - Associate input error messaging with the input it corresponds to.
+  - Make sure that error, warning, and success states are not visually communicated by just color.
+- Media: Media includes content such as pre-recorded and live audio and video.
+  - Make sure that media does not autoplay.
+  - Ensure that media controls use appropriate markup.
+  - Check to see that all media can be paused.
+- Video
+  - Confirm the presence of captions.
+  - Remove seizure triggers.
+- Audio
+  - Confirm that transcripts are available.
+- Appearance: How your website app content looks in any given situation.
+  - Check your content in specialized browsing modes. (Activate modes such as Windows High Contrast or Inverted Colors.)
+  - Increase text size to 200%.
+  - Double-check that good proximity between content is maintained. (Use the straw test to ensure people who depend on screen zoom software can still easily discover all content.)
+  - Make sure color isn't the only way information is conveyed.
+  - Make sure instructions are not visual or audio-only.
+  - Use a simple, straightforward, and consistent layout.
+- Animation: Content that moves, either on its own, or when triggered by a person activating a control.
+  - Ensure animations are subtle and do not flash too much.
+  - Provide a mechanism to pause background video.
+  - Make sure all animation obeys the prefers-reduced-motion media query.
+- Color contrast: how legible colors are when placed next to, and on top of each other.
+  - Check the contrast for all normal-sized text. (Level AA compliance requires a contrast ratio of 4.5:1.)
+  - Check the contrast for all large-sized text. (Level AA compliance requires a contrast ratio of 3:1.)
+  - Check the contrast for all icons. (Level AA compliance requires a contrast ratio of 3.0:1.)
+  - Check the contrast of borders for input elements (text input, radio buttons, checkboxes, etc.). (Level AA compliance requires a contrast ratio of 3.0:1.)
+  - Check text that overlaps images or video. (Is text still legible?)
+  - Check custom ::selection colors.
+- Mobile and touch
+  - Check that the site can be rotated to any orientation.
+  - Remove horizontal scrolling.
+  - Ensure that button and link icons can be activated with ease.
+  - Ensure sufficient space between interactive items in order to provide a scroll area. (hand tremors)
+
+## WAI-ARIA basics
+
+- WAI-ARIA (Web Accessibility Initiative - Accessible Rich Internet Applications)
+- There are three main features defined in the spec:
+  - Roles: These define what an element is or does. (role="navigation")
+  - Properties: These define properties of elements, which can be used to give them extra meaning or semantics. (aria-required="true")
+  - States: Special properties that define the current conditions of elements. (aria-disabled="true")
+- WAI-ARIA doesn't affect webpage structure, the DOM, etc., although the attributes can be useful for selecting elements by CSS.
+- There are four main areas that WAI-ARIA is useful in:
+  - Signposts/Landmarks
+  - Dynamic content updates
+  - Enhancing keyboard accessibility
+  - Accessibility of non-semantic controls
+- You should only use WAI-ARIA when you need to! Ideally, you should always use native HTML features to provide the semantics required by screen readers to tell their users what is going on.
