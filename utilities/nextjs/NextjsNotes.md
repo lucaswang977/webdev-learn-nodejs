@@ -33,4 +33,28 @@
 - Middleware
 - Internationalization
 
-## Data Fetching and Caching
+## Data Fetching
+
+- Data Fetching and Caching
+  - Fetching data on the server with the fetch API
+  - Fetching data on the server with an ORM or database
+  - Fetching data on the client
+  - Caching data with an ORM or Database (unstable_cache)
+  - Reusing data across multiple functions
+  - Patterns
+    - Parallel and sequential data fetching
+    - Preloading Data
+    - Preventing sensitive data from being exposed to the client
+- Server Actions and Mutations
+- Incremental Static Regeneration (ISR)
+
+## Rendering
+
+- Server Components
+  - Static Rendering (Default)
+  - Dynamic Rendering
+  - Streaming
+- Client Components
+- Server and Client Composition Patterns
+- Partial Prerendering
+- Runtimes
