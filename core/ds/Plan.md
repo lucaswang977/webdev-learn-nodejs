@@ -13,12 +13,15 @@ Objective: Strengthen the basics of data structures and algorithms.
    - Practice: Solve 3-5 Easy problems per topic on LeetCode.
 
 2. Month 2: Algorithms
+
    - Week 1: Sorting and Searching (Bubble, Quick, Merge, Binary Search)
    - Week 2: Recursion and Backtracking (Subset generation, permutations)
    - Week 3: Dynamic Programming (Basic problems like Fibonacci, Knapsack)
    - Week 4: Greedy Algorithms (Activity selection, Huffman coding)
    - Practice: Mix Easy and Medium problems (3-5 per topic).
+
 3. Month 3: Complexity Analysis
+
    - Learn Big-O notation and apply it to all your solutions.
    - Analyze time and space complexities of solved problems.
    - Practice optimizing your solutions.
