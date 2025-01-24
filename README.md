@@ -2,16 +2,17 @@
 
 ## Core concepts learning
 
-- Learn CSS by reading [MDN documents](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](core/css/CSSLearningNotes.md)
+- Learn CSS by reading [MDN documents](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](core/css/MdnCSSNotes.md)
 - Learn React by reading [React official documents](https://react.dev/learn) [📔](core/reactjs/react.dev/ReactLearn.md)
 - Learn Javascript by reading documents from [javascript.info](https://javascript.info/) [📔](core/javascript/the-modern-javascript-tutorial/TMJT.md)
 - Learn Typescript by reading [official handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](core/typescript/HandbookNotes.md)
+- Learn Data Structures and Algorithms on [LeetCode](https://leetcode.com) [📔](core/ds/Plan.md)
 
 ## Utitlities learning
 
 - [ESLint](https://eslint.org/docs/latest/use/getting-started)[📔](utilities/eslint-prettier/EslintNotes.md) & [Prettier](https://prettier.io/docs/en/) [📔](utilities/eslint-prettier/PrettierNotes.md)
-- [Learn Sass](https://sass-lang.com/guide/) [📔](sass/README.md)
-- [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction)
+- [Learn Sass](https://sass-lang.com/guide/) [📔](utilities/sass/README.md)
+- [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction) [📔](utilities/svg/README.md)
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 - [Framer Motion](https://www.framer.com/motion/)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
@@ -32,17 +33,8 @@
 
 ### Best Practice
 
-- Responsive design and implementation
-- Accessibility
-
-## Tips and tricks accumulating
-
-- [Kevin Powell Video on CSS](https://www.youtube.com/@KevinPowell/videos) [📔](core/css/KevinPowellYoutube.md)
-- [Matt Pocock Video on Typescript](https://www.youtube.com/@mattpocock/videos) [📔](core/typescript/matt-pocock.md)
-- https://www.smashingmagazine.com/
-- https://css-tricks.com/
-- [Essential Typescript for React](https://www.jacobparis.com/content/react-ts)
-- https://egghead.io/
+- Responsive design and implementation [📔](best-practices/responsive/README.md)
+- Accessibility [📔](best-practices/aria/README.md)
 
 ## Opensource project code reading
 
