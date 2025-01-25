@@ -3,13 +3,25 @@
 ## Routing
 
 - Layouts and pages
-  - layout.js
-  - nested route and nesting layout
+  - Folders are used to define the route segments that map to URL segments.
+  - Files (like page and layout) are used to create UI that is shown for a segment.
+  - Nested route
+  - Nesting layout: By default, layouts in the folder hierarchy are also nested, which means they wrap child layouts via their children prop.
+  - You can use the \<Link> component to navigate between routes.
 - Linking and navigating
-  - Link component
-  - useRouter hook
-  - redirect function
-  - native History API
+  - There are four ways to navigate between routes in Next.js:
+    - Link component (provide prefetching and client-side navigation between routes)
+    - useRouter hook (programmatically change routes from Client Components)
+    - redirect function (use the redirect function for Server Component)
+    - native History API (use the native _window.history.pushState_ and _window.history.replaceState_ methods to update the browser's history stack without reloading the page)
+  - How Routing and Navigation Works
+    - Code Splitting
+    - Prefetching
+    - Caching
+    - Partial Rendering
+    - Soft Navigation
+    - Back and Forward Navigation
+    - Routing between pages/ and app/
 - Dynamic routes
   - [folderName]
   - generateStaticParams
