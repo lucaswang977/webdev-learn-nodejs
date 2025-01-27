@@ -75,7 +75,13 @@ Every color in the default palette includes 11 steps, with 50 being the lightest
 
 ### Hover, focus, and other states
 
-- Pseudo-classes
+- Pseudo-classes:
+  - :hover, :focus, :focus-within(when it or one of its descendants has focus), :focus-visible(when it has been focused using the keyboard), :active, :disabled, :visited, :target (its ID matches the current URL fragment)
+  - :first-child, :last-child, :only-child, :nth-child(odd), :nth-child(even), :first-of-type, :last-of-type, :only-of-type, :nth-last-child(), :nth-of-type(), :nth-last-of-type()
+  - :required, :disabled
+  - :has()
+  - :not()
+  - group, group-focus, group-hover, group-active, group-disabled
 - Pseudo-elements
 
 ### Responsive design

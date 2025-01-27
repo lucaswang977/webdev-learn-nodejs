@@ -2,6 +2,14 @@
 
 https://react.dev/learn
 
+- [React.dev Learn](#reactdev-learn)
+  - [Quick Start](#quick-start)
+  - [Thinking in React](#thinking-in-react)
+  - [Describing the UI](#describing-the-ui)
+  - [Adding Interactivity](#adding-interactivity)
+  - [Managing State](#managing-state)
+  - [Escape Hatches](#escape-hatches)
+
 ## Quick Start
 
 - Creating and nesting components
