@@ -79,10 +79,14 @@ Every color in the default palette includes 11 steps, with 50 being the lightest
   - :hover, :focus, :focus-within(when it or one of its descendants has focus), :focus-visible(when it has been focused using the keyboard), :active, :disabled, :visited, :target (its ID matches the current URL fragment)
   - :first-child, :last-child, :only-child, :nth-child(odd), :nth-child(even), :first-of-type, :last-of-type, :only-of-type, :nth-last-child(), :nth-of-type(), :nth-last-of-type()
   - :required, :disabled
-  - :has()
-  - :not()
-  - group, group-focus, group-hover, group-active, group-disabled
+  - :has() (based on the state or content of its descendants), group-has-\* (based on the descendants of a parent element), peer-has-\* (based on the descendants of a sibling element)
+  - :not() (style an element when a condition is not true)
+  - group, group-\* (based on the state of some parent element), group/{name} (giving that parent a unique group name)
+  - in-\* (works similarly to group except you don't need to add group to the parent element)
+  - peer-\* (style an element based on the state of a sibling element, only be used on previous siblings)
+  - peer/{name} (style something on the state of a specific peer by giving that peer a unique name )
 - Pseudo-elements
+  - ::before and ::after
 
 ### Responsive design
 
