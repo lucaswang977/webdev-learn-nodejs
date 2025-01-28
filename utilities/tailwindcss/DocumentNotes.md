@@ -87,6 +87,40 @@ Every color in the default palette includes 11 steps, with 50 being the lightest
   - peer/{name} (style something on the state of a specific peer by giving that peer a unique name )
 - Pseudo-elements
   - ::before and ::after
+  - ::placeholder, ::file, ::marker (counters or bullets in lists), ::selection
+  - ::first-line and ::first-letter
+  - ::backdrop
+- Media and feature queries
+  - To style an element at a specific breakpoint, use responsive variants like "md" and "lg".
+  - To style an element based on the width of a parent element instead of the viewport, use variants like "@md" and "@lg"
+  - prefers-color-scheme(dark), prefers-reduced-motion(motion-reduce, motion-safe), prefers-contrast(contrast-more, contrast-less), forced-colors/not-forced-colors
+  - orientation(portrait/landscape), print
+  - @supports(supports-[...]/not-supports-[...])
+  - @starting-style(starting) (set the appearance of an element when it is first rendered in the DOM, or transitions from display: none to visible)
+- Attribute selectors
+  - ARIA states: aria-\*, aria-busy, aria-checked, aria-disabled, aria-expanded, aria-hidden, aria-pressed, aria-readonly, aria-required, aria-selected
+  - Data attributes: data-\*
+  - RTL support: rtl, ltr
+  - Open/closed state: open(conditionally add styles when a \<details> or \<dialog> element is in an open state)
+  - Styling inert elements: inert (HTML global attribute, used to make an element inert)
+- Child selectors
+  - Direct children: use the "\*" variant in situations where you need to style direct children that you don’t have control over
+  - all descendants: "\*\*" will apply styles to all descendants, not just the direct children
+- Custom variants
+  - Using arbitrary variants: [&.is-dragging]:cursor-grabbing, [&_p]:mt-4, [@supports(display:grid)]:grid
+  - Registering a custom variant:
+
+    ```CSS
+    @custom-variant pointer-coarse (@media (pointer: coarse));
+
+    @custom-variant any-hover {
+      @media (any-hover: hover) {
+        &:hover {
+          @slot;
+        }
+      }
+    }
+    ```
 
 ### Responsive design
 
