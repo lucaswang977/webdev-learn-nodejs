@@ -1,15 +1,38 @@
-function checkIfExist(arr: number[]): boolean {
-  if (arr.length < 2) return false;
-  arr.sort((a, b) => a - b);
+function validMountainArray(arr: number[]): boolean {
+  const len = arr.length;
+  if (len < 3) return false;
+  let i = 0;
+  let j = len - 1;
 
-  for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] * 2 === arr[j]) return true;
-    }
+  while (i < arr.length - 1 && arr[i + 1] - arr[i] > 0) {
+    i++;
   }
+  while (j > 0 && arr[j] - arr[j - 1] < 0) {
+    j--;
+  }
+
+  if (i === j && i !== 0 && i !== len - 1) return true;
+
   return false;
 }
 
+// function checkIfExist(arr: number[]): boolean {
+//   if (arr.length < 2) return false;
+//   const arrMap = new Map();
+//   arr.forEach((num, index) => {
+//     arrMap.set(num, index);
+//   });
+
+//   for (let i = 0; i < arr.length; i++) {
+//     const num = arr[i];
+//     const resultIndex = arrMap.get(num * 2);
+//     if (resultIndex !== undefined && resultIndex !== i) {
+//       return true;
+//     }
+//   }
+
+//   return false;
+// }
 // function removeDuplicates(nums: number[]): number {
 //   let i = 0;
 //   let p = Infinity;
@@ -97,12 +120,28 @@ function checkIfExist(arr: number[]): boolean {
 
 const runQuiz = () => {
   let arr;
-  arr = [10, 2, 5, 3];
-  console.log(checkIfExist(arr));
 
-  arr = [3, 1, 7, 11];
-  console.log(checkIfExist(arr));
+  arr = [2, 1];
+  console.log(validMountainArray(arr));
 
+  arr = [3, 5, 5];
+  console.log(validMountainArray(arr));
+
+  arr = [0, 3, 2, 1];
+  console.log(validMountainArray(arr));
+
+  arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  console.log(validMountainArray(arr));
+
+  // let arr;
+  // arr = [10, 2, 5, 3];
+  // console.log(checkIfExist(arr));
+
+  // arr = [3, 1, 7, 11];
+  // console.log(checkIfExist(arr));
+
+  // arr = [-10, 12, -20, -8, 15];
+  // console.log(checkIfExist(arr));
   // let nums, k;
   // nums = [1, 1, 2];
   // k = removeDuplicates(nums);
