@@ -107,7 +107,17 @@ Every color in the default palette includes 11 steps, with 50 being the lightest
   - Direct children: use the "\*" variant in situations where you need to style direct children that you don’t have control over
   - all descendants: "\*\*" will apply styles to all descendants, not just the direct children
 - Custom variants
-  - Using arbitrary variants: [&.is-dragging]:cursor-grabbing, [&_p]:mt-4, [@supports(display:grid)]:grid
+
+  - Using arbitrary variants:
+
+    ```CSS
+    [&.is-dragging]:cursor-grabbing
+
+    [&_p]:mt-4
+
+    [@supports(display:grid)]:grid
+    ```
+
   - Registering a custom variant:
 
     ```CSS
