@@ -31,10 +31,11 @@
 - [Advent of JS](https://adventofjs.com/)
 - [Typehero](https://typehero.dev/)
 
-### Best Practice
+### Best Practices
 
 - Responsive design and implementation [📔](best-practices/responsive/README.md)
 - Accessibility [📔](best-practices/aria/README.md)
+- Performance optimization [📔](best-practices/performance/README.md)
 
 ## Opensource project code reading
 

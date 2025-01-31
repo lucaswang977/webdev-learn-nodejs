@@ -1,4 +1,31 @@
-https://www.youtube.com/watch?v=TUD1AWZVgQ8
-https://www.youtube.com/watch?v=VQraviuwbzU
-https://www.youtube.com/watch?v=x4u1yp3Msao
-https://css-tricks.com/approaches-media-queries-sass/
+# Learn Responsive Design
+
+https://web.dev/learn/design
+
+## Introduction
+
+## Media queries
+
+## Internationalization
+
+## Macro layouts
+
+## Micro layouts
+
+## Typography
+
+## Responsive images
+
+## The picture element
+
+## Icons
+
+## Theming
+
+## Accessibility
+
+## Interaction
+
+## User interface patterns
+
+## Screen configurations
