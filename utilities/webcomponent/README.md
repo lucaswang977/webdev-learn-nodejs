@@ -92,3 +92,55 @@ https://developer.mozilla.org/en-US/docs/Web/API/Web_components
     ```
 
 ## Using templates and slots
+
+- Using templates with web components
+
+  ```JS
+  customElements.define(
+    "my-paragraph",
+    class extends HTMLElement {
+      constructor() {
+        super();
+        let template = document.getElementById("custom-paragraph");
+        let templateContent = template.content;
+
+        const shadowRoot = this.attachShadow({ mode: "open" });
+        shadowRoot.appendChild(templateContent.cloneNode(true));
+      }
+    },
+  );
+  ```
+
+  ```HTML
+  <template id="custom-paragraph">
+    <style>
+      p {
+        color: white;
+        background-color: #666;
+        padding: 5px;
+      }
+    </style>
+    <p>My paragraph</p>
+  </template>
+  <my-paragraph></my-paragraph>
+  ```
+
+- Adding flexibility with slots
+
+  ```HTML
+  <template id="custom-paragraph">
+    <style>
+      p {
+        color: white;
+        background-color: #666;
+        padding: 5px;
+      }
+    </style>
+    <p>
+      <slot name="my-text">My default text</slot>
+    </p>
+  </template>
+  <my-paragraph>
+    <span slot="my-text">Let's have some different text!</span>
+  </my-paragraph>
+  ```
