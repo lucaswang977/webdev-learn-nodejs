@@ -6,7 +6,7 @@
 - Learn React by reading [React official documents](https://react.dev/learn) [📔](core/reactjs/react.dev/ReactLearn.md)
 - Learn Javascript by reading documents from [javascript.info](https://javascript.info/) [📔](core/javascript/the-modern-javascript-tutorial/TMJT.md)
 - Learn Typescript by reading [official handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](core/typescript/HandbookNotes.md)
-- Learn Data Structures and Algorithms on [LeetCode](https://leetcode.com) [📔](core/ds/Plan.md)
+- Learn Data Structures and Algorithms on [LeetCode](https://leetcode.com) [📔](core/dsa/Plan.md)
 
 ## Utitlities learning
 
@@ -17,9 +17,10 @@
 - [Framer Motion](https://www.framer.com/motion/)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
 - [Next.js document](https://nextjs.org/docs)
-- [Remix](https://remix.run/docs/en/main)
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
+- [Remix](https://remix.run/docs/en/main)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
+- [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/README.md)
 - Other great utilities:
   - [FontSource](https://fontsource.org/)
   - [Gitignore.io](https://www.toptal.com/developers/gitignore)
