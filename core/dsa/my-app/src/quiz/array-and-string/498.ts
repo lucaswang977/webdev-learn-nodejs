@@ -7,35 +7,38 @@ function findDiagonalOrder(mat: number[][]): number[] {
   let j = 0;
   let wayUp = true;
 
-  while (i < m && j < n) {
-    result.push(mat[i][j]);
-
+  while (result.length < m * n) {
+    if (mat[i] !== undefined && mat[i][j] !== undefined) result.push(mat[i][j]);
     if (wayUp) {
-      i--;
-      j++;
-    } else {
-      i++;
-      j--;
-    }
-
-    if (mat[i] === undefined || mat[i][j] === undefined) {
-      wayUp = !wayUp;
-      if (wayUp) {
+      if (mat[i - 1] === undefined && mat[i][j + 1] !== undefined) {
+        wayUp = !wayUp;
+        j++;
+      } else if (mat[i - 1] === undefined && mat[i][j + 1] === undefined) {
+        wayUp = !wayUp;
+        i++;
+      } else if (mat[i - 1] !== undefined && mat[i - 1][j + 1] === undefined) {
+        wayUp = !wayUp;
+        i++;
+      } else {
         i--;
         j++;
+      }
+    } else {
+      if (mat[i + 1] === undefined && mat[i][j - 1] !== undefined) {
+        wayUp = !wayUp;
+        j++;
+      } else if (mat[i + 1] === undefined && mat[i][j - 1] === undefined) {
+        wayUp = !wayUp;
+        j++;
+      } else if (mat[i + 1] !== undefined && mat[i + 1][j - 1] === undefined) {
+        wayUp = !wayUp;
+        i++;
       } else {
         i++;
         j--;
       }
-      if (wayUp) i++;
-      else j++;
-      if (mat[i] === undefined || mat[i][j] === undefined) {
-        j--;
-        i++;
-      }
     }
   }
-  if (m === n && m !== 1) result.push(mat[m - 1][n - 1]);
 
   return result;
 }
