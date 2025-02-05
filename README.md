@@ -14,13 +14,17 @@
 - [Learn Sass](https://sass-lang.com/guide/) [📔](utilities/sass/README.md)
 - [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction) [📔](utilities/svg/README.md)
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
-- [Framer Motion](https://www.framer.com/motion/)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
 - [Next.js document](https://nextjs.org/docs)
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [Remix](https://remix.run/docs/en/main)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
 - [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/README.md)
+- Animation
+  - [Animate.css](https://animate.style/)
+  - [React Spring](https://react-spring.io/)
+  - [Framer Motion](https://www.framer.com/motion/)
+  - [GSAP](https://greensock.com/)
 - Other great utilities:
   - [FontSource](https://fontsource.org/)
   - [Gitignore.io](https://www.toptal.com/developers/gitignore)
