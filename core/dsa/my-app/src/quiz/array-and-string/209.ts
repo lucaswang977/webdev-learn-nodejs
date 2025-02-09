@@ -1,25 +1,28 @@
 function minSubArrayLen(target: number, nums: number[]): number {
   const len = nums.length;
-  nums.sort((a, b) => b - a);
-  let result = 0;
-  let rest = target;
+  let i = 0;
+  let j = 0;
+  let count = 1;
+  let result = nums[0];
+  let minCount = len + 1;
 
-  for (let i = 0; i < len; i++) {
-    console.log(rest, nums[i], result);
-    if (rest - nums[i] > 0) {
-      rest -= nums[i];
-      result++;
+  while (!(j >= len - 1 && result < target)) {
+    if (result >= target) {
+      if (count < minCount) {
+        minCount = count;
+      }
+      result -= nums[i];
+      i++;
+      count--;
     } else {
-      rest = rest - nums[i];
-      result++;
-      break;
+      j++;
+      result += nums[j];
+      count++;
     }
   }
-  console.log(rest, result);
+  if (minCount > len) minCount = 0;
 
-  if (rest > 0) return 0;
-
-  return result;
+  return minCount;
 }
 
 export default function testQuiz() {
@@ -54,5 +57,10 @@ export default function testQuiz() {
   // 8
   target = 213;
   nums = [12, 28, 83, 4, 25, 26, 25, 2, 25, 25, 25, 12];
+  console.log(minSubArrayLen(target, nums));
+
+  // 5
+  target = 15;
+  nums = [1, 2, 3, 4, 5];
   console.log(minSubArrayLen(target, nums));
 }
