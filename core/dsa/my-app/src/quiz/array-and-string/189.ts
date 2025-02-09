@@ -3,6 +3,7 @@ Do not return anything, modify nums in-place instead.
 */
 function rotate(nums: number[], k: number): void {
   const len = nums.length;
+  if (k > len) k = k % len;
   if (len === 0) return;
 
   const beforeMove = nums.splice(len - k, k);
