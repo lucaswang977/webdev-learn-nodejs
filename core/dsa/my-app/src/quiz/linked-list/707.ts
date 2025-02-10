@@ -1,15 +1,30 @@
 class MyLinkedList {
-  constructor() {}
+  constructor() {
+    this.data = [];
+  }
 
-  get(index: number): number {}
+  private data: (number | undefined)[];
 
-  addAtHead(val: number): void {}
+  get(index: number): number {
+    return this.data[index] !== undefined ? this.data[index] : -1;
+  }
 
-  addAtTail(val: number): void {}
+  addAtHead(val: number): void {
+    this.data.splice(0, 0, val);
+  }
 
-  addAtIndex(index: number, val: number): void {}
+  addAtTail(val: number): void {
+    this.data.push(val);
+  }
 
-  deleteAtIndex(index: number): void {}
+  addAtIndex(index: number, val: number): void {
+    if (index < this.data.length) this.data.splice(index, 0, val);
+    else if (index === this.data.length) this.data.push(val);
+  }
+
+  deleteAtIndex(index: number): void {
+    this.data.splice(index, 1);
+  }
 }
 
 /**
