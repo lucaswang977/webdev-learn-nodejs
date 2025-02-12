@@ -11,25 +11,6 @@ class ListNode {
   }
 }
 
-function hasCycle(head: ListNode | null): boolean {
-  let result = false;
-
-  let node = head;
-  const nodeSet = new Set();
-  while (node !== null) {
-    console.log(node);
-    if (node.next !== null && nodeSet.has(node.next)) {
-      result = true;
-      break;
-    } else {
-      nodeSet.add(node);
-    }
-    node = node.next;
-  }
-
-  return result;
-}
-
 function headToList(head: number[], pos: number): ListNode | null {
   let headNode = null;
   let lastNextNode = null;
@@ -51,31 +32,49 @@ function headToList(head: number[], pos: number): ListNode | null {
   return headNode;
 }
 
+function detectCycle(head: ListNode | null): ListNode | null {
+  let result = null;
+
+  let node = head;
+  const nodeSet = new Set();
+  while (node !== null) {
+    if (node.next !== null && nodeSet.has(node.next)) {
+      result = node.next;
+      break;
+    } else {
+      nodeSet.add(node);
+    }
+    node = node.next;
+  }
+
+  return result;
+}
+
 export default function testQuiz() {
   let head, pos;
   let headList;
 
-  // true
+  // 1
   head = [3, 2, 0, -4];
   pos = 1;
   headList = headToList(head, pos);
-  console.log(hasCycle(headList));
+  console.log(detectCycle(headList));
 
-  // true
+  // 0
   head = [1, 2];
   pos = 0;
   headList = headToList(head, pos);
-  console.log(hasCycle(headList));
+  console.log(detectCycle(headList));
 
-  // false
+  // null
   head = [1];
   pos = -1;
   headList = headToList(head, pos);
-  console.log(hasCycle(headList));
+  console.log(detectCycle(headList));
 
-  // false
+  // null
   head = [1, 2];
   pos = -1;
   headList = headToList(head, pos);
-  console.log(hasCycle(headList));
+  console.log(detectCycle(headList));
 }
