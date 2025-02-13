@@ -11,25 +11,6 @@ class ListNode {
   }
 }
 
-function hasCycle(head: ListNode | null): boolean {
-  let result = false;
-
-  let node = head;
-  const nodeSet = new Set();
-  while (node !== null) {
-    console.log(node);
-    if (node.next !== null && nodeSet.has(node.next)) {
-      result = true;
-      break;
-    } else {
-      nodeSet.add(node);
-    }
-    node = node.next;
-  }
-
-  return result;
-}
-
 function headToList(head: number[], pos: number): ListNode | null {
   let headNode = null;
   let lastNextNode = null;
@@ -49,6 +30,20 @@ function headToList(head: number[], pos: number): ListNode | null {
   }
 
   return headNode;
+}
+
+function hasCycle(head: ListNode | null): boolean {
+  let slow = head;
+  let fast = head;
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow!.next;
+    fast = fast.next.next;
+
+    if (slow === fast) return true;
+  }
+
+  return false;
 }
 
 export default function testQuiz() {

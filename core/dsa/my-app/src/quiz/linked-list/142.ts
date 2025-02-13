@@ -33,21 +33,29 @@ function headToList(head: number[], pos: number): ListNode | null {
 }
 
 function detectCycle(head: ListNode | null): ListNode | null {
-  let result = null;
+  let slow = head;
+  let fast = head;
+  let cycle = false;
 
-  let node = head;
-  const nodeSet = new Set();
-  while (node !== null) {
-    if (node.next !== null && nodeSet.has(node.next)) {
-      result = node.next;
-      break;
+  while (fast !== null && fast.next !== null) {
+    if (cycle === false) {
+      slow = slow!.next;
+      fast = fast.next.next;
+
+      if (slow === fast) {
+        cycle = true;
+        slow = head;
+      }
     } else {
-      nodeSet.add(node);
+      if (slow === fast) {
+        return slow;
+      }
+      slow = slow!.next;
+      fast = fast.next;
     }
-    node = node.next;
   }
 
-  return result;
+  return null;
 }
 
 export default function testQuiz() {
