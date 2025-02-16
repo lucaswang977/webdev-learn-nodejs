@@ -1,5 +1,20 @@
 # Web development learning project
 
+- [Web development learning project](#web-development-learning-project)
+  - [Core concepts learning](#core-concepts-learning)
+  - [Utitlities learning](#utitlities-learning)
+    - [Quiz and challenges](#quiz-and-challenges)
+    - [Best Practices](#best-practices)
+  - [Opensource project code reading](#opensource-project-code-reading)
+  - [VSCode setup](#vscode-setup)
+    - [Settings](#settings)
+    - [Shortcuts](#shortcuts)
+    - [AI extensions](#ai-extensions)
+  - [Project setup](#project-setup)
+    - [Devcontainer](#devcontainer)
+    - [Pure frontend projects - Vite](#pure-frontend-projects---vite)
+    - [Fullstack projects - Nextjs](#fullstack-projects---nextjs)
+
 ## Core concepts learning
 
 - Learn CSS by reading [MDN documents](https://developer.mozilla.org/en-US/docs/Web/CSS) [📔](core/css/MdnCSSNotes.md)
@@ -15,7 +30,7 @@
 - [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Introduction) [📔](utilities/svg/README.md)
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 - [Vite](https://vite.dev/guide/) & [Rsbuild](https://rsbuild.dev/)
-- [Next.js document](https://nextjs.org/docs)
+- [Next.js document](https://nextjs.org/docs) [📔](utilities/nextjs/NextjsNotes.md)
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [Remix](https://remix.run/docs/en/main)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
@@ -52,11 +67,9 @@
 
 ### Shortcuts
 
-- Ctrl/Cmd + K, V: Preview markdown
-- Ctrl/Cmd + K, Ctrl/Cmd + &larr; / &rarr;: Window focus move left/right
 - Ctrl/Cmd + B: Primary side bar toggle
 - Ctrl/Cmd + Alt/Option + B: Secondary side bar toggle (AI chatting)
-- Ctrl/Cmd + J: Panel toggle
+- Alt/Option + Shift + Up/Down: Multiple cursors up/down
 
 ### AI extensions
 
