@@ -36,6 +36,7 @@ function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
 
   let curr = head;
   let nthBefore = head;
+  let prev = head;
   let i = 0;
 
   while (curr.next !== null && nthBefore.next !== null) {
@@ -44,11 +45,17 @@ function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
       curr = curr.next;
     } else {
       curr = curr.next;
+      prev = nthBefore;
       nthBefore = nthBefore.next;
     }
   }
+  if (nthBefore === head) {
+    head = nthBefore.next;
+  } else {
+    prev.next = nthBefore.next;
+  }
 
-  return nthBefore;
+  return head;
 }
 
 export default function testQuiz() {
@@ -66,6 +73,11 @@ export default function testQuiz() {
 
   head = [1, 2];
   n = 1;
+  headList = headToList(head);
+  console.log(removeNthFromEnd(headList, n));
+
+  head = [1, 2];
+  n = 2;
   headList = headToList(head);
   console.log(removeNthFromEnd(headList, n));
 }
