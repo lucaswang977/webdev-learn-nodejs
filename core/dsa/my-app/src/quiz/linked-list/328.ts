@@ -29,20 +29,50 @@ function headToList(head: number[]): ListNode | null {
   return null;
 }
 
+function outputList(head: ListNode | null) {
+  const nodes: number[] = [];
+  while (head) {
+    nodes.push(head.val);
+    head = head.next;
+  }
+
+  console.log(nodes.join(","));
+}
+
 function oddEvenList(head: ListNode | null): ListNode | null {
   if (head === null) return null;
 
-  let slowPtr: ListNode | null = head;
-  let fastPtr: ListNode | null = head.next;
-  let prev = null;
+  // 1,2,3,4,5
+  // oddIndex = [1,3,5]
+  // evenIndex = [2,4]
+  // insertNode = 3
+  // insertNodePrev = 1
+  // insertNodeNext = 2
+  // 1,3,2,4,5
+  // insertNode = 5
+  // insertNodePrev = 3
+  // insertNodeNext = 2
+  // 1,3,5,2,4
+  let i = 1;
+  let insertNodePrev: ListNode | null = head;
+  let insertNodeNext: ListNode | null = head.next;
+  let ptr: ListNode | null = head.next;
 
-  while (slowPtr && fastPtr && fastPtr.next) {
-    prev = slowPtr;
-    slowPtr = slowPtr.next;
-    fastPtr = fastPtr.next.next;
+  while (ptr) {
+    if (i % 2 === 0 && insertNodePrev && insertNodeNext) {
+      insertNodePrev.next = ptr;
+      insertNodePrev = ptr;
 
-    prev.next = fastPtr;
-    fastPtr.next = slowPtr;
+      const temp = ptr.next;
+      ptr.next = insertNodeNext;
+      insertNodeNext.next = temp;
+
+      ptr = insertNodeNext;
+    }
+    i++;
+    if (ptr) ptr = ptr.next;
+    console.log(ptr, i);
+    outputList(head);
   }
 }
 
