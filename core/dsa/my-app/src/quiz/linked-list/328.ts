@@ -42,38 +42,33 @@ function outputList(head: ListNode | null) {
 function oddEvenList(head: ListNode | null): ListNode | null {
   if (head === null) return null;
 
-  // 1,2,3,4,5
-  // oddIndex = [1,3,5]
-  // evenIndex = [2,4]
-  // insertNode = 3
-  // insertNodePrev = 1
-  // insertNodeNext = 2
-  // 1,3,2,4,5
-  // insertNode = 5
-  // insertNodePrev = 3
-  // insertNodeNext = 2
-  // 1,3,5,2,4
   let i = 1;
-  let insertNodePrev: ListNode | null = head;
-  let insertNodeNext: ListNode | null = head.next;
+  let insertNode: ListNode | null = head;
   let ptr: ListNode | null = head.next;
+  let prev: ListNode | null = head;
 
   while (ptr) {
-    if (i % 2 === 0 && insertNodePrev && insertNodeNext) {
-      insertNodePrev.next = ptr;
-      insertNodePrev = ptr;
+    if (i % 2 === 0) {
+      // Remove the ptr from the list
+      prev.next = ptr.next;
 
-      const temp = ptr.next;
-      ptr.next = insertNodeNext;
-      insertNodeNext.next = temp;
+      // Insert the ptr node after the insertNode
+      const temp = insertNode.next;
+      insertNode.next = ptr;
+      ptr.next = temp;
 
-      ptr = insertNodeNext;
+      // Next inserting position will be after the ptr
+      insertNode = ptr;
+
+      // Next iterating pos should be restored
+      ptr = prev;
     }
     i++;
-    if (ptr) ptr = ptr.next;
-    console.log(ptr, i);
-    outputList(head);
+    prev = ptr;
+    ptr = ptr.next;
   }
+
+  return head;
 }
 
 export default function testQuiz() {
@@ -82,10 +77,10 @@ export default function testQuiz() {
   // [1,3,5,2,4]
   head = [1, 2, 3, 4, 5];
   headList = headToList(head);
-  console.log(oddEvenList(headList));
+  outputList(oddEvenList(headList));
 
   // [2,3,6,7,1,5,4]
   head = [2, 1, 3, 5, 6, 4, 7];
   headList = headToList(head);
-  console.log(oddEvenList(headList));
+  outputList(oddEvenList(headList));
 }
