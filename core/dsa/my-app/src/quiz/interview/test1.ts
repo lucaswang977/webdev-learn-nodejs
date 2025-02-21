@@ -1,65 +1,77 @@
+function calculateWeight(n: number, s: string): number[] {
+  const weight: number[] = [];
+
+  // Calculate the weight
+  for (let i = 0; i < n; i++) {
+    const threeChar = [
+      s[i - 1] === undefined ? "." : s[i - 1],
+      s[i],
+      s[i + 1] === undefined ? "." : s[i + 1],
+    ];
+    switch (threeChar.join("")) {
+      case "...":
+        weight.push(0);
+        break;
+      case "S..":
+      case ".S.":
+      case "..S":
+        weight.push(1);
+        break;
+      case "SS.":
+      case "S.S":
+      case ".SS":
+        weight.push(2);
+        break;
+      case "SSS":
+        weight.push(3);
+        break;
+    }
+  }
+  return weight;
+}
+
+function moralizeIndex(s: string, pos: number): string {
+  let newS = s.slice(0, pos) + "." + s.slice(pos + 1);
+  if (newS[pos - 1] !== undefined)
+    newS = newS.slice(0, pos - 1) + "." + newS.slice(pos);
+  if (newS[pos + 1] !== undefined)
+    newS = newS.slice(0, pos + 1) + "." + newS.slice(pos + 2);
+
+  return newS;
+}
+
 function problem(lines: string[]) {
   const [n, k] = lines[0].split(" ").map((v) => Number(v));
   const s = lines[1];
-  let riseCount = 0;
-  let fallCount = 0;
-  let echoCount = k;
-  const stats = {
-    s: 0,
-    ss: 0,
-    sss: 0,
-  };
 
-  for (let i = 0; i < n; i++) {
-    if (s[i] === ".") {
-      riseCount++;
-      fallCount = 0;
-    } else {
-      fallCount++;
-      if (fallCount === 1) {
-        stats.s++;
-      } else if (fallCount === 2) {
-        stats.s--;
-        stats.ss++;
-      } else if (fallCount === 3) {
-        stats.ss--;
-        stats.sss++;
-        fallCount = 0;
+  let max = -1;
+  const gen = (function* findMaxWeight(
+    s: string,
+    n: number,
+    k: number
+  ): Generator<number, void> {
+    if (k === 0) {
+      const t = [...s].reduce(
+        (count, char) => count + (char === "." ? 1 : 0),
+        0
+      );
+      if (t > max) max = t;
+      return;
+    }
+    const weight = calculateWeight(n, s);
+    const maxWeight = Math.max(...weight);
+    console.log(s, weight.join(","));
+    for (let i = 0; i < n; i++) {
+      if (weight[i] === maxWeight) {
+        yield i;
+        yield* findMaxWeight(moralizeIndex(s, i), n, k - 1);
       }
     }
-  }
+  })(s, n, k);
 
-  if (stats.sss > 0 && echoCount > 0) {
-    if (echoCount - stats.sss <= 0) {
-      riseCount += echoCount * 3;
-      echoCount = 0;
-    } else {
-      riseCount += stats.sss * 3;
-      echoCount -= stats.sss;
-    }
-  }
+  console.log([...gen]);
 
-  if (stats.ss > 0 && echoCount > 0) {
-    if (echoCount - stats.ss <= 0) {
-      riseCount += echoCount * 2;
-      echoCount = 0;
-    } else {
-      riseCount += stats.ss * 2;
-      echoCount -= stats.ss;
-    }
-  }
-
-  if (stats.s > 0 && echoCount > 0) {
-    if (echoCount - stats.s <= 0) {
-      riseCount += echoCount;
-      echoCount = 0;
-    } else {
-      riseCount += stats.s;
-      echoCount -= stats.s;
-    }
-  }
-
-  console.log(riseCount);
+  return max;
 }
 
 export default function testQuiz() {
@@ -67,17 +79,17 @@ export default function testQuiz() {
 
   // 5
   lines = ["5 3", "....."];
-  problem(lines);
+  console.log(problem(lines));
 
   // 4
   lines = ["5 1", "SS..S"];
-  problem(lines);
+  console.log(problem(lines));
 
   // 9
   lines = ["12 2", ".SSSS.SS.SSS"];
-  problem(lines);
+  console.log(problem(lines));
 
   // 6
   lines = ["6 2", "S.SSSS"];
-  problem(lines);
+  console.log(problem(lines));
 }
