@@ -40,6 +40,10 @@ function moralizeIndex(s: string, pos: number): string {
   return newS;
 }
 
+function getMoralizedCount(s: string): number {
+  return [...s].reduce((count, char) => count + (char === "." ? 1 : 0), 0);
+}
+
 function problem(lines: string[]) {
   const [n, k] = lines[0].split(" ").map((v) => Number(v));
   const s = lines[1];
@@ -49,27 +53,28 @@ function problem(lines: string[]) {
     s: string,
     n: number,
     k: number
-  ): Generator<number, void> {
+  ): Generator<undefined, void> {
     if (k === 0) {
-      const t = [...s].reduce(
-        (count, char) => count + (char === "." ? 1 : 0),
-        0
-      );
+      const t = getMoralizedCount(s);
       if (t > max) max = t;
       return;
     }
     const weight = calculateWeight(n, s);
     const maxWeight = Math.max(...weight);
-    console.log(s, weight.join(","));
+    if (maxWeight === 0) {
+      max = getMoralizedCount(s);
+      return;
+    }
+    // console.log(s, weight.join(","));
     for (let i = 0; i < n; i++) {
       if (weight[i] === maxWeight) {
-        yield i;
+        yield;
         yield* findMaxWeight(moralizeIndex(s, i), n, k - 1);
       }
     }
   })(s, n, k);
 
-  console.log([...gen]);
+  [...gen];
 
   return max;
 }
@@ -91,5 +96,9 @@ export default function testQuiz() {
 
   // 6
   lines = ["6 2", "S.SSSS"];
+  console.log(problem(lines));
+
+  // 6
+  lines = ["6 4", "S....S"];
   console.log(problem(lines));
 }
