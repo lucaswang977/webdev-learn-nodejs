@@ -2,6 +2,21 @@
 
 https://www.typescriptlang.org/docs/handbook/intro.html
 
+- [The TypeScript Handbook Learning Notes](#the-typescript-handbook-learning-notes)
+  - [Side notes](#side-notes)
+  - [TypeScript for JavaScript Programmers](#typescript-for-javascript-programmers)
+  - [The Basics](#the-basics)
+  - [Everyday Types](#everyday-types)
+  - [Narrowing](#narrowing)
+  - [More on Functions](#more-on-functions)
+  - [Object Types](#object-types)
+  - [Classes](#classes)
+  - [Type manipulation](#type-manipulation)
+  - [Modules - Theory](#modules---theory)
+  - [tsconfig.json](#tsconfigjson)
+  - [Decorators](#decorators)
+  - [Mixin](#mixin)
+
 ## Side notes
 
 Create a clean JS project by vite:

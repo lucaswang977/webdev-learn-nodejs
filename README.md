@@ -70,6 +70,7 @@
 - Ctrl/Cmd + B: Primary side bar toggle
 - Ctrl/Cmd + Alt/Option + B: Secondary side bar toggle (AI chatting)
 - Alt/Option + Shift + Up/Down: Multiple cursors up/down
+- Ctrl/Cmd + Shift + ]: Switch between terminal tabs
 
 ### AI extensions
 
