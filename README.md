@@ -35,6 +35,7 @@
 - [Remix](https://remix.run/docs/en/main)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
 - [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/README.md)
+- [Deno](https://docs.deno.com/)
 - Animation
   - [Animate.css](https://animate.style/)
   - [React Spring](https://react-spring.io/)
@@ -71,6 +72,7 @@
 - Ctrl/Cmd + Alt/Option + B: Secondary side bar toggle (AI chatting)
 - Alt/Option + Shift + Up/Down: Multiple cursors up/down
 - Ctrl/Cmd + Shift + ]: Switch between terminal tabs
+- Ctrl/Cmd + Alt/Option + Shift + ⬇/⬆: Create multiple cursors
 
 ### AI extensions
 

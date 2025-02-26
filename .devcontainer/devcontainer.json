@@ -21,12 +21,9 @@
           "zsh": {
             "path": "/bin/zsh"
           }
-        },
-        "deno.enable": true,
-        "deno.lint": true,
-        "deno.unstable": false
+        }
       },
-      "extensions": ["denoland.vscode-deno", "esbenp.prettier-vscode"]
+      "extensions": ["esbenp.prettier-vscode", "rvest.vs-code-prettier-eslint"]
     }
   }
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
