@@ -24,11 +24,13 @@
         },
         "deno.enable": true,
         "deno.lint": true,
-        "deno.unstable": false,
-        "extensions": ["denoland.vscode-deno"]
+        "deno.unstable": false
       }
     }
-  }
+  },
+  "mounts": [
+    "source=${env:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind"
+  ]
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
 }
