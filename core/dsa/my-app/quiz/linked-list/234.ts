@@ -1,4 +1,4 @@
-import { ListNode, headToList, outputList } from "./linked-list";
+import { ListNode, headToList } from "./linked-list";
 
 function isPalindrome(head: ListNode | null): boolean {
   let result = true;
