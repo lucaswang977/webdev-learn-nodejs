@@ -3,6 +3,7 @@ class MyCircularQueue {
   private data: (number | null)[];
   private head: number;
   private tail: number;
+  private nulls: number;
 
   constructor(k: number) {
     this.data = new Array(k).fill(null);
@@ -10,38 +11,34 @@ class MyCircularQueue {
     this.k = k;
     this.head = 0;
     this.tail = 0;
+    this.nulls = k;
   }
 
-  private countNulls = () => this.data.filter((v) => v === null).length;
-
   enQueue(value: number): boolean {
-    const nulls = this.countNulls();
-
-    if (nulls === 0) {
+    if (this.nulls === 0) {
       return false;
     } else {
-      if (this.data[this.tail]) {
+      if (this.data[this.tail] !== null) {
         this.tail++;
+        if (this.tail === this.k) this.tail = 0;
       }
       this.data[this.tail] = value;
+      this.nulls--;
     }
-    console.log(this.data.join(","), this.head, this.tail);
 
     return true;
   }
 
   deQueue(): boolean {
-    const nulls = this.countNulls();
-
-    if (nulls === this.k) {
+    if (this.nulls === this.k) {
       return false;
     } else {
       this.data[this.head] = null;
+      this.nulls++;
       const next = this.head + 1 === this.k ? 0 : this.head + 1;
-      if (this.data[next]) this.head = next;
+      if (this.data[next] !== null) this.head = next;
     }
 
-    console.log(this.data.join(","), this.head, this.tail);
     return true;
   }
 
@@ -56,14 +53,12 @@ class MyCircularQueue {
   }
 
   isEmpty(): boolean {
-    const nulls = this.countNulls();
-    if (nulls === this.k) return true;
+    if (this.nulls === this.k) return true;
     return false;
   }
 
   isFull(): boolean {
-    const nulls = this.countNulls();
-    if (nulls === 0) return true;
+    if (this.nulls === 0) return true;
     return false;
   }
 }
@@ -71,60 +66,60 @@ class MyCircularQueue {
 export default function testQuiz() {
   let myCircularQueue;
 
-  // myCircularQueue = new MyCircularQueue(3);
-  // console.log(myCircularQueue.enQueue(1)); // return True
-  // console.log(myCircularQueue.enQueue(2)); // return True
-  // console.log(myCircularQueue.enQueue(3)); // return True
-  // console.log(myCircularQueue.enQueue(4)); // return False
-  // console.log(myCircularQueue.Rear()); // return 3
-  // console.log(myCircularQueue.isFull()); // return True
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.enQueue(4)); // return True
-  // console.log(myCircularQueue.Rear()); // return 4
-  // console.log("--");
+  myCircularQueue = new MyCircularQueue(3);
+  console.log(myCircularQueue.enQueue(1)); // return True
+  console.log(myCircularQueue.enQueue(2)); // return True
+  console.log(myCircularQueue.enQueue(3)); // return True
+  console.log(myCircularQueue.enQueue(4)); // return False
+  console.log(myCircularQueue.Rear()); // return 3
+  console.log(myCircularQueue.isFull()); // return True
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.enQueue(4)); // return True
+  console.log(myCircularQueue.Rear()); // return 4
+  console.log("--");
 
-  // myCircularQueue = new MyCircularQueue(6);
-  // console.log(myCircularQueue.enQueue(6)); // return True
-  // console.log(myCircularQueue.Rear()); // return 6
-  // console.log(myCircularQueue.Rear()); // return 6
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.enQueue(5)); // return True
-  // console.log(myCircularQueue.Rear()); // return 5
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.Front()); // return -1
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log("--");
+  myCircularQueue = new MyCircularQueue(6);
+  console.log(myCircularQueue.enQueue(6)); // return True
+  console.log(myCircularQueue.Rear()); // return 6
+  console.log(myCircularQueue.Rear()); // return 6
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.enQueue(5)); // return True
+  console.log(myCircularQueue.Rear()); // return 5
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.Front()); // return -1
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log("--");
 
-  // myCircularQueue = new MyCircularQueue(1);
-  // console.log(myCircularQueue.enQueue(6)); // return True
-  // console.log(myCircularQueue.Rear()); // return 6
-  // console.log(myCircularQueue.enQueue(5)); // return False
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log(myCircularQueue.enQueue(2)); // return True
-  // console.log(myCircularQueue.Front()); // return 2
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.enQueue(1)); // return True
-  // console.log(myCircularQueue.Rear()); // return 1
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log("--");
+  myCircularQueue = new MyCircularQueue(1);
+  console.log(myCircularQueue.enQueue(6)); // return True
+  console.log(myCircularQueue.Rear()); // return 6
+  console.log(myCircularQueue.enQueue(5)); // return False
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log(myCircularQueue.enQueue(2)); // return True
+  console.log(myCircularQueue.Front()); // return 2
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.enQueue(1)); // return True
+  console.log(myCircularQueue.Rear()); // return 1
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log("--");
 
-  // myCircularQueue = new MyCircularQueue(3);
-  // console.log(myCircularQueue.enQueue(2)); // return True
-  // console.log(myCircularQueue.Rear()); // return 2
-  // console.log(myCircularQueue.Front()); // return 2
-  // console.log(myCircularQueue.deQueue()); // return True
-  // console.log(myCircularQueue.Front()); // return -1
-  // console.log(myCircularQueue.deQueue()); // return False
-  // console.log(myCircularQueue.Front()); // return -1
-  // console.log(myCircularQueue.enQueue(4)); // return True
-  // console.log(myCircularQueue.enQueue(2)); // return True
-  // console.log(myCircularQueue.enQueue(2)); // return True
-  // console.log(myCircularQueue.enQueue(3)); // return False
-  // console.log("--");
+  myCircularQueue = new MyCircularQueue(3);
+  console.log(myCircularQueue.enQueue(2)); // return True
+  console.log(myCircularQueue.Rear()); // return 2
+  console.log(myCircularQueue.Front()); // return 2
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.Front()); // return -1
+  console.log(myCircularQueue.deQueue()); // return False
+  console.log(myCircularQueue.Front()); // return -1
+  console.log(myCircularQueue.enQueue(4)); // return True
+  console.log(myCircularQueue.enQueue(2)); // return True
+  console.log(myCircularQueue.enQueue(2)); // return True
+  console.log(myCircularQueue.enQueue(3)); // return False
+  console.log("--");
 
   myCircularQueue = new MyCircularQueue(2);
   console.log(myCircularQueue.enQueue(1)); // return True
@@ -137,4 +132,19 @@ export default function testQuiz() {
   console.log(myCircularQueue.enQueue(3)); // return True
   console.log(myCircularQueue.deQueue()); // return True
   console.log(myCircularQueue.Front()); // return 3
+  console.log("--");
+
+  myCircularQueue = new MyCircularQueue(7);
+  console.log(myCircularQueue.enQueue(0)); // return True
+  console.log(myCircularQueue.Front()); // return 0
+  console.log(myCircularQueue.enQueue(4)); // return True
+  console.log(myCircularQueue.Rear()); // return 4
+  console.log(myCircularQueue.enQueue(6)); // return True
+  console.log(myCircularQueue.enQueue(3)); // return True
+  console.log(myCircularQueue.Rear()); // return 3
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.Front()); // return 4
+  console.log(myCircularQueue.deQueue()); // return True
+  console.log(myCircularQueue.Front()); // return 6
+  console.log("--");
 }
