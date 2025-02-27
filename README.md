@@ -34,8 +34,9 @@
 - [React Router](https://reactrouter.com/home) [📔](utilities/react-router/Notes.md)
 - [Remix](https://remix.run/docs/en/main)
 - [React Redux](https://react-redux.js.org/introduction/getting-started)
-- [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/README.md)
-- [Deno](https://docs.deno.com/)
+- [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/readme.md)
+- [Deno](https://docs.deno.com/) [📔](utilities/deno/README.md)
+- [Astro](https://docs.astro.build/en/getting-started/) [📔](utilities/astro/README.md)
 - Animation
   - [Animate.css](https://animate.style/)
   - [React Spring](https://react-spring.io/)
