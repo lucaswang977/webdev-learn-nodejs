@@ -37,6 +37,7 @@
 - [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/) [📔](utilities/webcomponent/readme.md)
 - [Deno](https://docs.deno.com/) [📔](utilities/deno/README.md)
 - [Astro](https://docs.astro.build/en/getting-started/) [📔](utilities/astro/README.md)
+- [CSS Modules](https://github.com/css-modules/css-modules)
 - Animation
   - [Animate.css](https://animate.style/)
   - [React Spring](https://react-spring.io/)
