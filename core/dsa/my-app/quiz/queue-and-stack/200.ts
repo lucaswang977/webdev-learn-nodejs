@@ -1,48 +1,47 @@
-function numIslands(grid: string[][]): number {
+async function numIslands(grid: string[][]): number {
   const islands: Map<[number, number], number> = new Map();
   let current = 0;
 
   // walk one by one
-  // if current is "1"
-  //   search array of set for neighbours
-  //     if it has neighbour in one set, push it into this set
-  //     if it has neighbour in another set, merge the two sets
-  //     if no neighbour, add a new set, push it in
-  //
+  // find the first "1" && not in islands, current++
+  //   walk four directions to push every visited node to islands
+  //   no more nodes can be visited from this start point
+  // find the next "1"
   const m = grid.length;
   const n = grid[0].length;
 
+  async function walkFrom(row: number, col: number) {
+    console.log("walk start from:", row, col);
+    const neighbors = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ];
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    for (const v of neighbors) {
+      const ii = row + v[0];
+      const jj = col + v[1];
+      console.log("searching:", row, col, ii, jj);
+      if (
+        grid[ii] !== undefined &&
+        grid[ii][jj] !== undefined &&
+        grid[ii][jj] === "1" &&
+        islands.get([ii, jj]) === undefined
+      ) {
+        islands.set([ii, jj], current);
+        console.log("set2: ", ii, jj);
+        walkFrom(ii, jj);
+      }
+    }
+  }
+
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
-      if (grid[i][j] === "1") {
-        console.log(i, j, islands);
-        // up, down, left, right
-        const neighbours = [
-          islands.get([i - 1, j]),
-          islands.get([i + 1, j]),
-          islands.get([i, j - 1]),
-          islands.get([i, j + 1]),
-        ];
-        if (neighbours.find((v) => v !== undefined) === undefined) {
-          console.log(neighbours);
-          current++;
-          islands.set([i, j], current);
-        } else {
-          let temp = 0;
-          for (let l = 0; l < 4; l++) {
-            const t = neighbours[l];
-            if (t !== undefined && t > 0) {
-              if (temp > 0 && t !== temp) {
-                // change all the value t to temp
-                islands.forEach((v, key) => {
-                  if (v === t) islands.set(key, temp);
-                });
-              } else {
-                temp = t;
-              }
-            }
-          }
-        }
+      if (grid[i][j] === "1" && islands.get([i, j]) === undefined) {
+        islands.set([i, j], current);
+        console.log("set1: ", i, j);
+        await walkFrom(i, j);
       }
     }
   }
