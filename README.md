@@ -75,6 +75,7 @@
 - Alt/Option + Shift + Up/Down: Multiple cursors up/down
 - Ctrl/Cmd + Shift + ]: Switch between terminal tabs
 - Ctrl/Cmd + Alt/Option + Shift + ⬇/⬆: Create multiple cursors
+- Ctrl/Cmd + Alt/Option + I: Toggle Copilot Chat panel
 
 ### AI extensions
 
