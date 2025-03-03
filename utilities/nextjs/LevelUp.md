@@ -92,7 +92,7 @@
 - Goals: Architect applications, lead teams, and focus on scalability and maintainability.
 - Key Learning Areas:
   - System Design:
-    - Architecting scalable React and Next.js applications.
+    - Architect scalable React and Next.js applications.
     - Optimize API calls and caching.
     - Use microservices or serverless architecture.
   - Advanced Next.js Features:

@@ -23,7 +23,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/
     - [Feature queries](#feature-queries)
     - [Media queries](#media-queries)
   - [CSS containment (for performance optimization)](#css-containment-for-performance-optimization)
-  - [CSS container queries (for reponsive design)](#css-container-queries-for-reponsive-design)
+  - [CSS container queries (for responsive design)](#css-container-queries-for-responsive-design)
   - [Wrapping text](#wrapping-text)
   - [Font](#font)
   - [CSS gradients](#css-gradients)
@@ -67,7 +67,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/
 - ID selectors such as #example. :is(), :has(), and negation (:not()) pseudo-classes. 1-0-0
 - Class selectors such as .myClass, attribute selectors like [type="radio"] and [lang|="fr"], and pseudo-classes, such as :hover, :nth-of-type(3n), and :required. 0-1-0
 - Type selectors such as p, h1, and td, and pseudo-elements like ::before, ::placeholder, and all other selectors with double-colon notation. 0-0-1
-- Universal selector (\*), combinators (+, >, ~), and negation pseudo-class (:not()) do not affect specificity. 0-0-0
+- Universal selector (\*), combinator (+, >, ~), and negation pseudo-class (:not()) do not affect specificity. 0-0-0
 - Combinator and nesting combinator(&) do not add weight.
 
 ## Display type (Box model)
@@ -170,7 +170,7 @@ flex shorthand:
 - flex: 1 == flex: 1 1 0;
 - flex: 2 == flex: 2 1 0;
 
-auto magin for main axis alignment:
+auto margin for main axis alignment:
 
 ```CSS
 .box {
@@ -314,14 +314,14 @@ Types of alignment
 - Baseline alignment: baseline, first baseline, last baseline
 - Distributed alignment: stretch, space-between, space-around, space-evenly
 
-| Method          |    Block    |  Absolute   |    Float    |   Table   |  Flexbox   |        Grid |
-| :-------------- | :---------: | :---------: | :---------: | :-------: | :--------: | ----------: |
-| justify-content |  not apply  |  not apply  |  not apply  | not apply | main axis  | inline axis |
-| justify-self    | inline axis | inline axis | inline axis | not apply | not apply  | inline axis |
-| justify-items   | inline axis | inline axis | inline axis | not apply | not apply  | inline axis |
-| align-content   | block axis  | block axis  | block axis  | not apply | cross axis |  block axis |
-| align-items     |  not apply  |  not apply  |  not apply  | not apply | cross axis |  block axis |
-| align-self      |  not apply  |  not apply  |  not apply  | not apply | cross axis |  block axis |
+| Method          |    Block    |  Absolute   |    Float    | Table |  Flexbox   |        Grid |
+| :-------------- | :---------: | :---------: | :---------: | :---: | :--------: | ----------: |
+| justify-content |      -      |      -      |      -      |   -   | main axis  | inline axis |
+| justify-self    | inline axis | inline axis | inline axis |   -   |     -      | inline axis |
+| justify-items   | inline axis | inline axis | inline axis |   -   |     -      | inline axis |
+| align-content   | block axis  | block axis  | block axis  |   -   | cross axis |  block axis |
+| align-items     |      -      |      -      |      -      |   -   | cross axis |  block axis |
+| align-self      |      -      |      -      |      -      |   -   | cross axis |  block axis |
 
 ## Using relative colors
 
@@ -455,7 +455,7 @@ An element becomes "relevant to the user" if any of the following are true:
 - The element or its contents are selected, for example by dragging over the text with the mouse cursor or by some other highlight operation.
 - The element or its contents are placed in the top layer.
 
-## CSS container queries (for reponsive design)
+## CSS container queries (for responsive design)
 
 ```CSS
 .post {
