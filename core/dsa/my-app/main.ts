@@ -1,3 +1,3 @@
-import testQuiz from "./quiz/queue-and-stack/200";
+import testQuiz from "./quiz/queue-and-stack/752";
 
 testQuiz();
