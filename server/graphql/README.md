@@ -3,6 +3,7 @@
 https://graphql.org/learn/
 https://www.apollographql.com/tutorials/
 https://the-guild.dev/graphql/yoga-server/tutorial/basic
+https://roadmap.sh/graphql
 
 ## Core Concepts
 ### Introduction
