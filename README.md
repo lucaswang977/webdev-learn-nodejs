@@ -21,7 +21,6 @@
 - Learn React by reading [React official documents](https://react.dev/learn) [📔](core/reactjs/react.dev/ReactLearn.md)
 - Learn Javascript by reading documents from [javascript.info](https://javascript.info/) [📔](core/javascript/the-modern-javascript-tutorial/TMJT.md)
 - Learn Typescript by reading [official handbook](https://www.typescriptlang.org/docs/handbook/intro.html) [📔](core/typescript/HandbookNotes.md)
-- Learn Data Structures and Algorithms on [LeetCode](https://leetcode.com) [📔](core/dsa/Plan.md)
 
 ## Utilities learning
 
