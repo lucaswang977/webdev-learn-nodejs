@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { colors, mq } from "../styles";
 import { humanReadableTimeFromSeconds } from "../utils/helpers";
-import type { Track } from "../__generated__/graphql";
 import { Link } from "react-router-dom";
+import type { Track } from "../__generated__/graphql";
 
 /**
  * Track Card component renders basic info in a card format
