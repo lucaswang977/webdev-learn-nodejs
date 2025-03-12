@@ -2,6 +2,15 @@
 
 https://web.dev/learn/accessibility
 
+- [Learn Accessibility](#learn-accessibility)
+  - [What is digital accessibility, and why does it matter?](#what-is-digital-accessibility-and-why-does-it-matter)
+  - [How is digital accessibility measured?](#how-is-digital-accessibility-measured)
+  - [ARIA and HTML](#aria-and-html)
+  - [Content structure](#content-structure)
+  - [The Document](#the-document)
+  - [Keyboard focus](#keyboard-focus)
+  - [JavaScript](#javascript)
+
 ## What is digital accessibility, and why does it matter?
 * Digital accessibility is the practice of ensuring that all users, including those with disabilities, can access and use digital content and services.
 * It matters because it promotes inclusivity, improves user experience, and is often required by law.
@@ -60,7 +69,54 @@ https://web.dev/learn/accessibility
     ```HTML
     <p lang="fr">Bonjour</p>
     ```
-* iFrames: Use the `title` attribute to provide a descriptive title for the iframe content. It is good to set the scrolling to "yes" or "auto" to allows people with low vision to be able to scroll into content within the <iframe> that they might not otherwise be able to see.
+* iFrames: Use the `title` attribute to provide a descriptive title for the iframe content. It is good to set the scrolling to "yes" or "auto" to allows people with low vision to be able to scroll into content within the `<iframe>` that they might not otherwise be able to see.
   ```HTML
   <iframe src="https://example.com" title="Example Content" scrolling="auto"></iframe>
   ```
+
+## Keyboard focus
+* Keyboard support for all of these disabilities and circumstances is critical. A large part of keyboard accessibility is centered around focus. 
+* Focus refers to the element on the screen actively receiving input from the keyboard.
+* Focus order: also called tab or navigation order, is the order in which elements receive focus. The default focus order must be logical, intuitive, and match the visual order of a page.
+  * Tabindex: 
+    * The focus order begins with elements that have a positive tabindex attribute (if there are any) and moves from the smallest positive number to the largest (such as 1, 2, 3). 
+    * When a tabindex of zero (tabindex="0") is applied to normally unfocusable elements, they are added into the natural focus order of the page according to the way they appear in the DOM.
+    * A negative tabindex (tabindex="-1") removes an element from the focus order, but it can still be focused programmatically.
+    * Avoid using positive tabindex values unless absolutely necessary, as it can lead to a non-intuitive tab order and disrupt the natural flow.
+  * Skip links: 
+    * Skip links are anchor links that jump to a different section of the same page, using that section's ID, instead of sending the user to another page on the website or an external resource.
+    * Skip links are typically added as the first focusable element a user will encounter when arriving at a website and can be visible or visually hidden until a user tabs to it.
+    * When a user presses the tab key, and an active skip link is in place, it sends the keyboard focus to the skip link.
+* Focus indicator
+  * Browser default styling: don't override the browser's default styling.
+  * Custom styles: Adhere to a 3:1 color contrast ratio for all focus indicators to meet WCAG 2.2's Focus Appearance (Minimum).
+
+## JavaScript
+* Trigger events
+  * It's critical that you add keyboard support to your JavaScript actions, as it affects all of these users.
+  * If an onClick() event is used on a semantic HTML element such as a <button> or <a>, it naturally includes both mouse and keyboard functionality.
+  * If a non-semantic element is used for a trigger event, a keydown/keyup event must be added to detect the enter or space key press.
+* Page titles
+  * The transitions or routes of SPA often forget to update the page title when the content changes.
+  * Use the `document.title` property to update the page title dynamically.
+* Dynamic content
+
+| Possible misuse                                                                | Correct use                                                                                                                                                     |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Render large chunks of non-semantic HTML                                       | Render smaller pieces of semantic HTML                                                                                                                          |
+| Not allowing time for dynamic content to be recognized by assistive technology | Using a setTimeout() time delay to allow users to hear the full message                                                                                         |
+| Applying style attributes for onFocus() dynamically                            | Use :focus for the related elements in your CSS stylesheet                                                                                                      |
+| Applying inline styles may cause user stylesheets to not be read properly      | Keep your styles in CSS files to keep the consistency of the theme                                                                                              |
+| Creating very large JavaScript files that slow down overall s                  | Use less JavaScript. You may be able to perform similar functions in CSS (such as animations or sticky navigation), which parse faster and are more performant. |
+
+* Focus management
+  * Component level
+    * One of the most common patterns where users experience focus management issues is in a modal component.
+    * A keyboard-only user should never be allowed outside of the modal without explicitly dismissing it.
+  * Page level
+    * When transitioning between pages (or routing), the development team must decide where the focus goes when the page loads.
+* State management
+  * Component level: Depending on your page content and what information your users need, there are many ARIA states to consider when relaying information about a component to the user.
+  * Page level
+    * Developers often use a visually hidden area called the ARIA live region to announce changes on the screen and alert messages to assistive technology (AT) users.
+    * This area can be paired with JavaScript to notify users of dynamic changes to the page without requiring the entire page to reload.

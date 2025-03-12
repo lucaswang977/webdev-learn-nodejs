@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" />
     <link href="styles/style.scss" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frontend Mentor | Fylo landing page with two column layout</title>
   </head>
   <body>
     <header>
-      <img role="heading" aria-roledescription="logo" src="" alt="Fylo" />
+      <img
+        role="heading"
+        aria-roledescription="logo"
+        src="img/logo.svg"
+        alt="Fylo"
+      />
       <nav role="navigation">
         <a href="">Features</a>
         <a href="">Team</a>
@@ -17,23 +22,75 @@
       </nav>
     </header>
     <main>
-      All your files in one secure location, accessible anywhere. Fylo stores
-      your most important files in one secure location. Access them wherever you
-      need, share and collaborate with friends, family, and co-workers. Get
-      Started Stay productive, wherever you are Never let location be an issue
-      when accessing your files. Fylo has you covered for all of your file
-      storage needs. Securely share files and folders with friends, family and
-      colleagues for live collaboration. No email attachments required! See how
-      Fylo works Fylo has improved our team productivity by an order of
-      magnitude. Since making the switch our team has become a well-oiled
-      collaboration machine. Kyle Burton Founder & CEO, Huddle Get early access
-      today It only takes a minute to sign up and our free starter tier is
-      extremely generous. If you have any questions, our support team would be
-      happy to help you. Get Started For Free
+      <section>
+        <p role="heading">
+          All your files in one secure location, accessible anywhere.
+        </p>
+        <p>
+          Fylo stores your most important files in one secure location. Access
+          them wherever you need, share and collaborate with friends, family,
+          and co-workers.
+        </p>
+        <form action="submit">
+          <input type="text" placeholder="Enter your email..." />
+          <button>Get Started</button>
+        </form>
+      </section>
+      <section>
+        <p role="heading">Stay productive, wherever you are</p>
+        <p>
+          Never let location be an issue when accessing your files. Fylo has you
+          covered for all of your file storage needs.
+        </p>
+        <p>
+          Securely share files and folders with friends, family and colleagues
+          for live collaboration. No email attachments required!
+        </p>
+        <button>See how Fylo works</button>
+      </section>
+      <section>
+        <p>
+          Fylo has improved our team productivity by an order of magnitude.
+          Since making the switch our team has become a well-oiled collaboration
+          machine.
+        </p>
+        <span>
+          <img src="img/avatar-testimonial.jpg" alt="Kyle Burton" />
+          <p>Kyle Burton</p>
+          <p>Founder & CEO, Huddle</p>
+        </span>
+      </section>
+      <section>
+        <p role="heading">Get early access today</p>
+        <p>
+          It only takes a minute to sign up and our free starter tier is
+          extremely generous. If you have any questions, our support team would
+          be happy to help you.
+        </p>
+        <form action="submit">
+          <input type="text" placeholder="email@example.com" />
+          <button>Get Started For Free</button>
+        </form>
+      </section>
     </main>
     <footer>
-      Phone: +1-543-123-4567 example@fylo.com About Us Jobs Press Blog Contact
-      Us Terms Privacy
+      <img src="img/logo.svg" alt="Logo" />
+      <p>Phone: +1-543-123-4567</p>
+      <p>example@fylo.com</p>
+      <nav>
+        <a href="">About Us</a>
+        <a href="">Jobs</a>
+        <a href="">Press</a>
+        <a href="">Blog </a>
+        <a href="">Contact Us</a>
+        <a href="">Terms</a>
+        <a href="">Privacy</a>
+      </nav>
+      <section>
+        <a href=""><img src="" alt="Facebook" /></a>
+        <a href=""><img src="" alt="Twitter" /></a>
+        <a href=""><img src="" alt="Instagram" /></a>
+      </section>
     </footer>
   </body>
 </html>
