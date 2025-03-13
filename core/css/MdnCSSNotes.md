@@ -3,6 +3,7 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/
 
 - [MDN CSS Learning Notes](#mdn-css-learning-notes)
+  - [To learn](#to-learn)
   - [Selectors](#selectors)
   - [Specificity](#specificity)
   - [Display type (Box model)](#display-type-box-model)
@@ -36,6 +37,9 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/
   - [Scroll snap](#scroll-snap)
   - [CSS generated content](#css-generated-content)
   - [Explain CSS Arrow Please](#explain-css-arrow-please)
+
+## To learn
+* data- attributes
 
 ## Selectors
 

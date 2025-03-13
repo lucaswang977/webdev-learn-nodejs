@@ -53,6 +53,7 @@
 
 ### Quiz and challenges
 
+- [CodePen Trending](https://codepen.io/trending)
 - [Frontend Mentor](https://www.frontendmentor.io/)
 - [Advent of CSS](https://www.adventofcss.com/)
 - [Advent of JS](https://adventofjs.com/)
