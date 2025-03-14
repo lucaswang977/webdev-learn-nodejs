@@ -18,6 +18,7 @@ body {
 }
 
 /* 5. Improve media defaults */
+a,
 img,
 picture,
 video,
@@ -65,4 +66,11 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+/*
+  10. Other
+*/
+a {
+  text-decoration: none;
 }

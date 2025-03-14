@@ -1,0 +1,24 @@
+@use "variables" as vars;
+
+.header-top {
+  visibility: hidden;
+}
+
+.header-main {
+  padding: 20px 0;
+  border-bottom: 1px solid vars.$color-cultured;
+}
+
+.header-logo {
+  margin-bottom: 20px;
+
+  img {
+    margin: auto;
+  }
+}
+
+.header-search-container {
+  input {
+    width: 100%;
+  }
+}
