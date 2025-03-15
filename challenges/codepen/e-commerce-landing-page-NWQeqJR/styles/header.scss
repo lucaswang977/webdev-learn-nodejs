@@ -18,7 +18,15 @@
 }
 
 .header-search-container {
+  position: relative;
   input {
     width: 100%;
+  }
+  button {
+    .search-icon {
+      color: vars.$color-onyx;
+      width: 18px;
+      height: 18px;
+    }
   }
 }
