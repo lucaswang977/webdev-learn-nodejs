@@ -5,8 +5,12 @@
 }
 
 .header-main {
-  padding: 20px 0;
+  padding: 20px 0px;
   border-bottom: 1px solid vars.$color-cultured;
+
+  .header-container {
+    padding: 0 15px;
+  }
 }
 
 .header-logo {
@@ -19,14 +23,26 @@
 
 .header-search-container {
   position: relative;
-  input {
-    width: 100%;
+
+  .search-field {
+    font-size: vars.$fs-7;
+    color: vars.$color-onyx;
+    padding: 10px 15px;
+    padding-right: 50px;
+    border: 1px solid vars.$color-cultured;
+    border-radius: vars.$border-radius-medium;
   }
-  button {
-    .search-icon {
-      color: vars.$color-onyx;
-      width: 18px;
-      height: 18px;
+  .search-btn {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    transform: translateY(-50%);
+    color: vars.$color-onyx;
+    font-size: 18px;
+    padding: 8px 15px;
+
+    ion-icon {
+      display: block;
     }
   }
 }
