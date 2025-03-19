@@ -2,7 +2,10 @@
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  list-style: none;
 }
 
 /* 2. Remove default margin */
@@ -76,6 +79,7 @@ a {
 }
 
 button {
+  display: block;
   background: none;
   font: inherit;
   border: none;
@@ -85,4 +89,8 @@ button {
 input {
   display: block;
   width: 100%;
+}
+
+ion-icon {
+  display: block;
 }

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/poppins':
+        specifier: ^5.2.5
+        version: 5.2.5
       ionicons:
         specifier: ^7.4.0
         version: 7.4.0
@@ -176,6 +179,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/poppins@5.2.5':
+    resolution: {integrity: sha512-1S3k45pZOz2jqGPPqKw0in3uxFwnB+d5jSU8Tp9YwH/dIJptE3jdkQbYN0QD861GtuOpn6QhPW/yKt1w7hVRBQ==}
 
   '@rollup/rollup-android-arm-eabi@4.35.0':
     resolution: {integrity: sha512-uYQ2WfPaqz5QtVgMxfN6NpLD+no0MYHDBywl7itPYd3K5TjjSghNKmX8ic9S8NU8w81NVhJv/XojcHptRly7qQ==}
@@ -636,6 +642,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.1':
     optional: true
+
+  '@fontsource/poppins@5.2.5': {}
 
   '@rollup/rollup-android-arm-eabi@4.35.0':
     optional: true
