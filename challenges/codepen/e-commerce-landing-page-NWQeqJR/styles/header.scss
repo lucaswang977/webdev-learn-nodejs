@@ -97,6 +97,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: 0.5s ease;
   padding: 20px;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
 
   &.active {
     left: 0;
@@ -122,6 +124,105 @@
 
       ion-icon {
         --ionicon-stroke-width: 50px;
+      }
+    }
+  }
+
+  .menu-category-list {
+    margin-bottom: 30px;
+    .menu-category-item {
+      border-bottom: 1px solid vars.$color-cultured;
+
+      .menu-title {
+        padding: 12px 0px;
+        color: vars.$color-onyx;
+        font-size: vars.$fs-6;
+        font-weight: vars.$fw-500;
+      }
+
+      .menu-accordion {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        ion-icon {
+          --ionicon-stroke-width: 90px;
+        }
+
+        div {
+          font-size: 14px;
+        }
+
+        .hidden {
+          display: none;
+        }
+      }
+
+      .menu-subcategory-list {
+        margin-left: 10px;
+        visibility: hidden;
+        max-height: 0px;
+        transition: 0.5s ease;
+        overflow: hidden;
+
+        &.active {
+          max-height: 144px;
+          visibility: visible;
+        }
+
+        .menu-subcategory-item {
+          .subcategory-title {
+            font-size: vars.$fs-6;
+            color: vars.$color-sonic-silver;
+            font-weight: vars.$fw-300;
+            padding: 6px 0px;
+          }
+        }
+      }
+    }
+  }
+
+  .menu-bottom {
+    .menu-category-item {
+      border: none;
+    }
+
+    .menu-category-list {
+      .menu-category-item {
+        .menu-title {
+          font-size: vars.$fs-4;
+          font-weight: vars.$fw-500;
+        }
+
+        .menu-subcategory-list {
+          margin-bottom: 20px;
+          border: 1px solid vars.$color-cultured;
+          border-radius: vars.$border-radius-medium;
+          padding: 0 15px;
+          margin-left: 0;
+          box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.05);
+        }
+
+        .menu-subcategory-item:not(:last-child) {
+          border-bottom: 1px solid vars.$color-cultured;
+        }
+      }
+    }
+    .menu-bottom-social {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      .social-link {
+        background-color: vars.$color-cultured;
+        color: vars.$color-eerie-black;
+        font-size: 20px;
+        padding: 10px;
+        border-radius: vars.$border-radius-medium;
+      }
+      .social-icon {
       }
     }
   }
