@@ -5,7 +5,21 @@ https://react.dev/learn
 - [React.dev Learn](#reactdev-learn)
   - [Quick Start](#quick-start)
   - [Thinking in React](#thinking-in-react)
+    - [Step 1: Break the UI into a component hierarchy](#step-1-break-the-ui-into-a-component-hierarchy)
+    - [Step 2: Build a static version in React](#step-2-build-a-static-version-in-react)
+    - [Step 3: Find the minimal but complete representation of UI state](#step-3-find-the-minimal-but-complete-representation-of-ui-state)
+    - [Step 4: Identify where your state should live](#step-4-identify-where-your-state-should-live)
+    - [Step 5: Add inverse data flow](#step-5-add-inverse-data-flow)
   - [Describing the UI](#describing-the-ui)
+    - [Your first component](#your-first-component)
+    - [Importing and Exporting Components](#importing-and-exporting-components)
+    - [Writing Markup with JSX](#writing-markup-with-jsx)
+    - [JavaScript in JSX with Curly Braces](#javascript-in-jsx-with-curly-braces)
+    - [Passing Props to a Component](#passing-props-to-a-component)
+    - [Conditional Rendering](#conditional-rendering)
+    - [Rendering Lists](#rendering-lists)
+    - [Keeping Components Pure](#keeping-components-pure)
+    - [Understanding Your UI as a Tree](#understanding-your-ui-as-a-tree)
   - [Adding Interactivity](#adding-interactivity)
   - [Managing State](#managing-state)
   - [Escape Hatches](#escape-hatches)
@@ -25,32 +39,260 @@ https://react.dev/learn
 
 ## Thinking in React
 
-- Start with the mockup - Step 1: Break the UI into a component hierarchy
-  - Programming: single responsibility principle
-  - CSS: class selectors, granular than components
-  - Design: organize the design's layers
-  - Identified the components in the mockup, arrange them into a hierarchy.
-- Step 2: Build a static version in React
-  - At this point, you should not be using any state values.
-  - The component at the top of the hierarchy will take your data model as a prop.
-  - one-way data flow
-- Step 3: Find the minimal but complete representation of UI state
-  - Think of state as the minimal set of changing data that your app needs to remember.
-  - The most important principle for structuring state is to keep it DRY (Don't Repeat Yourself).
-  - Which of these are state?
-    - Does it remain unchanged over time? If so, it isn't state.
-    - Is it passed in from a parent via props? If so, it isn't state.
-    - Can you compute it based on existing state or props in your component? If so, it definitely isn't state!
-- Step 4: Identify where your state should live
-  - Often, you can put the state directly into their common parent.
-  - You can also put the state into some component above their common parent.
-  - If you can't find a component where it makes sense to own the state, create a new component solely for holding the state and add it somewhere in the hierarchy above the common parent component.
-- Step 5: Add inverse data flow
-  - You will need to support data flowing the other way: the components deep in the hierarchy need to update the state in the common parent component.
+- Start with the mockup 
+
+### Step 1: Break the UI into a component hierarchy
+- Programming: single responsibility principle
+- CSS: class selectors, granular than components
+- Design: organize the design's layers
+- Identified the components in the mockup, arrange them into a hierarchy.
+
+### Step 2: Build a static version in React
+- At this point, you should not be using any state values.
+- The component at the top of the hierarchy will take your data model as a prop.
+- one-way data flow
+
+### Step 3: Find the minimal but complete representation of UI state
+- Think of state as the minimal set of changing data that your app needs to remember.
+- The most important principle for structuring state is to keep it DRY (Don't Repeat Yourself).
+- Which of these are state?
+  - Does it remain unchanged over time? If so, it isn't state.
+  - Is it passed in from a parent via props? If so, it isn't state.
+  - Can you compute it based on existing state or props in your component? If so, it definitely isn't state!
+
+### Step 4: Identify where your state should live
+- Often, you can put the state directly into their common parent.
+- You can also put the state into some component above their common parent.
+- If you can't find a component where it makes sense to own the state, create a new component solely for holding the state and add it somewhere in the hierarchy above the common parent component.
+
+### Step 5: Add inverse data flow
+- You will need to support data flowing the other way: the components deep in the hierarchy need to update the state in the common parent component.
 
 ## Describing the UI
+* React is a JavaScript library for rendering user interfaces (UI). 
+* UI is built from small units like buttons, text, and images. 
+* React lets you combine them into **reusable, nestable components**. 
 
-- React assumes that every component you write is a pure function. A pure function:
+### Your first component
+* Components are one of the core concepts of React.
+* Components: UI building blocks: React lets you combine your markup, CSS, and JavaScript into custom "components", reusable UI elements for your app.
+* Defining a component
+  * Step 1: Export the component
+  * Step 2: Define the function
+  * Step 3: Add markup
+    ```Javascript
+    // Without parentheses, any code on the lines after return will be ignored!
+    return (
+      <div>
+        <img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson" />
+      </div>
+    );
+    ```
+* Using a component
+  * Components are regular JavaScript functions, so you can keep multiple components in the same file.
+    ```Javascript
+    function Profile() {
+      return (
+        <img
+          src="https://i.imgur.com/MK3eW3As.jpg"
+          alt="Katherine Johnson"
+        />
+      );
+    }
+    export default function Gallery() {
+      return (
+        <section>
+          <h1>Amazing scientists</h1>
+          <Profile />
+          <Profile />
+          <Profile />
+        </section>
+      );
+    }
+    ```
+  * When a child component needs some data from a parent, pass it by props instead of nesting definitions.
+  * Components can render other components, but you must never nest their definitions.
+    ```Javascript
+    export default function Gallery() {
+      // ...
+    }
+
+    // ✅ Declare components at the top level
+    function Profile() {
+      // ...
+    }
+    ```
+  * Your React application begins at a "root" component. Usually, it is created automatically when you start a new project. 
+
+### Importing and Exporting Components
+* The magic of components lies in their reusability: you can create components that are composed of other components. 
+* But as you nest more and more components, it often makes sense to start splitting them into different files. 
+* This lets you keep your files easy to scan and reuse components in more places.
+* The root component file
+  * The root component is the first component that React renders. It is usually created automatically when you start a new project.
+  * The root component is usually called App.js or App.jsx.
+* Exporting and importing a component
+  ```Javascript
+  import Gallery from './Gallery.js';
+
+  export default function App() {
+    return (
+      <Gallery />
+    );
+  }
+  ```
+  * There are two primary ways to export values with JavaScript: `default exports` and `named exports`.
+
+    | Syntax  | Export statement                      | Import statement                        |
+    | ------- | ------------------------------------- | --------------------------------------- |
+    | Default | `export default function Button() {}` | `import Button from './Button.js';`     |
+    | Named   | `export function Button() {}`         | `import { Button } from './Button.js';` |
+* Exporting and importing multiple components from the same file
+  * A file can only have one default export, but it can have numerous named exports!
+  * To reduce the potential confusion between default and named exports, some teams choose to only stick to one style (default or named), or avoid mixing them in a single file.
+
+    ```Javascript
+    import Gallery from './Gallery.js';
+    import { Profile } from './Gallery.js';
+
+    export default function App() {
+      return (
+        <Profile />
+      );
+    }
+    ```
+### Writing Markup with JSX
+* JSX: Putting markup into JavaScript
+* The Rules of JSX
+  * Return a single root element
+  * Close all the tags
+  * camelCase all most of the things!
+    * For historical reasons, aria-* and data-* attributes are written as in HTML with dashes.
+* This empty tag \<>\</> is called a Fragment. Fragments let you group things without leaving any trace in the browser HTML tree.
+* JSX looks like HTML, but under the hood it is transformed into plain JavaScript objects. You can’t return two objects from a function without wrapping them into an array.
+
+### JavaScript in JSX with Curly Braces
+* JSX is a special way of writing JavaScript. That means it’s possible to use JavaScript inside it—with curly braces { }.
+  ```Javascript
+  const today = new Date();
+
+  function formatDate(date) {
+    return new Intl.DateTimeFormat(
+      'en-US',
+      { weekday: 'long' }
+    ).format(date);
+  }
+
+  export default function TodoList() {
+    return (
+      <h1>To Do List for {formatDate(today)}</h1>
+    );
+  }
+  ```
+* You can only use curly braces in two ways inside JSX:
+  * As text directly inside a JSX tag: \<h1>{name}'s To Do List\</h1> works, but \<{tag}>Gregorio Y. Zara's To Do List\</{tag}> will not.
+  * As attributes immediately following the = sign: src={avatar} will read the avatar variable, but src="{avatar}" will pass the string "{avatar}".
+* Using "double curlies": CSS and other objects in JSX (it’s nothing more than an object inside the JSX curlies)
+  ```Javascript
+  export default function TodoList() {
+    return (
+      <ul style={{
+        backgroundColor: 'black',
+        color: 'pink'
+      }}>
+        <li>Improve the videophone</li>
+        <li>Prepare aeronautics lectures</li>
+        <li>Work on the alcohol-fuelled engine</li>
+      </ul>
+    );
+  }
+  ```
+* Notice: Inline style properties are written in camelCase. 
+  * For example, HTML \<ul style="background-color: black"> would be written as \<ul style={{ backgroundColor: 'black' }}>  in your component.
+
+### Passing Props to a Component
+* Props are the information that you pass to a JSX tag.
+* Step 1: Pass props to the child component
+  ```Javascript
+  export default function Profile() {
+    return (
+      <Avatar
+        person={{ name: 'Lin Lanying', imageId: '1bX5QH6' }}
+        size={100}
+      />
+    );
+  }
+  ```
+* Step 2: Read props inside the child component
+  ```Javascript
+  // destructuring from "props"
+  function Avatar({ person, size }) {
+    return (
+      <img
+        className="avatar"
+        src={getImageUrl(person)}
+        alt={person.name}
+        width={size}
+        height={size}
+      />
+    );
+  }
+  ```
+* Specifying a default value for a prop
+  ```Javascript
+  // The default value is only used if the size prop is missing or if you pass size={undefined}.
+  function Avatar({ person, size = 100 }) {
+    // ...
+  }
+  ```
+* Forwarding props with the JSX spread syntax
+  ```Javascript
+  function Profile(props) {
+    return (
+      <div className="card">
+        <Avatar {...props} />
+      </div>
+    );
+  }
+  ```
+  * Use spread syntax with restraint. If you're using it in every other component, something is wrong. Often, it indicates that you should split your components and pass children as JSX.
+* Passing JSX as children
+  * When you nest content inside a JSX tag, the parent component will receive that content in a prop called children.
+  * You can think of a component with a children prop as having a "hole" that can be "filled in" by its parent components with arbitrary JSX.
+  ```Javascript
+  function Card({ children }) {
+    return (
+      <div className="card">
+        {children}
+      </div>
+    );
+  }
+
+  export default function Profile() {
+    return (
+      <Card>
+        <Avatar
+          size={100}
+          person={{ 
+            name: 'Katsuko Saruhashi',
+            imageId: 'YfeOqp2'
+          }}
+        />
+      </Card>
+    );
+  }
+  ```
+* How props change over time
+  * A component may receive different props over time. Props are not always static.
+  * However, props are immutable—a term from computer science meaning "unchangeable". 
+  * Don’t try to "change props". Instead, think of props as a snapshot of the data at a given moment in time. If you want to change the data, you need to "ask" its parent component to pass it different props.
+
+### Conditional Rendering
+### Rendering Lists
+### Keeping Components Pure
+### Understanding Your UI as a Tree
+
+- React assumes that every component you write is a `pure function`. A pure function:
   - Minds its own business. It does not change any objects or variables that existed before it was called.
   - Same inputs, same output. Given the same inputs, a pure function should always return the same result.
 - React uses trees to model the relationships between components and modules. A React render tree is a representation of the parent and child relationship between components.
