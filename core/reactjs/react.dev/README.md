@@ -21,6 +21,13 @@ https://react.dev/learn
     - [Keeping Components Pure](#keeping-components-pure)
     - [Understanding Your UI as a Tree](#understanding-your-ui-as-a-tree)
   - [Adding Interactivity](#adding-interactivity)
+    - [Responding to Events](#responding-to-events)
+    - [State: A Component's Memory](#state-a-components-memory)
+    - [Render and Commit](#render-and-commit)
+    - [State as a Snapshot](#state-as-a-snapshot)
+    - [Queueing a Series of State Updates](#queueing-a-series-of-state-updates)
+    - [Updating Objects in State](#updating-objects-in-state)
+    - [Updating Arrays in State](#updating-arrays-in-state)
   - [Managing State](#managing-state)
   - [Escape Hatches](#escape-hatches)
 
@@ -288,76 +295,715 @@ https://react.dev/learn
   * Don’t try to "change props". Instead, think of props as a snapshot of the data at a given moment in time. If you want to change the data, you need to "ask" its parent component to pass it different props.
 
 ### Conditional Rendering
-### Rendering Lists
-### Keeping Components Pure
-### Understanding Your UI as a Tree
+* Your components will often need to display different things depending on different conditions.
+* Conditionally returning JSX 
+  ```Javascript
+  function Item({ name, isPacked }) {
+    if (isPacked) {
+      return <li className="item">{name} ✅</li>;
+    }
+    return <li className="item">{name}</li>;
+  }
 
-- React assumes that every component you write is a `pure function`. A pure function:
+  export default function PackingList() {
+    return (
+      <section>
+        <h1>Sally Ride's Packing List</h1>
+        <ul>
+          <Item 
+            isPacked={true} 
+            name="Space suit" 
+          />
+          <Item 
+            isPacked={true} 
+            name="Helmet with a golden leaf" 
+          />
+          <Item 
+            isPacked={false} 
+            name="Photo of Tam" 
+          />
+        </ul>
+      </section>
+    );
+  }
+  ```
+* Conditionally returning nothing with null
+  ```Javascript
+  function Item({ name, isPacked }) {
+    if (isPacked) {
+      return null;
+    }
+    return <li className="item">{name}</li>;
+  }
+
+  export default function PackingList() {
+    return (
+      <section>
+        <h1>Sally Ride's Packing List</h1>
+        <ul>
+          <Item 
+            isPacked={true} 
+            name="Space suit" 
+          />
+          <Item 
+            isPacked={true} 
+            name="Helmet with a golden leaf" 
+          />
+          <Item 
+            isPacked={false} 
+            name="Photo of Tam" 
+          />
+        </ul>
+      </section>
+    );
+  }
+  ```
+* Conditional (ternary) operator (? :) 
+  ```Javascript
+  function Item({ name, isPacked }) {
+    return (
+      <li className="item">
+        {isPacked ? (
+          <del>
+            {name + ' ✅'}
+          </del>
+        ) : (
+          name
+        )}
+      </li>
+    );
+  }
+
+  export default function PackingList() {
+    return (
+      <section>
+        <h1>Sally Ride's Packing List</h1>
+        <ul>
+          <Item 
+            isPacked={true} 
+            name="Space suit" 
+          />
+          <Item 
+            isPacked={true} 
+            name="Helmet with a golden leaf" 
+          />
+          <Item 
+            isPacked={false} 
+            name="Photo of Tam" 
+          />
+        </ul>
+      </section>
+    );
+  }
+  ```
+  * If your components get messy with too much nested conditional markup, consider extracting child components to clean things up.
+* Logical AND operator (&&) 
+  * A JavaScript && expression returns the value of its right side (in our case, the checkmark) if the left side (our condition) is true. But if the condition is false, the whole expression becomes false. 
+  * React considers false as a "hole" in the JSX tree, just like null or undefined, and doesn’t render anything in its place.
+  ```Javascript
+  function Item({ name, isPacked }) {
+    return (
+      <li className="item">
+        {name} {isPacked && '✅'}
+      </li>
+    );
+  }
+  ```
+* Conditionally assigning JSX to a variable
+  ```Javascript
+  function Item({ name, isPacked }) {
+    let itemContent = name;
+    if (isPacked) {
+      itemContent = (
+        <del>
+          {name + " ✅"}
+        </del>
+      );
+    }
+    return (
+      <li className="item">
+        {itemContent}
+      </li>
+    );
+  }
+  ```
+
+### Rendering Lists
+* Rendering data from arrays 
+* Keeping list items in order with key
+  ```Javascript
+  export default function List() {
+    const listItems = people.map(person =>
+      <li key={person.id}>
+        <img
+          src={getImageUrl(person)}
+          alt={person.name}
+        />
+        <p>
+          <b>{person.name}</b>
+            {' ' + person.profession + ' '}
+            known for {person.accomplishment}
+        </p>
+      </li>
+    );
+    return <ul>{listItems}</ul>;
+  }
+  ```
+* Displaying several DOM nodes for each list item
+  ```Javascript
+  import { Fragment } from 'react';
+
+  // ...
+
+  const listItems = people.map(person =>
+    <Fragment key={person.id}>
+      <h1>{person.name}</h1>
+      <p>{person.bio}</p>
+    </Fragment>
+  );
+  ```
+* Rules of keys
+  * Keys must be unique among siblings. However, it's okay to use the same keys for JSX nodes in different arrays.
+  * Keys must not change or that defeats their purpose! Don't generate them while rendering.
+* Where to get your key
+  * Data from a database: If your data is coming from a database, you can use the database keys/IDs, which are unique by nature.
+  * Locally generated data: If your data is generated and persisted locally (e.g. notes in a note-taking app), use an incrementing counter, crypto.randomUUID() or a package like uuid when creating items.
+
+### Keeping Components Pure
+- A pure function:
   - Minds its own business. It does not change any objects or variables that existed before it was called.
   - Same inputs, same output. Given the same inputs, a pure function should always return the same result.
-- React uses trees to model the relationships between components and modules. A React render tree is a representation of the parent and child relationship between components.
-- Components can render other components, but you must never nest their definitions. When a child component needs some data from a parent, pass it by props instead of nesting definitions.
-- The Rules of JSX
-  - Return a single root element
-  - Close all the tags
-  - camelCase all most of the things!
-- You can only use curly braces in two ways inside JSX:
-  - **As text** directly inside a JSX tag: &lt;h1&gt;{name}'s To Do List&lt;/h1&gt; works, but &lt;{tag}&gt;Gregorio Y. Zara's To Do List&lt;/{tag}&gt; will not.
-  - **As attributes** immediately following the = sign: src={avatar} will read the avatar variable, but src="{avatar}" will pass the string "{avatar}"
-- Using “double curlies”: CSS and other objects in JSX. {{ and }} is not special syntax: it's a JavaScript object tucked inside JSX curly braces.
-- To pass props, add them to the JSX, just like you would with HTML attributes. To read props, use the function Avatar({ person, size }) destructuring syntax.
-- You can forward all props with &lt;Avatar {...props} /&gt; JSX spread syntax, but don't overuse it!
-- Nested JSX like &lt;Card&gt;&lt;Avatar /&gt;&lt;/Card&gt; will appear as Card component's children prop.
-- Props are read-only snapshots in time: every render receives a new version of props. You can't change props. When you need interactivity, you'll need to set state.
-- In JSX, {cond ? &lt;A /&gt; : &lt;B /&gt;} means “if cond, render &lt;A /&gt;, otherwise &lt;B /&gt;”. {cond && &lt;A /&gt;} means “if cond, render &lt;A /&gt;, otherwise nothing”.
-- Rules of keys
-  - **Keys must be unique among siblings.** However, it's okay to use the same keys for JSX nodes in different arrays.
-  - **Keys must not change or that defeats their purpose!** Don't generate them while rendering.
-- In React, side effects usually belong inside event handlers. Event handlers don't need to be pure.
-- Why does React care about purity?
-  - Your components could run in a different environment.
+- React assumes that every component you write is a `pure function`. 
+- Side Effects: (un)intended consequences
+  ```Javascript
+  // passing guest as a prop instead modifying it inside of the component
+  function Cup({ guest }) {
+    return <h2>Tea cup for guest #{guest}</h2>;
+  }
+
+  export default function TeaSet() {
+    return (
+      <>
+        <Cup guest={1} />
+        <Cup guest={2} />
+        <Cup guest={3} />
+      </>
+    );
+  }
+  ```
+* Detecting impure calculations with StrictMode 
+  * React offers a "Strict Mode" in which it calls each component's function twice during development. By calling the component functions twice, Strict Mode helps find components that break these rules.
+  * Strict Mode has no effect in production, so it won’t slow down the app for your users. To opt into Strict Mode, you can wrap your root component into \<React.StrictMode>. Some frameworks do this by default.
+* Local mutation
+  * It’s completely fine to change variables and objects that you’ve just created while rendering. 
+  * It’s fine because you’ve created them during the same render.
+  ```Javascript
+  function Cup({ guest }) {
+    return <h2>Tea cup for guest #{guest}</h2>;
+  }
+
+  export default function TeaGathering() {
+    let cups = [];
+    for (let i = 1; i <= 12; i++) {
+      cups.push(<Cup key={i} guest={i} />);
+    }
+    return cups;
+  }
+  ```
+* Where you can cause side effects
+  * These changes—updating the screen, starting an animation, changing the data—are called side effects. They're things that happen "on the side", not during rendering.
+  * In React, side effects usually belong inside **event handlers**. Even though event handlers are defined inside your component, they don't run during rendering! So event handlers don't need to be pure.
+  * If you've exhausted all other options and can't find the right event handler for your side effect, you can still attach it to your returned JSX with a `useEffect` call in your component.
+  * This tells React to execute it later, after rendering, when side effects are allowed. However, this approach should be your last resort.
+* Why does React care about purity?
+  - Your components could run in a different environment. For example, React Native runs on mobile devices, and React Server runs on the server.
   - You can improve performance by skipping rendering components whose inputs have not changed.
   - If some data changes in the middle of rendering a deep component tree, React can restart rendering without wasting time to finish the outdated render.
-- Render trees represent the nested relationship between React components across a single render. Dependency trees represent the module dependencies in a React app.
+
+### Understanding Your UI as a Tree
+* React uses trees to model the relationships between components and modules. 
+* The Render Tree
+  * A React render tree is a representation of the parent and child relationship between components.
+  * Components can render other components, but you must never nest their definitions. 
+  * When a child component needs some data from a parent, pass it by props instead of nesting definitions.
+  * Render trees represent the nested relationship between React components across a single render. 
+* The Module Dependency Tree
+  * Another relationship in a React app that can be modeled with a tree are an app's module dependencies. 
+  * Each node in a module dependency tree is a module and each branch represents an import statement in that module.
+  * Dependency trees are useful to determine what modules are necessary to run your React app. 
 
 ## Adding Interactivity
+* In React, data that changes over time is called state. You can add state to any component, and update it as needed.
 
-- Responding to Events
-  - Events propagate upwards. Call e.stopPropagation() on the first argument to prevent that.
-  - Events may have unwanted default browser behavior. Call e.preventDefault() to prevent that.
-  - Explicitly calling an event handler prop from a child handler is a good alternative to propagation
-- State: A Component's Memory
-  - Hooks might remind you of imports: they need to be called unconditionally. Calling Hooks, including useState, is only valid at the top level of a component or another Hook.
-  - You can have more than one state variable. Internally, React matches them up by their order.
-  - State is private to the component. If you render it in two places, each copy gets its own state.
-- Render and Commit
-  - Step 1: Trigger a render
-    - It's the component's initial render. (root.render())
-    - The component's (or one of its ancestors') state has been updated. (Updating your component's state automatically queues a render.)
-  - Step 2: React renders your components
-    - "Rendering" is React calling your components. On initial render, React will call the root component. For subsequent renders, React will call the function component whose state update triggered the render. This process is recursive.
-    - Rendering must always be a pure calculation: Same inputs, same output. It minds its own business.
-    - When developing in **Strict Mode**, React calls each component's function twice, which can help surface mistakes caused by impure functions.
-  - Step 3: React commits changes to the DOM
-    - For the initial render, React will use the appendChild() DOM API to put all the DOM nodes it has created on screen.
-    - React only changes the DOM nodes if there's a difference between renders.
-- State as a Snapshot
-  - When React re-renders a component: React calls your function again. Your function returns a new JSX snapshot. React then updates the screen to match the snapshot your function returned.
-  - Setting state only changes it for the next render.
-  - A state variable's value never changes within a render, even if its event handler's code is asynchronous. React keeps the state values “fixed” within one render's event handlers.
-- Queueing a Series of State Updates
-  - React does not batch across multiple intentional events like clicks—each click is handled separately.
-  - When you pass an **updater function** to a state setter: React queues this function to be processed after all the other code in the event handler has run. During the next render, React goes through the queue and gives you the final updated state.
-  - Updater functions run during rendering, so updater functions must be pure and only return the result.
-- Updating Objects in State
-  - Treat all state in React as immutable.
-  - When you store objects in state, mutating them will not trigger renders and will change the state in previous render “snapshots”.
-  - Instead of mutating an object, create a new version of it, and trigger a re-render by setting state to it.
-  - You can use the {...obj, something: 'newValue'} object spread syntax to create copies of objects.
-  - Spread syntax is shallow: it only copies one level deep.
-  - To update a nested object, you need to create copies all the way up from the place you're updating.
-  - To reduce repetitive copying code, use Immer.
-- Updating Arrays in State
+### Responding to Events
+* React lets you add event handlers to your JSX. Event handlers are your own functions that will be triggered in response to interactions like clicking, hovering, focusing form inputs, and so on.
+* Adding event handlers
+  ```Javascript
+  export default function Button() {
+    function handleClick() {
+      alert('You clicked me!');
+    }
+
+    return (
+      // Functions passed to event handlers must be passed, not called.
+      <button onClick={handleClick}>
+        Click me
+      </button>
+    );
+  }
+  ```
+* Reading props in event handlers
+  ```Javascript
+  function AlertButton({ message, children }) {
+    return (
+      <button onClick={() => alert(message)}>
+        {children}
+      </button>
+    );
+  }
+
+  export default function Toolbar() {
+    return (
+      <div>
+        <AlertButton message="Playing!">
+          Play Movie
+        </AlertButton>
+        <AlertButton message="Uploading!">
+          Upload Image
+        </AlertButton>
+      </div>
+    );
+  }
+  ```
+* Passing event handlers as props
+  * Often you’ll want the parent component to specify a child’s event handler.
+  ```Javascript
+  function Button({ onClick, children }) {
+    return (
+      <button onClick={onClick}>
+        {children}
+      </button>
+    );
+  }
+
+  function PlayButton({ movieName }) {
+    function handlePlayClick() {
+      alert(`Playing ${movieName}!`);
+    }
+
+    return (
+      <Button onClick={handlePlayClick}>
+        Play "{movieName}"
+      </Button>
+    );
+  }
+
+  function UploadButton() {
+    return (
+      <Button onClick={() => alert('Uploading!')}>
+        Upload Image
+      </Button>
+    );
+  }
+
+  export default function Toolbar() {
+    return (
+      <div>
+        <PlayButton movieName="Kiki's Delivery Service" />
+        <UploadButton />
+      </div>
+    );
+  }
+  ```
+* Naming event handler props
+  * Built-in components like \<button> and \<div> only support browser event names like onClick. However, when you're building your own components, you can name their event handler props any way that you like.
+  * By convention, event handler props should start with on, followed by a capital letter.
+  ```Javascript
+  function Button({ onSmash, children }) {
+    return (
+      <button onClick={onSmash}>
+        {children}
+      </button>
+    );
+  }
+
+  export default function App() {
+    return (
+      <div>
+        <Button onSmash={() => alert('Playing!')}>
+          Play Movie
+        </Button>
+        <Button onSmash={() => alert('Uploading!')}>
+          Upload Image
+        </Button>
+      </div>
+    );
+  }
+  ```
+* Event propagation
+  * Events propagate upwards. Call e.stopPropagation() on the first argument to prevent that.
+    ```Javascript
+    function Button({ onClick, children }) {
+      return (
+        <button onClick={e => {
+          e.stopPropagation();
+          onClick();
+        }}>
+          {children}
+        </button>
+      );
+    }
+
+    export default function Toolbar() {
+      return (
+        <div className="Toolbar" onClick={() => {
+          alert('You clicked on the toolbar!');
+        }}>
+          <Button onClick={() => alert('Playing!')}>
+            Play Movie
+          </Button>
+          <Button onClick={() => alert('Uploading!')}>
+            Upload Image
+          </Button>
+        </div>
+      );
+    }
+    ```
+  * In rare cases, you might need to catch all events on child elements, even if they stopped propagation.
+    ```Javascript
+    <div onClickCapture={() => { /* this runs first */ }}>
+      <button onClick={e => e.stopPropagation()} />
+      <button onClick={e => e.stopPropagation()} />
+    </div>
+    ```
+  * Explicitly calling an event handler prop from a child handler is a good alternative to propagation.
+    ```Javascript
+    function Button({ onClick, children }) {
+      return (
+        <button onClick={e => {
+          e.stopPropagation();
+          onClick();
+        }}>
+          {children}
+        </button>
+      );
+    }
+    ```
+  * Events may have unwanted default browser behavior. Call e.preventDefault() to prevent that.
+    ```Javascript
+    export default function Signup() {
+      return (
+        <form onSubmit={e => {
+          e.preventDefault();
+          alert('Submitting!');
+        }}>
+          <input />
+          <button>Send</button>
+        </form>
+      );
+    }
+    ```
+* Unlike rendering functions, event handlers don't need to be pure, so it's a great place to change something outside of the component. Event handlers are the best place for side effects.
+
+### State: A Component's Memory
+* When a regular variable isn't enough
+  * Local variables don't persist between renders. When React renders this component a second time, it renders it from scratch—it doesn't consider any changes to the local variables.
+  * Changes to local variables won't trigger renders. React doesn't realize it needs to render the component again with the new data.
+* The useState Hook provides those two things:
+  * A state variable to retain the data between renders.
+  * A state setter function to update the variable and trigger React to render the component again.
+* Adding a state variable
+  ```Javascript
+  import { useState } from 'react';
+  import { sculptureList } from './data.js';
+
+  export default function Gallery() {
+    const [index, setIndex] = useState(0);
+
+    function handleClick() {
+      setIndex(index + 1);
+    }
+
+    let sculpture = sculptureList[index];
+    return (
+      <>
+        <button onClick={handleClick}>
+          Next
+        </button>
+        <h2>
+          <i>{sculpture.name} </i> 
+          by {sculpture.artist}
+        </h2>
+        <h3>  
+          ({index + 1} of {sculptureList.length})
+        </h3>
+        <img 
+          src={sculpture.url} 
+          alt={sculpture.alt}
+        />
+        <p>
+          {sculpture.description}
+        </p>
+      </>
+    );
+  }
+  ```
+* Anatomy of useState 
+  * Hooks are special functions that are only available while React is rendering. They let you "hook into" different React features.
+  * Hooks—functions starting with use—can only be called at the top level of your components or your own Hooks.
+  * The only argument to useState is the initial value of your state variable.
+  * Every time your component renders, useState gives you an array containing two values:
+    1. The current value of the state variable.
+    2. A function to update the state variable.
+* Giving a component multiple state variables
+  * It is a good idea to have multiple state variables if their state is unrelated. But if you find that you often change two state variables together, it might be easier to combine them into one.
+* State is isolated and private
+  * State is local to a component instance on the screen. In other words, if you render the same component twice, each copy will have completely isolated state!
+  * Unlike props, state is fully private to the component declaring it. The parent component can't change it.
+  * This lets you add state to any component or remove it without impacting the rest of the components.
+
+### Render and Commit
+* Step 1: Trigger a render
+  * It's the component's initial render. (root.render())
+  * The component's (or one of its ancestors') state has been updated. (Updating your component's state automatically queues a render.)
+    ```Javascript
+    import Image from './Image.js';
+    import { createRoot } from 'react-dom/client';
+
+    const root = createRoot(document.getElementById('root'))
+    root.render(<Image />);
+    ```
+* Step 2: React renders your components
+  * "Rendering" is React calling your components. On initial render, React will call the root component. For subsequent renders, React will call the function component whose state update triggered the render. This process is recursive.
+  * Rendering must always be a pure calculation: Same inputs, same output. It minds its own business.
+  * When developing in **Strict Mode**, React calls each component's function twice, which can help surface mistakes caused by impure functions.
+* Step 3: React commits changes to the DOM
+  * For the initial render, React will use the appendChild() DOM API to put all the DOM nodes it has created on screen.
+  * React only changes the DOM nodes if there's a difference between renders.
+    ```Javascript
+    export default function Clock({ time }) {
+      return (
+        <>
+          <h1>{time}</h1>
+          <input />
+        </>
+      );
+    }
+    ```
+
+### State as a Snapshot
+* State variables might look like regular JavaScript variables that you can read and write to. 
+* However, state behaves more like a snapshot. Setting it does not change the state variable you already have, but instead triggers a re-render.
+* Setting state triggers renders
+  ```Javascript
+  import { useState } from 'react';
+
+  export default function Form() {
+    const [isSent, setIsSent] = useState(false);
+    const [message, setMessage] = useState('Hi!');
+    if (isSent) {
+      return <h1>Your message is on its way!</h1>
+    }
+    return (
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        setIsSent(true);
+        sendMessage(message);
+      }}>
+        <textarea
+          placeholder="Message"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+        />
+        <button type="submit">Send</button>
+      </form>
+    );
+  }
+
+  function sendMessage(message) {
+    // ...
+  }
+  ```
+* Rendering takes a snapshot in time
+  * When React re-renders a component: 
+    * React calls your function again. 
+    * Your function returns a new JSX snapshot. 
+    * React then updates the screen to match the snapshot your function returned.
+  * When React calls your component, it gives you a snapshot of the state for that particular render. Your component returns a snapshot of the UI with a fresh set of props and event handlers in its JSX, all calculated using the state values from that render!
+  * Setting state only changes it for the next render.
+* State over time
+  * A state variable's value never changes within a render, even if its event handler’s code is asynchronous.
+  * React keeps the state values "fixed" within one render's event handlers.
+    ```Javascript
+    import { useState } from 'react';
+
+    export default function Form() {
+      const [to, setTo] = useState('Alice');
+      const [message, setMessage] = useState('Hello');
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        setTimeout(() => {
+          alert(`You said ${message} to ${to}`);
+        }, 5000);
+      }
+
+      return (
+        <form onSubmit={handleSubmit}>
+          <label>
+            To:{' '}
+            <select
+              value={to}
+              onChange={e => setTo(e.target.value)}>
+              <option value="Alice">Alice</option>
+              <option value="Bob">Bob</option>
+            </select>
+          </label>
+          <textarea
+            placeholder="Message"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+          />
+          <button type="submit">Send</button>
+        </form>
+      );
+    }
+    ```
+
+### Queueing a Series of State Updates
+* Setting a state variable will queue another render. But sometimes you might want to perform multiple operations on the value before queueing the next render.
+* React batches state updates
+  * React waits until all code in the event handlers has run before processing your state updates.
+  * React does not batch across multiple intentional events like clicks — each click is handled separately. 
+    ```Javascript
+    import { useState } from 'react';
+
+    export default function Counter() {
+      const [number, setNumber] = useState(0);
+
+      return (
+        <>
+          <h1>{number}</h1>
+          <button onClick={() => {
+            setNumber(number + 1); // (0 + 1)
+            setNumber(number + 1); // (0 + 1)
+            setNumber(number + 1); // (0 + 1)
+          }}>+3</button>
+        </>
+      )
+    }
+    ```
+* Updating the same state multiple times before the next render
+  ```Javascript
+  import { useState } from 'react';
+
+  export default function Counter() {
+    const [number, setNumber] = useState(0);
+
+    return (
+      <>
+        <h1>{number}</h1>
+        <button onClick={() => {
+          setNumber(n => n + 1);  // updater function
+          setNumber(n => n + 1);
+          setNumber(n => n + 1);
+        }}>+3</button>
+      </>
+    )
+  }
+  ```
+  * Updater functions must be pure and only return the result. Don’t try to set state from inside of them or run other side effects.
+### Updating Objects in State
+* State can hold any kind of JavaScript value, including objects. But you shouldn't change objects that you hold in the React state directly. 
+* Instead, when you want to update an object, you need to create a new one (or make a copy of an existing one), and then set the state to use that copy.
+* What’s a mutation? 
+  ```Javascript
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  ```
+  * Technically, it is possible to change the contents of the object itself. This is called a mutation.
+  * However, although objects in React state are technically mutable, you should treat them as if they were immutable.
+  * Instead of mutating them, you should always replace them.
+* Treat state as read-only 
+  ```Javascript
+  import { useState } from 'react';
+
+  export default function MovingDot() {
+    const [position, setPosition] = useState({
+      x: 0,
+      y: 0
+    });
+    return (
+      <div
+        onPointerMove={e => {
+          // Replace position with this new object
+          // And render this component again
+          setPosition({
+            x: e.clientX,
+            y: e.clientY
+          });
+        }}
+        style={{
+          position: 'relative',
+          width: '100vw',
+          height: '100vh',
+        }}>
+        <div style={{
+          position: 'absolute',
+          backgroundColor: 'red',
+          borderRadius: '50%',
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          left: -10,
+          top: -10,
+          width: 20,
+          height: 20,
+        }} />
+      </div>
+    );
+  }
+  ```
+* Copying objects with the spread syntax
+  * Note that the ... spread syntax is "shallow" — it only copies things one level deep. This makes it fast, but it also means that if you want to update a nested property, you'll have to use it more than once.
+
+  ```Javascript
+  setPerson({
+    ...person, // Copy the old fields
+    firstName: e.target.value // But override this one
+  });
+  ```
+
+* Updating a nested object
+  ```Javascript
+  setPerson({
+    ...person, // Copy other fields
+    artwork: { // but replace the artwork
+      ...person.artwork, // with the same one
+      city: 'New Delhi' // but in New Delhi!
+    }
+  });
+  ```
+* Write concise update logic with Immer
+  ```Javascript
+  import { useImmer } from 'use-immer';
+
+  // ...
+  const [person, updatePerson] = useImmer({
+    name: 'Niki de Saint Phalle',
+    artwork: {
+      title: 'Blue Nana',
+      city: 'Hamburg',
+      image: 'https://i.imgur.com/Sd1AgUOm.jpg',
+    }
+  });
+
+  // ...
+  function handleImageChange(e) {
+    updatePerson(draft => {
+      draft.artwork.image = e.target.value;
+    });
+  }
+  ```
+
+### Updating Arrays in State
   - avoid (mutates the array): push, unshift, pop, shift, splice, arr[i] = ... assignment, reverse, sort
   - prefer (returns a new array): concat, [...arr] spread syntax, filter, slice, map, copy the array first
   - Generally, you shouldn't need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
