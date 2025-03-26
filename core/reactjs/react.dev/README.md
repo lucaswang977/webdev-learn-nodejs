@@ -29,6 +29,13 @@ https://react.dev/learn
     - [Updating Objects in State](#updating-objects-in-state)
     - [Updating Arrays in State](#updating-arrays-in-state)
   - [Managing State](#managing-state)
+    - [Reacting to Input with State](#reacting-to-input-with-state)
+    - [Choosing the State Structure](#choosing-the-state-structure)
+    - [Sharing State Between Components](#sharing-state-between-components)
+    - [Preserving and Resetting State](#preserving-and-resetting-state)
+    - [Extracting State Logic into a Reducer](#extracting-state-logic-into-a-reducer)
+    - [Passing Data Deeply with Context](#passing-data-deeply-with-context)
+    - [Scaling Up with Reducer and Context](#scaling-up-with-reducer-and-context)
   - [Escape Hatches](#escape-hatches)
 
 ## Quick Start
@@ -1004,43 +1011,279 @@ https://react.dev/learn
   ```
 
 ### Updating Arrays in State
-  - avoid (mutates the array): push, unshift, pop, shift, splice, arr[i] = ... assignment, reverse, sort
-  - prefer (returns a new array): concat, [...arr] spread syntax, filter, slice, map, copy the array first
-  - Generally, you shouldn't need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
+* Arrays are mutable in JavaScript, but you should treat them as immutable when you store them in state. 
+* Updating arrays without mutation
+  * avoid (mutates the array): push, unshift, pop, shift, splice, arr[i] = ... assignment, reverse, sort
+  * prefer (returns a new array): concat, [...arr] spread syntax, filter, slice, map, copy the array first
+* Adding to an array (spread syntax)
+  ```Javascript
+  setArtists([
+    { id: nextId++, name: name },
+    ...artists // Put old items at the end
+  ]);
+  ```
+* Removing from an array (use filter)
+  ```Javascript
+  setArtists(
+    artists.filter(a => a.id !== artist.id)
+  );
+  ```
+* Transforming an array (use map)
+  ```Javascript
+  function handleClick() {
+    const nextShapes = shapes.map(shape => {
+      if (shape.type === 'square') {
+        // No change
+        return shape;
+      } else {
+        // Return a new circle 50px below
+        return {
+          ...shape,
+          y: shape.y + 50,
+        };
+      }
+    });
+    // Re-render with the new array
+    setShapes(nextShapes);
+  }
+  ```
+* Replacing items in an array (use map)
+  ```Javascript
+  function handleIncrementClick(index) {
+    const nextCounters = counters.map((c, i) => {
+      if (i === index) {
+        // Increment the clicked counter
+        return c + 1;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    setCounters(nextCounters);
+  }
+  ```
+* Inserting into an array (use slice)
+  ```Javascript
+  function handleClick() {
+    const insertAt = 1; // Could be any index
+    const nextArtists = [
+      // Items before the insertion point:
+      ...artists.slice(0, insertAt),
+      // New item:
+      { id: nextId++, name: name },
+      // Items after the insertion point:
+      ...artists.slice(insertAt)
+    ];
+    setArtists(nextArtists);
+    setName('');
+  }
+  ```
+* Making other changes to an array
+  * You can copy the array first, and then make changes to it.
+    ```Javascript
+    function handleClick() {
+      const nextList = [...list];
+      nextList.reverse();
+      setList(nextList);
+    }
+    ```
+* Updating objects inside arrays
+  * When updating nested state, you need to create copies from the point where you want to update, and all the way up to the top level.
+    ```Javascript
+    function handleToggleYourList(artworkId, nextSeen) {
+      setYourList(yourList.map(artwork => {
+        if (artwork.id === artworkId) {
+          // Create a *new* object with changes
+          return { ...artwork, seen: nextSeen };
+        } else {
+          // No changes
+          return artwork;
+        }
+      }));
+    }
+    ```
+* Write concise update logic with Immer
+  * Generally, you shouldn’t need to update state more than a couple of levels deep. If your state objects are very deep, you might want to restructure them differently so that they are flat.
+  ```Javascript
+  import { useImmer } from 'use-immer';
+
+  const [yourList, updateYourList] = useImmer(
+    initialList
+  );
+  function handleToggleYourList(artworkId, nextSeen) {
+    updateYourList(draft => {
+      const artwork = draft.find(a =>
+        a.id === artworkId
+      );
+      // you’re not mutating the original state, but you’re mutating a special draft object provided by Immer.
+      artwork.seen = nextSeen;
+    });
+  }
+  ```
 
 ## Managing State
+* As your application grows, it helps to be more intentional about how your state is organized and how the data flows between your components. 
+* Redundant or duplicate state is a common source of bugs.
 
-- Reacting to Input with State
-  - Declarative UI compares to imperative: you describe what you want to happen, not how to do it.
-  - Thinking about UI declaratively:
-    - Identify your component's different visual states.
-    - Determine what triggers those state changes.
-    - Represent the state in memory using useState.
-    - Remove any non-essential state variables.
-    - Connect the event handlers to set the state.
-  - If a component has a lot of visual states, it can be convenient to show them all on one page.
-  - To prevent the cases where the state in memory doesn't represent any valid UI that you'd want a user to see.
-    - Does this state cause a paradox?
-    - Is the same information available in another state variable already?
-    - Can you get the same information from the inverse of another state variable?
-- Choosing the State Structure
-  - Group related state: if some two state variables always change together, it might be a good idea to unify them into a single state variable.
-  - Avoid contradictions in state: when the state is structured in a way that several pieces of state may contradict and “disagree” with each other, you leave room for mistakes.
-  - Avoid redundant state: If you can calculate some information from the component's props or its existing state variables during rendering, you should not put that information into that component's state.
-  - Avoid duplication in state: when the same data is duplicated between multiple state variables, or within nested objects, it is difficult to keep them in sync. Reduce duplication when you can.
-  - Avoid deeply nested state: deeply hierarchical state is not very convenient to update. When possible, prefer to structure state in a flat way.
-- Sharing State Between Components
-  - Controlled and uncontrolled components: It is common to call a component with some local state “uncontrolled”. In contrast, you might say a component is “controlled” when the important information in it is driven by props rather than its own local state.
-  - Lifting state up:
-    - Step 1: Remove state from the child components.
-    - Step 2: Pass hardcoded data from the common parent.
-    - Step 3: Add state to the common parent.
-  - For each unique piece of state, you will choose the component that “owns” it. This principle is also known as having a “single source of truth”.
-- Preserving and Resetting State
+### Reacting to Input with State
+* How declarative UI compares to imperative
+  ```Javascript
+  // Imperative: You are responsible for keeping the DOM in sync with the application state.
+  document.addEventListener('DOMContentLoaded', () => {
+    let count = 0;
+
+    const counter = document.createElement('h1');
+    // You manually create and update DOM elements
+    counter.textContent = `Count: ${count}`;
+    document.body.appendChild(counter);
+
+    const button = document.createElement('button');
+    button.textContent = 'Increment';
+    document.body.appendChild(button);
+
+    button.addEventListener('click', () => {
+      count += 1;
+      // You explicitly define how the UI should change when the button is clicked.
+      counter.textContent = `Count: ${count}`;
+    });
+  });
+
+
+  // Declarative: you don't manually manipulate the DOM; React handles it for you.
+  import { useState } from 'react';
+
+  export default function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+      <div>
+        // You describe the desired UI state
+        <h1>Count: {count}</h1>
+        // React automatically updates the DOM when the state (count) changes.
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  }
+  ```
+* Thinking about UI declaratively:
+  * Identify your component's different visual states.
+    * If a component has a lot of visual states, it can be convenient to show them all on one page.
+  * Determine what triggers those state changes.
+  * Represent the state in memory using useState.
+  * Remove any non-essential state variables.
+    * our goal is to prevent the cases where the state in memory doesn't represent any valid UI that you'd want a user to see.
+    * Here are some questions you can ask about your state variables:
+      - Does this state cause a paradox?
+      - Is the same information available in another state variable already?
+      - Can you get the same information from the inverse of another state variable?
+  * Connect the event handlers to set the state.
+### Choosing the State Structure
+* Structuring state well can make a difference between a component that is pleasant to modify and debug, and one that is a constant source of bugs.
+* Principles for structuring state
+  * **Group related state**: if some two state variables always change together, it might be a good idea to unify them into a single state variable.
+  ```Javascript
+  // from this
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+
+  // to this
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  ```
+
+  * **Avoid contradictions in state**: when the state is structured in a way that several pieces of state may contradict and "disagree" with each other, you leave room for mistakes.
+  ```Javascript
+  // from this (isSending and isSent should never be true at the same time)
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  // to this (one status state variable)
+  const [status, setStatus] = useState('typing');
+  const isSending = status === 'sending';
+  const isSent = status === 'sent';
+  ```
+  * **Avoid redundant state**: If you can calculate some information from the component's props or its existing state variables during rendering, you should not put that information into that component's state.
+  ```Javascript
+  // from this
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
+
+  // to this
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const fullName = firstName + ' ' + lastName;
+  ```
+
+  * **Avoid duplication in state**: when the same data is duplicated between multiple state variables, or within nested objects, it is difficult to keep them in sync. Reduce duplication when you can.
+  ```Javascript
+  // from this (the contents of the selectedItem is the same object as one of the items inside the items list)
+  const [items, setItems] = useState(initialItems);
+  const [selectedItem, setSelectedItem] = useState(
+    items[0]
+  );
+
+  // to this
+  const [items, setItems] = useState(initialItems);
+  const [selectedId, setSelectedId] = useState(0);
+
+  ```
+
+  * **Avoid deeply nested state**: deeply hierarchical state is not very convenient to update. When possible, prefer to structure state in a flat way.
+
+  * **Don’t mirror props in state**: if you have a prop that is passed to a component, and you also have a state variable that is initialized with the same value, you should remove the state variable. This is because the prop will always be the source of truth for that value.
+  ```Javascript
+  // from this
+  function Message({ messageColor }) {
+    const [color, setColor] = useState(messageColor);
+    // ...
+  }
+
+  // to this
+  function Message({ messageColor }) {
+    const color = messageColor;
+    // ...
+  }
+  ```
+* Ideally, you would also remove the deleted items (and their children!) from the "table" object to improve memory usage.
+  ```Javascript
+  const [plan, updatePlan] = useImmer(initialTravelPlan);
+  function handleComplete(parentId, childId) {
+    updatePlan(draft => {
+      // Remove from the parent place's child IDs.
+      const parent = draft[parentId];
+      parent.childIds = parent.childIds
+        .filter(id => id !== childId);
+
+      // Forget this place and all its subtree.
+      deleteAllChildren(childId);
+      function deleteAllChildren(id) {
+        const place = draft[id];
+        place.childIds.forEach(deleteAllChildren);
+        delete draft[id];
+      }
+    });
+  }
+  ```
+
+### Sharing State Between Components
+* Lifting state up: Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. 
+* Lifting state up:
+  * Step 1: Remove state from the child components.
+  * Step 2: Pass hardcoded data from the common parent.
+  * Step 3: Add state to the common parent.
+* Controlled and uncontrolled components: 
+  * It is common to call a component with some local state "uncontrolled". For example, the original Panel component with an isActive state variable is uncontrolled because its parent cannot influence whether the panel is active or not.
+  * In contrast, you might say a component is "controlled" when the important information in it is driven by props rather than its own local state. This lets the parent component fully specify its behavior.
+* A single source of truth for each state
+  * For each unique piece of state, you will choose the component that "owns" it. This principle is also known as having a "single source of truth".
+  * Instead of duplicating shared state between components, lift it up to their common shared parent, and pass it down to the children that need it.
+
+
+### Preserving and Resetting State
   - If you want to preserve the state between re-renders, the structure of your tree needs to “match up” from one render to another. If the structure is different, the state gets destroyed because React destroys state when it removes a component from the tree.
   - Always declare component functions at the top level, and don't nest their definitions. Because changing the state will render a different component in the same position, and React will reset all state below. This leads to bugs and performance problems.
   - Specifying a key tells React to use the key itself as part of the position, instead of their order within the parent.
-- Extracting State Logic into a Reducer
+### Extracting State Logic into a Reducer
   - To convert from useState to useReducer:
     - Dispatch actions from event handlers.
     - Write a reducer function that returns the next state for a given state and action.
@@ -1048,7 +1291,7 @@ https://react.dev/learn
   - Reducers require you to write a bit more code, but they help with debugging and testing.
   - Reducers must be pure.
   - Each action describes a single user interaction, even if that leads to multiple changes in the data.
-- Passing Data Deeply with Context
+### Passing Data Deeply with Context
   - Context lets a parent component provide data to the entire tree below it.
     - Create a context.
     - Use that context from the component that needs the data.
@@ -1059,7 +1302,7 @@ https://react.dev/learn
     - Start by passing props.
     - Extract components and pass JSX as children to them.
   - Use cases for context: theming, current account, routing, managing state
-- Scaling Up with Reducer and Context
+### Scaling Up with Reducer and Context
 
 ## Escape Hatches
 
