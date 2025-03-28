@@ -74,6 +74,8 @@
 
 ### Hooks 
 * Hooks for web applications which run in the browser DOM environment.
+* `useFormStatus`: allows you to make updates to the UI based on the status of a form.
+
 ### Components 
 * React supports all of the browser built-in HTML and SVG components.
 ### APIs 
