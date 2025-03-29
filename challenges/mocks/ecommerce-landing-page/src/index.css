@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+  --color-spanish-gray: hsl(0, 0%, 60%);
+  --color-sonic-silver: hsl(0, 0%, 47%);
+  --color-eerie-black: hsl(0, 0%, 13%);
+  --color-salmon-pink: hsl(353, 100%, 78%);
+  --color-sandy-brown: hsl(29, 90%, 65%);
+  --color-bittersweet: hsl(0, 100%, 70%);
+  --color-ocean-green: hsl(152, 51%, 52%);
+  --color-davys-gray: hsl(0, 0%, 33%);
+  --color-cultured: hsl(0, 0%, 93%);
+  --color-white: hsl(0, 100%, 100%);
+  --color-onyx: hsl(0, 0%, 27%);
+
+  --font-display: "Poppins", "sans-serif";
+
+  --breakpoint-xs: 30rem; /* 480px */
+  --breakpoint-sm: 36rem; /* 570px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-2xl: 88rem; /* 1400px */
+}

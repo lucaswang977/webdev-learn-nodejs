@@ -43,6 +43,7 @@
   - [Framer Motion](https://www.framer.com/motion/)
   - [GSAP](https://greensock.com/)
 - Other great utilities:
+  - [ReactIcons](https://react-icons.github.io/)
   - [FontSource](https://fontsource.org/)
   - [Gitignore.io](https://www.toptal.com/developers/gitignore)
 
