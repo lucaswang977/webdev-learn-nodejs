@@ -1,179 +1,312 @@
 # The Modern JavaScript Tutorial Learning Notes
 
+- [The Modern JavaScript Tutorial Learning Notes](#the-modern-javascript-tutorial-learning-notes)
+  - [Part 1: The JavaScript language](#part-1-the-javascript-language)
+    - [JavaScript Fundamentals](#javascript-fundamentals)
+    - [Code quality](#code-quality)
+    - [Objects: the basics](#objects-the-basics)
+    - [Data types](#data-types)
+    - [Advanced working with functions](#advanced-working-with-functions)
+    - [Object properties configuration](#object-properties-configuration)
+    - [Prototypes, inheritance](#prototypes-inheritance)
+    - [Classes](#classes)
+    - [Error handling](#error-handling)
+    - [Promises, async/await](#promises-asyncawait)
+    - [Generators, advanced iteration](#generators-advanced-iteration)
+    - [Modules](#modules)
+    - [Miscellaneous](#miscellaneous)
+  - [Part 2: Browser: Document, Events, Interfaces](#part-2-browser-document-events-interfaces)
+    - [Document](#document)
+    - [Introduction to Events](#introduction-to-events)
+    - [UI Events](#ui-events)
+    - [Forms, controls](#forms-controls)
+    - [Document and resource loading](#document-and-resource-loading)
+    - [Miscellaneous](#miscellaneous-1)
+  - [Part 3: Additional articles](#part-3-additional-articles)
+    - [Frames and windows](#frames-and-windows)
+    - [Binary data, files](#binary-data-files)
+    - [Network requests](#network-requests)
+    - [Storing data in the browser](#storing-data-in-the-browser)
+    - [Animation](#animation)
+    - [Web components](#web-components)
+    - [Regular expressions](#regular-expressions)
+
 https://javascript.info/
-
-## Side notes
-
-Create a clean JS project by vite:
-
-```bash
-pnpm create vite x.x.x --template vanilla
-```
 
 ## Part 1: The JavaScript language
 
 ### JavaScript Fundamentals
+* Hello, world!
+* Code structure
+* The modern mode, "use strict"
+* Variables
+* Data types
+* Interaction: alert, prompt, confirm
+* Type Conversions
+* Basic operators, maths
+* Comparisons
+* Conditional branching: if, '?'
+* Logical operators
+* Nullish coalescing operator '??'
+* Loops: while and for
+* The "switch" statement
+* Functions
+* Function expressions
+* Arrow functions, the basics
+* JavaScript specials
 
-- special numeric values:
-  - NaN: represents a computational error. It is a result of an incorrect or an undefined mathematical operation, for instance: alert( "not a number" / 2 );
-  - Infinity / -Infinity : represents the mathematical Infinity ∞. It is a special value that’s greater than any number. alert( 1 / 0 );
-- In JavaScript, null is not a “reference to a non-existing object” or a “null pointer” like in some other languages. It’s just a special value which represents “nothing”, “empty” or “value unknown”.
-- The meaning of undefined is “value is not assigned”. If a variable is declared, but not assigned, then its value is undefined.
-- typeof:
-  - typeof Symbol("id") // "symbol"
-  - typeof null // "object"
-  - typeof NaN // "number"
-  - typeof undefined // "undefined"
-  - typeof Infinity // "number"
-  - typeof Math // "object"
-  - typeof alert // "function"
-- Numeric conversion: Number(), unary +
-- The comma operator allows us to evaluate several expressions, dividing them with a comma ,. Each of them is evaluated but only the result of the last one is returned. let a = (1 + 2, 3 + 4); // a == 7
-- OR "||" finds the first truthy value, if all operands have been evaluated (i.e. all were false), returns the last operand : alert( null || 0 || 1 ); // 1 (the first truthy value)
-- AND "&&" finds the first falsy value, if all operands have been evaluated (i.e. all were truthy), returns the last operand : alert( null && 5 ); // null
-- A double NOT !! is sometimes used for converting a value to boolean type: alert( !!"non-empty string" ); // true;; alert( !!null ); // false
-- The precedence of AND && operator is higher than OR ||. So the code a && b || c && d is essentially the same as if the && expressions were in parentheses: (a && b) || (c && d).
-- nullish coalescing operator: The result of a ?? b is: if a is defined, then a, if a isn’t defined (null/undefined), then b.
-- || doesn’t distinguish between false, 0, an empty string "" and null/undefined. They are all the same – falsy values.
-- The precedence of the ?? operator is the same as ||.
-- Variables declared outside of any function are called global. It’s a good practice to minimize the use of global variables.
-- Default parameters in old JavaScript code: text = text || 'no text given';
-- Difference between Function Declaration and Function Expression.
-- Arrow functions: let func = (arg1, arg2, ..., argN) => expression;
+### Code quality
+* Debugging in the browser
+* Coding Style
+* Comments
+* Ninja code
+* Automated testing with Mocha
 
 ### Objects: the basics
-
-- Difference between accessing object properties using dot notation (.) and bracket notation ([]).
-- Why does the "in" operator exist? Isn’t it enough to compare against "undefined"? Why not just use Object.hasOwnProperty()?
-- What is integer property? What is the different behaviors of integer property in array and object?
-- Object.assign(dest, ...sources); spread syntax: clone = {...user}; clone = structuredClone(user); function properties will be cloned? \_.cloneDeep(obj);
-- What is reachability? How does mark-and-sweep garbage collection work?
-- How is "this" determined when "this" is defined in the global context, function call, method call, constructor call? Beware of losing context, and arrow functions do not have "this".
-- What are the differences between a constructor function and a normal function? (calling syntax, return value, purpose, this keyword)
-- What is the usage of "new.target" property? (enforcing constructor calls, detecting constructor calls)
-- How to define methods in constructors? When to define?
-- Best practices on using optional chaining (?.)? (safe reading and deleting, but not writing)
-- Only two primitive types may serve as object property keys: string and symbol.
-- What is symbol and its characteristics? Can Object.assign() copy symbols?
-- What is global symbols? How to use them?
-- What is Symbol.toPrimitive()? What is toString() method and valueOf() method?
+* Objects
+* Object references and copying
+* Garbage collection
+* Object methods, "this"
+* Constructor, operator "new"
+* Optional chaining '?.'
+* Symbol type
+* Object to primitive conversion
 
 ### Data types
-
-- There are 7 primitive types: string, number, bigint, boolean, symbol, null and undefined.
-- The “object wrappers” are different for each primitive type and are called: String, Number, Boolean, Symbol and BigInt.
-- Numbers:
-  - How to represent Hex, binary and octal numbers? toString(base)
-  - Rounding: Math.floor, Math.ceil, Math.round, Math.trunc, num.toFixed(precision)
-  - Imprecise calculation of 64bit format IEEE-754
-  - isFinite and isNaN, Number.isNaN and Number.isFinite
-  - Object.is and ===
-  - parseInt and parseFloat
-- Strings:
-  - Quotes: single quotes and double qoutes and backticks
-  - Special characters
-  - String length is a read-write property: If we increase it manually, nothing interesting happens. But if we decrease it, the array is truncated.
-  - Accessing characters: string[index], str.at(pos)
-  - Strings are immutable
-  - Searching for a substring: str.indexOf, str.lastIndexOf(substr, position), str.includes(substr, pos), str.startsWith, str.endsWith
-  - Getting a substring: str.slice(start [, end]), str.substring(start [, end]), str.substr(start [, length])
-  - Comparing strings: str.codePointAt(pos), String.fromCodePoint(code), str.localeCompare(str2)
-- Arrays:
-  - Declaration: let arr = new Array(); let arr = [];
-  - Get last elements with "at": arr.at(-1), arr[arr.length - 1]
-  - Methods pop/push, shift/unshift: arr.pop(), arr.push(), arr.shift(), arr.unshift()
-  - Loops: for (let i = 0; i < arr.length; i++) {}; for (let fruit of fruits) {}; Difference between for..in and for..of?
-  - new Array(2): it creates an array without items, but with the given length.
-  - Multidimensional arrays
-  - Arrays do not have Symbol.toPrimitive, neither a viable valueOf, they implement only toString conversion, so here [] becomes an empty string, [1] becomes "1" and [1,2] becomes "1,2".
-  - Don’t compare arrays with ==: if we compare arrays with ==, they are never the same, unless we compare two variables that reference exactly the same array.
-  - Add/remove items: arr.push(...items), arr.pop(), arr.unshift(...items), arr.shift()
-  - Delete an element: arr.splice(start[, deleteCount, elem1, ..., elemN]) , returns the array of removed elements
-  - Getting a part of array: arr.slice([start], [end])
-  - Concatenation: arr.concat(arr2, arr3, ...)
-  - Iterate: forEach: arr.forEach(callback, thisArg)
-  - Searching in array: arr.indexOf(item, from); arr.includes(item, from); arr.lastIndexOf(item); arr.find(fn); arr.findIndex; arr.findLastIndex; arr.filter(fn)
-  - Transform an array: Map: arr.map([fn]); Sorting: arr.sort([fn]); Reverse: arr.reverse(); Split and Join: arr.join(separator), str.split(separator, limit); reduce/reduceRight: arr.reduce(function(accumulator, item, index, array)
-  - Array.isArray()
-  - thisArg: arr.find(func, thisArg); arr.filter(func, thisArg); ...
-- Iterables:
-  - Use Symbol.iterator to make range iterable: range = { from: 1, to: 5 }
-  - String is iterable and works correctly with surrogate pairs.
-  - Array.from() is surrogate-aware, but string.slice() is not.
-- Map and Set:
-  - map: new Map(), map.set(key, value), map.get(key), map.has(key), map.delete(key), map.clear(), map.size, map.keys(), map.values(), map.entries(), map.forEach()
-  - Map can also use objects as keys, while object can't use objects as keys.
-  - Map from/to object: Object.entries, Object.fromEntries
-  - set: new Set(), set.add(value), set.delete(value), set.has(value), set.clear(), set.size, set.keys(), set.values(), set.entries(), set.forEach()
-- WeakMap and WeakSet
-  - WeakMap is Map-like collection that allows only objects as keys and removes them together with associated value once they become inaccessible by other means.
-  - WeakSet is Set-like collection that stores only objects and removes them once they become inaccessible by other means.
-  - Their main advantages are that they have weak reference to objects, so they can easily be removed by garbage collector.
-  - That comes at the cost of not having support for clear, size, keys, values…
-- Object.keys, values, entries
-  - Object.keys(obj) – returns an array of keys. Object.values(obj) – returns an array of values. Object.entries(obj) – returns an array of [key, value] pairs. Object.fromEntries(arr) – returns an object created from an array of [key, value] pairs.
-  - Object.getOwnPropertySymbols that returns an array of only symbolic keys. Also, there exist a method Reflect.ownKeys(obj) that returns all keys.
-- Destructuring assignment
-  Examples:
-
-  ```Javascript
-  let [a, b, c] = "abc"; // ["a", "b", "c"]
-  let [one, two, three] = new Set([1, 2, 3]);
-  for (let [key, value] of Object.entries(user)) {}
-  [guest, admin] = [admin, guest]; // Swap guest and admin
-  let [name = "Guest", surname = "Anonymous"] = ["Julius"]; // default values
-
-  let {height, width, title} = { title: "Menu", height: 200, width: 100 }
-  let {width: w = 100, height: h = 200, title} = options;
-  let {title, ...rest} = options;
-  ({title, width, height} = {title: "Menu", width: 200, height: 100}); // without let
-  function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {} // default values
-  ```
+* Methods of primitives
+* Numbers
+* Strings
+* Arrays
+* Array methods
+* Iterables
+* Map and Set
+* WeakMap and WeakSet
+* Object.keys, values, entries
+* Destructuring assignment
+* Date and time
+* JSON methods, toJSON
 
 ### Advanced working with functions
+* Recursion and stack
+* Rest parameters and spread syntax
+* Variable scope, closure
+* The old "var"
+* Global object
+* Function object, NFE
+* The "new Function" syntax
+* Scheduling: setTimeout and setInterval
+* Decorators and forwarding, call/apply
+* Function binding
+* Arrow functions revisited
 
 ### Object properties configuration
+* Property flags and descriptors
+* Property getters and setters
 
 ### Prototypes, inheritance
+* Prototypal inheritance
+* F.prototype
+* Native prototypes
+* Prototype methods, objects without __proto__
 
 ### Classes
+* Class basic syntax
+* Class inheritance
+* Static properties and methods
+* Private and protected properties and methods
+* Extending built-in classes
+* Class checking: "instanceof"
+* Mixins
 
 ### Error handling
+* Error handling, "try...catch"
+* Custom errors, extending Error
 
 ### Promises, async/await
+* Introduction: callbacks
+* Promise
+* Promises chaining
+* Error handling with promises
+* Promise API
+* Promisification
+* Microtasks
+* Async/await
 
 ### Generators, advanced iteration
+* Generators
+* Async iteration and generators
 
 ### Modules
+* Modules, introduction
+* Export and Import
+* Dynamic imports
 
 ### Miscellaneous
+* Proxy and Reflect
+  ```Javascript
+  let user = {
+    name: "John",
+  };
+
+  user = new Proxy(user, {
+    get(target, prop, receiver) {
+      alert(`GET ${prop}`);
+      return Reflect.get(target, prop, receiver);
+    },
+    set(target, prop, val, receiver) {
+      alert(`SET ${prop}=${val}`);
+      return Reflect.set(target, prop, val, receiver);
+    }
+  });
+
+  let name = user.name; // shows "GET name"
+  user.name = "Pete"; // shows "SET name=Pete"
+  ```
+
+* Eval: run a code string
+* Currying
+  ```Javascript
+  function curry(func) {
+    return function curried(...args) {
+      if (args.length >= func.length) {
+        return func.apply(this, args);
+      } else {
+        return function(...args2) {
+          return curried.apply(this, args.concat(args2));
+        }
+      }
+    };
+  }
+
+  function log(date, importance, message) {
+    alert(`[${date.getHours()}:${date.getMinutes()}] [${importance}] ${message}`);
+  }
+
+  log = curry(log);
+
+  log(new Date(), "DEBUG", "some debug"); // log(a, b, c)
+  log(new Date())("DEBUG")("some debug"); // log(a)(b)(c)
+
+  // logNow will be the partial of log with fixed first argument
+  let logNow = log(new Date());
+  // use it
+  logNow("INFO", "message"); // [HH:mm] INFO message
+
+  let debugNow = logNow("DEBUG");
+  debugNow("message"); // [HH:mm] DEBUG message
+  ```
+* Reference Type
+* BigInt
+* Unicode, String internals
+* WeakRef and FinalizationRegistry
 
 ## Part 2: Browser: Document, Events, Interfaces
 
 ### Document
+* Browser environment, specs
+* DOM tree
+* Walking the DOM
+* Searching: getElement*, querySelector*
+* Node properties: type, tag and contents
+* Attributes and properties
+* Modifying the document
+* Styles and classes
+* Element size and scrolling
+* Window sizes and scrolling
+* Coordinates
 
 ### Introduction to Events
+* Introduction to browser events
+* Bubbling and capturing
+* Event delegation
+* Browser default actions
+* Dispatching custom events
 
 ### UI Events
+* Mouse events
+* Moving the mouse: mouseover/out, mouseenter/leave
+* Drag'n'Drop with mouse events
+* Pointer events
+* Keyboard: keydown and keyup
+* Scrolling
 
 ### Forms, controls
+* Form properties and methods
+* Focusing: focus/blur
+* Events: change, input, cut, copy, paste
+* Forms: event and method submit
 
 ### Document and resource loading
+* Page: DOMContentLoaded, load, beforeunload, unload
+* Scripts: async, defer
+* Resource loading: onload and onerror
 
 ### Miscellaneous
+* Mutation observer
+* Selection and Range
+* Event loop: microtasks and macrotasks
 
 ## Part 3: Additional articles
 
 ### Frames and windows
+* Popups and window methods
+* Cross-window communication
+* The clickjacking attack
 
 ### Binary data, files
+* ArrayBuffer, binary arrays
+* TextDecoder and TextEncoder
+* Blob
+* File and FileReader
 
 ### Network requests
+* Fetch
+* FormData
+* Fetch: Download progress
+* Fetch: Abort
+* Fetch: Cross-Origin Requests
+* Fetch API
+* URL objects
+* XMLHttpRequest
+* Resumable file upload
+* Long polling
+* WebSocket
+* Server Sent Events
 
 ### Storing data in the browser
+* Cookies, document.cookie
+* LocalStorage, sessionStorage
+* IndexedDB
 
 ### Animation
+* Bezier curve
+* CSS-animations
+* JavaScript animations
 
 ### Web components
+* From the orbital height
+* Custom elements
+* Shadow DOM
+* Template element
+* Shadow DOM slots, composition
+* Shadow DOM styling
+* Shadow DOM and events
 
 ### Regular expressions
+* Patterns and flags
+* Character classes
+* Unicode: flag "u" and class \p{...}
+* Anchors: string start ^ and end $
+* Multiline mode of anchors ^ $, flag "m"
+* Word boundary: \b
+* Escaping, special characters
+* Sets and ranges [...]
+* Quantifiers +, *, ? and {n}
+* Greedy and lazy quantifiers
+* Capturing groups
+* Backreferences in pattern: \N and \k<name>
+* Alternation (OR) |
+* Lookahead and lookbehind
+* Catastrophic backtracking
+* Sticky flag "y", searching at position
+* Methods of RegExp and String
