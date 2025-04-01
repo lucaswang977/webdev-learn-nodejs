@@ -5,9 +5,9 @@ type Props = {
 
 const DropdownMenu = ({ list, selectedIndex }: Props) => {
   return (
-    <select>
+    <select defaultValue={list[selectedIndex]}>
       {list.map((item: string, index: number) => (
-        <option key={index} selected={index === selectedIndex}>
+        <option key={index} value={item}>
           {item}
         </option>
       ))}

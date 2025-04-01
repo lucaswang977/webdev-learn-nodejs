@@ -1,3 +1,4 @@
+import BottomNavigation from "./header/BottomNavigation";
 import HeaderMain from "./header/HeaderMain";
 import HeaderTop from "./header/HeaderTop";
 
@@ -6,6 +7,7 @@ const Header = () => {
     <header>
       <HeaderTop />
       <HeaderMain />
+      <BottomNavigation />
     </header>
   );
 };
