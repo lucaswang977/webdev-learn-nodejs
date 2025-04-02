@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import Header from "../components/Header";
-import { MenuOpenProvider, MenuOpenContext } from "../contexts/MenuOpenContext";
+import MenuOpenContext from "../contexts/MenuOpenContext";
+import MenuOpenProvider from "../contexts/MenuOpenProvider";
 
 const Main = () => {
   return <main></main>;
@@ -11,17 +12,18 @@ const Footer = () => {
 };
 
 const Overlay = () => {
+  const { isMenuOpen } = useContext(MenuOpenContext) ?? { isMenuOpen: false };
   return (
-    <div className="fixed top-0 left-0 z-5 h-screen w-full bg-black opacity-50"></div>
+    isMenuOpen && (
+      <div className="fixed top-0 left-0 z-5 h-screen w-full bg-black opacity-50"></div>
+    )
   );
 };
 
 function App() {
-  const menuOpenContext = useContext(MenuOpenContext);
-
   return (
     <MenuOpenProvider>
-      {menuOpenContext?.isMenuOpen && <Overlay />}
+      <Overlay />
       <Header />
       <Main />
       <Footer />

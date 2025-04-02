@@ -1537,17 +1537,244 @@ https://react.dev/learn
   ```
 
 ### Passing Data Deeply with Context
-  - Context lets a parent component provide data to the entire tree below it.
-    - Create a context.
-    - Use that context from the component that needs the data.
-    - Provide that context from the component that specifies the data.
-  - Context lets you write components that "adapt to their surroundings" and display themselves differently depending on where (or, in other words, in which context) they are being rendered.
-  - In React, the only way to override some context coming from above is to wrap children into a context provider with a different value. Different React contexts don't override each other.
-  - A few alternatives you should consider before using context:
-    - Start by passing props.
-    - Extract components and pass JSX as children to them.
-  - Use cases for context: theming, current account, routing, managing state
+* Lifting state up that high can lead to a situation called "prop drilling".
+* Context lets the parent component make some information available to any component in the tree below it—no matter how deep—without passing it explicitly through props.
+* Let children to "ask" for data from somewhere above in the tree:
+  * Create a context.
+    ```Javascript
+    // LevelContext.js
+    import { createContext } from 'react';
+    export const LevelContext = createContext(0);
+    ```
+  * Use that context from the component that needs the data.
+    ```Javascript
+    // Heading.js
+    import { useContext } from 'react';
+    import { LevelContext } from './LevelContext.js';
+    export default function Heading({ children }) {
+      const level = useContext(LevelContext);
+      // ...
+    }
+    ```
+    ```Javascript
+    // App.js
+    import Heading from './Heading.js';
+    import Section from './Section.js';
+
+    export default function Page() {
+      return (
+        <Section}>
+          <Heading>Title</Heading>
+          <Section>
+            <Heading>Heading</Heading>
+            // ...
+          </Section>
+        </Section>
+      )
+    }
+    ```
+  * Provide that context from the component that specifies the data.
+    ```Javascript
+    // Section.js
+    import { useContext } from 'react';
+    import { LevelContext } from './LevelContext.js';
+
+    export default function Section({ level, children }) {
+      const level = useContext(LevelContext);
+      return (
+        <section className="section">
+          <LevelContext value={level + 1}>
+            {children}
+          </LevelContext>
+        </section>
+      );
+    }
+    ```
+  
+* Context lets you write components that "adapt to their surroundings" and display themselves differently depending on where (or, in other words, in which context) they are being rendered.
+* In React, the only way to override some context coming from above is to wrap children into a context provider with a different value. 
+* Different React contexts don't override each other.
+* Just because you need to pass some props several levels deep doesn’t mean you should put that information into context.
+  * Start by passing props.
+  * Extract components and pass JSX as children to them.
+* Use cases for context: theming, current account, routing, managing state
+
 ### Scaling Up with Reducer and Context
+* You can combine reducers and context together to manage state of a complex screen.
+* Combining a reducer with context:
+  ```Javascript
+  // App.js
+  export default function TaskApp() {
+    const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+    function handleAddTask(text) {
+      dispatch({
+        // ...
+      })
+    }
+    function handleChangeTask(task) {
+      dispatch({
+        // ...
+      })
+    }
+    function handleDeleteTask(taskId) {
+      dispatch({
+        // ...
+      })
+    }
+
+    return (
+      <>
+        <h1>Day off in Kyoto</h1>
+        <AddTask
+          onAddTask={handleAddTask}
+        />
+        <TaskList
+          tasks={tasks}
+          onChangeTask={handleChangeTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      </>
+    );
+  }
+
+  function tasksReducer(tasks, action) {
+    switch (action.type) {
+      // ...
+    }
+  }
+
+  const initialTasks = [
+    // ...
+  ];
+  ```
+
+  ```Javascript
+  // TaskList.js
+  export default function TaskList({tasks, onChangeTask, onDeleteTask}) {
+    return (
+      <ul>
+        {tasks.map(task => (
+          <li key={task.id}>
+            <Task
+              task={task}
+              onChangeTask={onChangeTask}
+              onDeleteTask={onDeleteTask}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  function Task({ task, onChange, onDelete }) {
+    return (
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={task.done}
+            onChange={() => onChange(task)}
+          />
+          {task.text}
+        </label>
+        <button onClick={() => onDelete(task.id)}>Delete</button>
+      </div>
+    );
+  }
+  ```
+  * Currently, the tasks state and the dispatch function are only available in the top-level TaskApp component.
+  * To let other components read the list of tasks or change it, you have to explicitly pass down the current state and the event handlers that change it as props.
+* Step 1: Create the context
+  ```Javascript
+  // TasksContext.js
+  import { createContext } from 'react';
+  export const TasksContext = createContext(null);
+  export const TasksDispatchContext = createContext(null);
+  ```
+* Step 2: Put state and dispatch into context
+  ```Javascript
+  // TaskApp.js
+  import { TasksContext, TasksDispatchContext } from './TasksContext.js';
+
+  export default function TaskApp() {
+    const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+    // ...
+    return (
+      <TasksContext.Provider value={tasks}>
+        <TasksDispatchContext.Provider value={dispatch}>
+          ...
+        </TasksDispatchContext.Provider>
+      </TasksContext.Provider>
+    );
+  }
+  ```
+* Step 3: Use context anywhere in the tree
+  ```Javascript
+  // AddTask.js
+  export default function AddTask() {
+    const [text, setText] = useState('');
+    const dispatch = useContext(TasksDispatchContext);
+    // ...
+    return (
+      // ...
+      <button onClick={() => {
+        setText('');
+        dispatch({
+          type: 'added',
+          id: nextId++,
+          text: text,
+        });
+      }}>Add</button>
+      // ...
+  ```
+* Moving all wiring into a single file
+  ```Javascript
+  // TasksContext.js
+  import { createContext } from 'react';
+
+  export const TasksContext = createContext(null);
+  export const TasksDispatchContext = createContext(null);
+
+  export function TasksProvider({ children }) {
+    const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+    return (
+      <TasksContext.Provider value={tasks}>
+        <TasksDispatchContext.Provider value={dispatch}>
+          {children}
+        </TasksDispatchContext.Provider>
+      </TasksContext.Provider>
+    );
+  }
+
+  export function useTasks() {
+    return useContext(TasksContext);
+  }
+
+  export function useTasksDispatch() {
+    return useContext(TasksDispatchContext);
+  }
+  ```
+
+  ```Javascript
+  // TaskApp.js
+  import { TasksProvider } from './TasksContext.js';
+
+  export default function TaskApp() {
+    return (
+      <TasksProvider>
+        <h1>Day off in Kyoto</h1>
+        <AddTask />
+        <TaskList />
+      </TasksProvider>
+    );
+  }
+  ```
+
+* This is a powerful way to scale your app and lift state up without too much work whenever you want to access the data deep in the tree.
+
+
 
 ## Escape Hatches
 

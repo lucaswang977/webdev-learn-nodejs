@@ -6,8 +6,8 @@ import {
   IoMenuOutline,
 } from "react-icons/io5";
 import NavIcon from "./NavIcon";
-import { MenuOpenContext } from "../../contexts/MenuOpenContext";
 import { useContext } from "react";
+import MenuOpenContext from "../../contexts/MenuOpenContext";
 
 const BottomNavigation = () => {
   const menuOpenContext = useContext(MenuOpenContext);
@@ -17,7 +17,10 @@ const BottomNavigation = () => {
       <NavIcon
         icon={IoMenuOutline}
         action={() => {
-          if (menuOpenContext) menuOpenContext.setIsMenuOpen(true);
+          if (menuOpenContext) {
+            menuOpenContext.setIsMenuOpen(true);
+            console.log("clicked");
+          }
         }}
       />
       <NavIcon icon={IoBagHandleOutline} notification={0} />
