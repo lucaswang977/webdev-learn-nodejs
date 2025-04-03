@@ -1,6 +1,7 @@
 import BottomNavigation from "./header/BottomNavigation";
 import HeaderMain from "./header/HeaderMain";
 import HeaderTop from "./header/HeaderTop";
+import MobileNavMenu from "./menu/MobileNavMenu";
 
 const Header = () => {
   return (
@@ -8,6 +9,7 @@ const Header = () => {
       <HeaderTop />
       <HeaderMain />
       <BottomNavigation />
+      <MobileNavMenu />
     </header>
   );
 };

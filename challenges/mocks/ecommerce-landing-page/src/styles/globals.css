@@ -28,3 +28,11 @@
 
   --shadow-normal: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
+
+@layer utilities {
+  .ionicon-bold {
+    path {
+      stroke-width: 50px;
+    }
+  }
+}

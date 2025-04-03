@@ -19,7 +19,6 @@ const BottomNavigation = () => {
         action={() => {
           if (menuOpenContext) {
             menuOpenContext.setIsMenuOpen(true);
-            console.log("clicked");
           }
         }}
       />
