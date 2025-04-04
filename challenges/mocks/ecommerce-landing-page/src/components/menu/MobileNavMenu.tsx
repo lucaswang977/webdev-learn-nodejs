@@ -1,6 +1,9 @@
-import { useContext } from "react";
-import { IoCloseOutline } from "react-icons/io5";
+import { useContext, useState } from "react";
+import { IoCloseOutline, IoCaretBackOutline } from "react-icons/io5";
 import MenuOpenContext from "../../contexts/MenuOpenContext";
+import MenuCategory from "./MenuCategory";
+import { menuCategories } from "../../data/menuCategories";
+import { menuOptions } from "../../data/menuOptions";
 
 const MenuTitle = () => {
   const menuOpenContext = useContext(MenuOpenContext);
@@ -12,86 +15,76 @@ const MenuTitle = () => {
         className="text-[22px]"
         onClick={() => menuOpenContext?.setIsMenuOpen(false)}
       >
-        <IoCloseOutline className="ionicon-bold" />
+        <IoCloseOutline className="ionicon-semibold" />
       </button>
     </div>
   );
 };
 
-type MenuCategoryProps = {
-  data: MenuCategoryType;
+type MenuOptionProp = {
+  name: string;
+  options: string[];
+  opened?: boolean;
+  setOpen?: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-const MenuCategory = ({ data }: MenuCategoryProps) => {
+const MenuOption = ({ name, options, opened, setOpen }: MenuOptionProp) => {
   return (
-    <div className="border-cultured text-onyx border-b-[1px] py-3 text-[15px] font-medium">
-      {data.name}
-    </div>
+    <>
+      <button
+        className="text-onyx mt-10 flex w-full items-center justify-between text-lg font-medium"
+        onClick={() => setOpen && (opened ? setOpen(undefined) : setOpen(name))}
+      >
+        <p>{name}</p>
+        {opened ? (
+          <IoCaretBackOutline size="16px" className="-rotate-90" />
+        ) : (
+          <IoCaretBackOutline size="16px" />
+        )}
+      </button>
+      {opened && (
+        <ul>
+          {options.map((v) => (
+            <li key={v}>
+              <button>{v}</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 
-const MenuCategoryItem = () => {
-  return <div>MenuCategoryItem</div>;
-};
-
-const MenuOption = () => {
-  return <div>MenuOption</div>;
-};
-
-type MenuCategoryType = { name: string; value: string | MenuCategoryType[] };
-
-const menuCategories: MenuCategoryType[] = [
-  { name: "Home", value: "#" },
-  {
-    name: "Men's",
-    value: [
-      { name: "Shirt", value: "#" },
-      { name: "Short & Jeans", value: "#" },
-      { name: "Safety Shoes", value: "#" },
-      { name: "Wallet", value: "#" },
-    ],
-  },
-  {
-    name: "Women's",
-    value: [
-      { name: "Dress & Frock", value: "#" },
-      { name: "Earrings", value: "#" },
-      { name: "Necklace", value: "#" },
-      { name: "Makeup Kit", value: "#" },
-    ],
-  },
-  {
-    name: "Jewelry",
-    value: [
-      { name: "Earrings", value: "#" },
-      { name: "Couple Rings", value: "#" },
-      { name: "Necklace", value: "#" },
-      { name: "Bracelets", value: "#" },
-    ],
-  },
-  {
-    name: "Perfume",
-    value: [
-      { name: "Clothes Perfume", value: "#" },
-      { name: "Flower Fragrance", value: "#" },
-      { name: "Deodorant", value: "#" },
-      { name: "Air Freshener", value: "#" },
-    ],
-  },
-  { name: "Blog", value: "#" },
-  { name: "Hot Offers", value: "#" },
-];
-
 const MobileNavMenu = () => {
   const menuOpenContext = useContext(MenuOpenContext);
+  const [openCategory, setOpenCategory] = useState<string | undefined>(
+    undefined,
+  );
+  const [openOption, setOpenOption] = useState<string | undefined>(undefined);
 
   return (
     menuOpenContext?.isMenuOpen && (
-      <nav className="fixed top-0 left-0 z-10 h-screen w-full max-w-[320px] bg-white px-5 py-5">
+      <nav className="fixed top-0 left-0 z-10 h-screen w-full max-w-[320px] bg-white px-5 py-6">
         <MenuTitle />
         {menuCategories.map((category) => (
-          <MenuCategory data={category} />
+          <MenuCategory
+            key={category.name}
+            data={category}
+            open={openCategory === category.name}
+            setOpen={setOpenCategory}
+          />
         ))}
+        <div className="mt-10">
+          {menuOptions.map((option) => (
+            <MenuOption
+              key={option.name}
+              name={option.name}
+              options={option.options}
+              opened={openOption === option.name}
+              setOpen={setOpenOption}
+            />
+          ))}
+        </div>
       </nav>
     )
   );
