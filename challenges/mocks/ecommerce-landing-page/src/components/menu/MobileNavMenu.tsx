@@ -1,57 +1,22 @@
-import { useContext, useState } from "react";
-import { IoCloseOutline, IoCaretBackOutline } from "react-icons/io5";
+import React, { useContext, useState } from "react";
 import MenuOpenContext from "../../contexts/MenuOpenContext";
 import MenuCategory from "./MenuCategory";
 import { menuCategories } from "../../data/menuCategories";
 import { menuOptions } from "../../data/menuOptions";
+import MenuOption from "./MenuOption";
+import MenuTitle from "./MenuTitle";
+import {
+  IoLogoFacebook,
+  IoLogoInstagram,
+  IoLogoLinkedin,
+  IoLogoTwitter,
+} from "react-icons/io5";
 
-const MenuTitle = () => {
-  const menuOpenContext = useContext(MenuOpenContext);
-
+const SocialButton = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="border-cultured mb-2 flex justify-between border-b-[2px] pb-3">
-      <p className="text-salmon-pink text-lg font-semibold">Menu</p>
-      <button
-        className="text-[22px]"
-        onClick={() => menuOpenContext?.setIsMenuOpen(false)}
-      >
-        <IoCloseOutline className="ionicon-semibold" />
-      </button>
-    </div>
-  );
-};
-
-type MenuOptionProp = {
-  name: string;
-  options: string[];
-  opened?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<string | undefined>>;
-};
-
-const MenuOption = ({ name, options, opened, setOpen }: MenuOptionProp) => {
-  return (
-    <>
-      <button
-        className="text-onyx mt-10 flex w-full items-center justify-between text-lg font-medium"
-        onClick={() => setOpen && (opened ? setOpen(undefined) : setOpen(name))}
-      >
-        <p>{name}</p>
-        {opened ? (
-          <IoCaretBackOutline size="16px" className="-rotate-90" />
-        ) : (
-          <IoCaretBackOutline size="16px" />
-        )}
-      </button>
-      {opened && (
-        <ul>
-          {options.map((v) => (
-            <li key={v}>
-              <button>{v}</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+    <li className="bg-cultured rounded-lg p-[10px]">
+      <a href="#">{children}</a>
+    </li>
   );
 };
 
@@ -64,7 +29,7 @@ const MobileNavMenu = () => {
 
   return (
     menuOpenContext?.isMenuOpen && (
-      <nav className="fixed top-0 left-0 z-10 h-screen w-full max-w-[320px] bg-white px-5 py-6">
+      <nav className="fixed top-0 left-0 z-10 h-screen w-full max-w-[320px] overflow-y-scroll overscroll-contain bg-white px-5 py-6">
         <MenuTitle />
         {menuCategories.map((category) => (
           <MenuCategory
@@ -85,6 +50,28 @@ const MobileNavMenu = () => {
             />
           ))}
         </div>
+        <ul className="text-eerie-black mt-10 flex w-full justify-center gap-2 text-xl">
+          <li>
+            <SocialButton>
+              <IoLogoFacebook />
+            </SocialButton>
+          </li>
+          <li>
+            <SocialButton>
+              <IoLogoTwitter />
+            </SocialButton>
+          </li>
+          <li>
+            <SocialButton>
+              <IoLogoInstagram />
+            </SocialButton>
+          </li>
+          <li>
+            <SocialButton>
+              <IoLogoLinkedin />
+            </SocialButton>
+          </li>
+        </ul>
       </nav>
     )
   );

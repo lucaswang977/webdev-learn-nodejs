@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import Header from "../components/Header";
-import MenuOpenContext from "../contexts/MenuOpenContext";
 import MenuOpenProvider from "../contexts/MenuOpenProvider";
+import Overlay from "../components/Overlay";
 
 const Main = () => {
   return <main></main>;
@@ -9,15 +8,6 @@ const Main = () => {
 
 const Footer = () => {
   return <footer></footer>;
-};
-
-const Overlay = () => {
-  const { isMenuOpen } = useContext(MenuOpenContext) ?? { isMenuOpen: false };
-  return (
-    isMenuOpen && (
-      <div className="fixed top-0 left-0 z-5 h-screen w-full bg-black opacity-50"></div>
-    )
-  );
 };
 
 function App() {

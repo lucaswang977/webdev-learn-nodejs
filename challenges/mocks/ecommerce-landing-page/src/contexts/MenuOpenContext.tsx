@@ -6,6 +6,9 @@ export interface MenuOpenContextType {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MenuOpenContext = createContext<MenuOpenContextType | null>(null);
+const MenuOpenContext = createContext<MenuOpenContextType>({
+  isMenuOpen: false,
+  setIsMenuOpen: () => {},
+});
 
 export default MenuOpenContext;

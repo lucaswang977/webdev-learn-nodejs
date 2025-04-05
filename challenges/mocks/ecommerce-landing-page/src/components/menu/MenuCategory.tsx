@@ -28,17 +28,20 @@ const MenuCategory = ({ data, open, setOpen }: MenuCategoryProps) => {
               <IoAddOutline className="ionicon-bold" />
             )}
           </button>
-          {open && (
-            <div className="mt-4 pl-3">
-              {data.value.map((v) => (
-                <MenuCategoryItem
-                  key={v.name}
-                  name={v.name}
-                  value={v.value.toString()}
-                />
-              ))}
-            </div>
-          )}
+          <div
+            className={
+              (open ? "max-h-[144px]" : "max-h-0") +
+              " transition-height overflow-hidden pl-3 duration-500"
+            }
+          >
+            {data.value.map((v) => (
+              <MenuCategoryItem
+                key={v.name}
+                name={v.name}
+                value={v.value.toString()}
+              />
+            ))}
+          </div>
         </>
       ) : (
         <a href={data.value}>{data.name}</a>

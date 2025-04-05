@@ -28,6 +28,7 @@
   --breakpoint-2xl: 88rem; /* 1400px */
 
   --shadow-normal: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  --shadow-light: 0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
 @layer utilities {
