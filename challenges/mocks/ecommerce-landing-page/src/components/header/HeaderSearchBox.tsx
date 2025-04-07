@@ -2,7 +2,7 @@ import { IoSearchOutline } from "react-icons/io5";
 
 const HeaderSearchBox = () => {
   return (
-    <div className="relative sm:min-w-[300px]">
+    <div className="relative sm:min-w-[300px] md:grow-1">
       <input
         type="text"
         placeholder="Enter your product name"

@@ -1,6 +1,9 @@
 import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
-import MenuCategoryItem from "./MenuCategoryItem";
+
+import { twMerge } from "tailwind-merge";
+
 import { MenuCategoryType } from "../../data/menuCategories";
+import MenuCategoryItem from "./MenuCategoryItem";
 
 type MenuCategoryProps = {
   data: MenuCategoryType;
@@ -29,10 +32,10 @@ const MenuCategory = ({ data, open, setOpen }: MenuCategoryProps) => {
             )}
           </button>
           <div
-            className={
-              (open ? "max-h-[144px]" : "max-h-0") +
-              " transition-height overflow-hidden pl-3 duration-500"
-            }
+            className={twMerge(
+              "transition-height overflow-hidden pl-3 duration-500",
+              open ? "max-h-[144px]" : "max-h-0 invisible",
+            )}
           >
             {data.value.map((v) => (
               <MenuCategoryItem
