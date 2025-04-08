@@ -1,15 +1,24 @@
 import React from "react";
 import { type IconType } from "react-icons";
+
+import { twMerge } from "tailwind-merge";
+
 type Props = {
   icon: IconType;
   notification?: number;
   action?: () => void;
+  style?: string;
 };
 
-const NavIcon = ({ icon, notification, action }: Props) => {
+const NavIcon = ({
+  icon,
+  notification,
+  action,
+  style = "p-[10px] text-[26px]",
+}: Props) => {
   return (
     <button
-      className="relative p-[10px] text-[26px]"
+      className={twMerge("relative ", style)}
       onClick={() => {
         if (action) action();
       }}

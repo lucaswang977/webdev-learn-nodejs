@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import {
   IoLogoFacebook,
   IoLogoInstagram,
@@ -11,17 +11,10 @@ import { twMerge } from "tailwind-merge";
 import MenuOpenContext from "../../contexts/MenuOpenContext";
 import { menuCategories } from "../../data/menuCategories";
 import { menuOptions } from "../../data/menuOptions";
+import SocialButton from "../common/SocialButton";
 import MenuCategory from "./MenuCategory";
 import MenuOption from "./MenuOption";
 import MenuTitle from "./MenuTitle";
-
-const SocialButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <li className="bg-cultured rounded-lg p-[10px]">
-      <a href="#">{children}</a>
-    </li>
-  );
-};
 
 const MobileNavMenu = () => {
   const { isMenuOpen } = useContext(MenuOpenContext);
