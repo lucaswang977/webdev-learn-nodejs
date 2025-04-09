@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import {
   IoBagHandleOutline,
   IoGridOutline,
@@ -7,11 +6,11 @@ import {
   IoMenuOutline,
 } from "react-icons/io5";
 
-import MenuOpenContext from "../../contexts/MenuOpenContext";
-import NavIcon from "./NavIcon";
+import NavIcon from "@components/header/NavIcon";
+import useMenuOpen from "@contexts/MenuOpenContext";
 
 const BottomNavigation = () => {
-  const { setIsMenuOpen } = useContext(MenuOpenContext);
+  const { setIsMenuOpen } = useMenuOpen();
 
   return (
     <div className="border-cultured shadow-normal xs:rounded-t-lg fixed bottom-0 left-1/2 flex w-full max-w-[500px] -translate-x-1/2 justify-around border-t-[1px] bg-white py-[5px] lg:hidden">

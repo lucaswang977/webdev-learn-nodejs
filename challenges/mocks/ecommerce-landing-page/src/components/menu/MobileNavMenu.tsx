@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   IoLogoFacebook,
   IoLogoInstagram,
@@ -6,18 +6,17 @@ import {
   IoLogoTwitter,
 } from "react-icons/io5";
 
+import SocialButton from "@components/common/SocialButton";
+import MenuCategory from "@components/menu/MenuCategory";
+import MenuOption from "@components/menu/MenuOption";
+import MenuTitle from "@components/menu/MenuTitle";
+import useMenuOpen from "@contexts/MenuOpenContext";
+import { menuCategories } from "@data/menuCategories";
+import { menuOptions } from "@data/menuOptions";
 import { twMerge } from "tailwind-merge";
 
-import MenuOpenContext from "../../contexts/MenuOpenContext";
-import { menuCategories } from "../../data/menuCategories";
-import { menuOptions } from "../../data/menuOptions";
-import SocialButton from "../common/SocialButton";
-import MenuCategory from "./MenuCategory";
-import MenuOption from "./MenuOption";
-import MenuTitle from "./MenuTitle";
-
 const MobileNavMenu = () => {
-  const { isMenuOpen } = useContext(MenuOpenContext);
+  const { isMenuOpen } = useMenuOpen();
   const [openCategory, setOpenCategory] = useState<string | undefined>(
     undefined,
   );

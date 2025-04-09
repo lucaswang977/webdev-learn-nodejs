@@ -1,9 +1,9 @@
-import { useContext } from "react";
 import { IoCloseOutline } from "react-icons/io5";
-import MenuOpenContext from "../../contexts/MenuOpenContext";
+
+import useMenuOpen from "@contexts/MenuOpenContext";
 
 const MenuTitle = () => {
-  const { setIsMenuOpen } = useContext(MenuOpenContext);
+  const { setIsMenuOpen } = useMenuOpen();
 
   return (
     <div className="border-cultured mb-2 flex justify-between border-b-[2px] pb-3">

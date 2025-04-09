@@ -1,19 +1,20 @@
-import Header from "../components/Header";
-import MenuOpenProvider from "../contexts/MenuOpenProvider";
-import Overlay from "../components/Overlay";
+import { useState } from "react";
 
-const Main = () => {
-  return <main></main>;
-};
+import Overlay from "@components/common/Overlay";
+import Header from "@components/header/Header";
+import Main from "@components/main/Main";
+import MenuOpenProvider from "@contexts/MenuOpenProvider";
 
 const Footer = () => {
   return <footer></footer>;
 };
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <MenuOpenProvider>
-      <Overlay />
+    <MenuOpenProvider value={{ isMenuOpen, setIsMenuOpen }}>
+      <Overlay isShow={isMenuOpen} setShow={setIsMenuOpen} />
       <Header />
       <Main />
       <Footer />

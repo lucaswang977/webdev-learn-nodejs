@@ -1,11 +1,13 @@
-import { useState } from "react";
-import MenuOpenContext from "./MenuOpenContext";
+import { MenuOpenContext, MenuOpenContextType } from "./MenuOpenContext";
 
-function MenuOpenProvider({ children }: { children: React.ReactNode }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface MenuOpenProviderProps {
+  children: React.ReactNode;
+  value: MenuOpenContextType;
+}
 
+function MenuOpenProvider({ children, value }: MenuOpenProviderProps) {
   return (
-    <MenuOpenContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
+    <MenuOpenContext.Provider value={value}>
       {children}
     </MenuOpenContext.Provider>
   );

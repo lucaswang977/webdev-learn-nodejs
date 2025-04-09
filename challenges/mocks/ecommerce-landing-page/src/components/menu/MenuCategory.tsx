@@ -1,9 +1,8 @@
 import { IoAddOutline, IoRemoveOutline } from "react-icons/io5";
 
+import MenuCategoryItem from "@components/menu/MenuCategoryItem";
+import { MenuCategoryType } from "@data/menuCategories";
 import { twMerge } from "tailwind-merge";
-
-import { MenuCategoryType } from "../../data/menuCategories";
-import MenuCategoryItem from "./MenuCategoryItem";
 
 type MenuCategoryProps = {
   data: MenuCategoryType;

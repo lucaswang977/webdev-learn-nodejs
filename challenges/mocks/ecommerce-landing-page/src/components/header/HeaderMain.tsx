@@ -4,9 +4,9 @@ import {
   IoPersonOutline,
 } from "react-icons/io5";
 
-import HeaderLogo from "./HeaderLogo";
-import HeaderSearchBox from "./HeaderSearchBox";
-import NavIcon from "./NavIcon";
+import HeaderLogo from "@components/header/HeaderLogo";
+import HeaderSearchBox from "@components/header/HeaderSearchBox";
+import NavIcon from "@components/header/NavIcon";
 
 const HeaderUserAction = () => {
   return (
