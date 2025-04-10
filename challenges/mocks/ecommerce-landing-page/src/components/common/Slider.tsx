@@ -6,9 +6,17 @@ type SliderItemProps = {
 };
 
 export const Slider = ({ children }: SliderProps) => {
-  return <div className="flex overflow-hidden">{children}</div>;
+  return (
+    <div className="flex gap-3 scroll-snap-inline snap-mandatory snap-x overflow-x-auto overflow-y-hidden overscroll-contain pb-2">
+      {children}
+    </div>
+  );
 };
 
 export const SliderItem = ({ children }: SliderItemProps) => {
-  return <div className="min-w-[100%]">{children}</div>;
+  return (
+    <div className="relative aspect-square min-w-[100%] max-h-[450px] rounded-xl overflow-hidden snap-start">
+      {children}
+    </div>
+  );
 };

@@ -29,7 +29,7 @@ const HeaderUserAction = () => {
 const HeaderMain = () => {
   return (
     <div className="border-cultured border-b-[1px] w-full">
-      <div className="px-4 py-6 sm:flex sm:items-center sm:justify-between md:gap-[80px] md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px] mx-auto">
+      <div className="p-4 sm:flex sm:items-center sm:justify-between md:gap-[80px] md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px] mx-auto">
         <HeaderLogo />
         <HeaderSearchBox />
         <HeaderUserAction />

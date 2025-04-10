@@ -1,21 +1,36 @@
 import { Slider, SliderItem } from "@components/common/Slider";
 
-type Props = {};
+import SliderItemContent from "./SliderItemContent";
 
-const Banner = (props: Props) => {
+const Banner = () => {
   return (
-    <div>
+    <div className="p-3 mt-3">
       <Slider>
         <SliderItem>
-          <img src="https://i.postimg.cc/V6Rrdsk1/banner-1.jpg" alt="" />
+          <SliderItemContent
+            imgUrl="https://i.postimg.cc/V6Rrdsk1/banner-1.jpg"
+            category="Trending Item"
+            title="Women's Latest Fashion Sale"
+            shopUrl="#"
+          />
         </SliderItem>
 
         <SliderItem>
-          <img src="https://i.postimg.cc/RFXhvPgZ/banner-2.jpg" alt="" />
+          <SliderItemContent
+            imgUrl="https://i.postimg.cc/RFXhvPgZ/banner-2.jpg"
+            category="Trending accessories"
+            title="Modern Sunglasses"
+            shopUrl="#"
+          />
         </SliderItem>
 
         <SliderItem>
-          <img src="https://i.postimg.cc/MTKZ37z2/banner-3.jpg" alt="" />
+          <SliderItemContent
+            imgUrl="https://i.postimg.cc/MTKZ37z2/banner-3.jpg"
+            category="Sale Offer"
+            title="New Fashion Summer Sale"
+            shopUrl="#"
+          />
         </SliderItem>
       </Slider>
     </div>
