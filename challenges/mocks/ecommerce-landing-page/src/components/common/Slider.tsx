@@ -15,7 +15,7 @@ export const Slider = ({ children }: SliderProps) => {
 
 export const SliderItem = ({ children }: SliderItemProps) => {
   return (
-    <div className="relative aspect-square min-w-[100%] max-h-[450px] rounded-xl overflow-hidden snap-start">
+    <div className="relative aspect-square min-w-[100%] max-h-[450px] xs:aspect-5/3 sm:aspect-4/2 md:aspect-auto rounded-xl overflow-hidden snap-start md:h-[350px] lg:h-[360px]">
       {children}
     </div>
   );
