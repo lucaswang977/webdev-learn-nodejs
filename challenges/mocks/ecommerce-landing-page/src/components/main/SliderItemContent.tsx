@@ -1,5 +1,8 @@
+import { twMerge } from "tailwind-merge";
+
 interface SlideItemContentProps {
   imgUrl: string;
+  imgStyle: string;
   category: string;
   title: string;
   slogan: string[];
@@ -8,6 +11,7 @@ interface SlideItemContentProps {
 
 const SliderItemContent = ({
   imgUrl,
+  imgStyle,
   category,
   title,
   slogan,
@@ -16,7 +20,7 @@ const SliderItemContent = ({
   return (
     <>
       <img
-        className="w-full h-full object-cover object-right"
+        className={twMerge("w-full h-full object-cover", imgStyle)}
         src={imgUrl}
         alt=""
       />
@@ -24,7 +28,7 @@ const SliderItemContent = ({
         <p className="text-salmon-pink font-medium text-sm tracking-wide mb-3 capitalize xs:text-base xs:tracking-widest md:text-xl lg:text-2xl">
           {category}
         </p>
-        <p className="text-eerie-black text-2xl font-bold uppercase mb-3 leading-none xs:text-3xl md:text-[2.5rem]">
+        <p className="text-eerie-black text-2xl font-bold uppercase mb-3 leading-none xs:text-3xl md:text-[2.3rem]">
           {title}
         </p>
         <p className="hidden xs:block mb-3 text-sonic-silver font-medium text-sm md:text-xl lg:text-2xl">

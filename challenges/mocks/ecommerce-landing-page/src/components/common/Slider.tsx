@@ -7,7 +7,7 @@ type SliderItemProps = {
 
 export const Slider = ({ children }: SliderProps) => {
   return (
-    <div className="flex gap-3 scroll-snap-inline snap-mandatory snap-x overflow-x-auto overflow-y-hidden overscroll-contain pb-2">
+    <div className="flex gap-3 scroll-snap-inline snap-mandatory snap-x overflow-x-auto overflow-y-hidden overscroll-contain pb-2 scrollbar-style">
       {children}
     </div>
   );
