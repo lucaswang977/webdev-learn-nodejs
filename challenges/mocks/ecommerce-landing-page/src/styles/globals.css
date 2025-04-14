@@ -29,6 +29,7 @@
 
   --shadow-normal: 0px 0px 10px rgba(0, 0, 0, 0.25);
   --shadow-light: 0px 0px 10px rgba(0, 0, 0, 0.05);
+  --shadow-menu: 0px 3px 3px rgba(0, 0, 0, 0.1);
 }
 
 @layer base {

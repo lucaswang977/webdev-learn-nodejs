@@ -30,14 +30,16 @@ const MobileNavMenu = () => {
       )}
     >
       <MenuTitle />
-      {menuCategories.map((category) => (
-        <MenuCategory
-          key={category.name}
-          data={category}
-          open={openCategory === category.name}
-          setOpen={setOpenCategory}
-        />
-      ))}
+      {menuCategories
+        .filter((v) => v.name !== "Categories")
+        .map((category) => (
+          <MenuCategory
+            key={category.name}
+            data={category}
+            open={openCategory === category.name}
+            setOpen={setOpenCategory}
+          />
+        ))}
       <div className="mt-10">
         {menuOptions.map((option) => (
           <MenuOption

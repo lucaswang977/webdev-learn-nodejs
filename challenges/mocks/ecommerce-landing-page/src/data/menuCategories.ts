@@ -1,5 +1,6 @@
 export const menuCategories = [
   { name: "Home", value: "#" },
+  { name: "Categories", value: [] },
   {
     name: "Men's",
     value: [
