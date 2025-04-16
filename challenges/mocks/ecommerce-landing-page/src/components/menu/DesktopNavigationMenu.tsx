@@ -60,55 +60,45 @@ const DesktopNavMenuItemTitle = ({
   href,
 }: DesktopNavMenuItemTitleProps) => {
   return (
-    <a href={href} className="">
+    <a
+      href={href}
+      className="after:bg-salmon-pink after:transition-width relative py-4 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:duration-200 after:ease-in hover:after:w-full"
+    >
       {name}
     </a>
   );
 };
 
-type Props = {
+type DesktopNavMenuItemProps = {
   name: string;
   value: string | readonly { name: string; value: string }[];
 };
 
-const DesktopNavMenuItem = ({ name, value }: Props) => {
+const DesktopNavMenuItem = ({ name, value }: DesktopNavMenuItemProps) => {
   return (
     <li
       key={name}
-      className="text-eerie-black hover:text-salmon-pink after:bg-salmon-pink after:transition-width group cursor-pointer py-4 text-sm font-semibold uppercase transition-colors duration-200 ease-in not-nth-2:relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:duration-200 after:ease-in hover:after:w-full"
+      className="text-eerie-black hover:text-salmon-pink group cursor-pointer py-4 text-sm font-semibold uppercase transition-colors duration-200 ease-in not-nth-2:relative"
     >
       {value instanceof Array ? (
         name === "Categories" ? (
           <>
-            <span className="">{name}</span>
+            <DesktopNavMenuItemTitle name={name} href="#" />
             <DesktopNavMenuDropdown styles="w-full">
               <div className="flex gap-4">
-                <DesktopNavMenuDropdownList
-                  title={dropdownMenuItems[0].title}
-                  items={dropdownMenuItems[0].items}
-                  img={dropdownMenuItems[0].img}
-                />
-                <DesktopNavMenuDropdownList
-                  title={dropdownMenuItems[1].title}
-                  items={dropdownMenuItems[1].items}
-                  img={dropdownMenuItems[1].img}
-                />
-                <DesktopNavMenuDropdownList
-                  title={dropdownMenuItems[2].title}
-                  items={dropdownMenuItems[2].items}
-                  img={dropdownMenuItems[2].img}
-                />
-                <DesktopNavMenuDropdownList
-                  title={dropdownMenuItems[3].title}
-                  items={dropdownMenuItems[3].items}
-                  img={dropdownMenuItems[3].img}
-                />
+                {dropdownMenuItems.map((v) => (
+                  <DesktopNavMenuDropdownList
+                    title={v.title}
+                    items={v.items}
+                    img={v.img}
+                  />
+                ))}
               </div>
             </DesktopNavMenuDropdown>
           </>
         ) : (
           <>
-            <span className="">{name}</span>
+            <DesktopNavMenuItemTitle name={name} href="#" />
             <DesktopNavMenuDropdown styles="w-[200px]">
               {value.map((item) => (
                 <li key={item.name} className="hover:text-salmon-pink py-1">
@@ -119,9 +109,7 @@ const DesktopNavMenuItem = ({ name, value }: Props) => {
           </>
         )
       ) : (
-        <a href={value} className="">
-          {name}
-        </a>
+        <DesktopNavMenuItemTitle name={name} href="#" />
       )}
     </li>
   );
