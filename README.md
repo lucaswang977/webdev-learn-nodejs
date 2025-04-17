@@ -82,6 +82,7 @@
 - Ctrl/Cmd + Shift + ]: Switch between terminal tabs
 - Ctrl/Cmd + Alt/Option + Shift + ⬇/⬆: Create multiple cursors
 - Ctrl/Cmd + Alt/Shift + I: Toggle Copilot Chat panel
+- (Win/Lin) Alt + Left Arrow / (Mac)Ctrl + - (minus sign): Go back
 - (Customized) Ctrl + Shift + t: Terminal in editor
 - (Customized) Ctrl/Cmd + Shift + r: Show remote explorer(dev containers)
 
