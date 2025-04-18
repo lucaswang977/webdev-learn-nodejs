@@ -1,11 +1,12 @@
 type Props = {
+  name: string;
   list: string[];
   selectedIndex: number;
 };
 
-const DropdownMenu = ({ list, selectedIndex }: Props) => {
+const DropdownMenu = ({ name, list, selectedIndex }: Props) => {
   return (
-    <select defaultValue={list[selectedIndex]}>
+    <select name={name} defaultValue={list[selectedIndex]}>
       {list.map((item: string, index: number) => (
         <option key={index} value={item}>
           {item}

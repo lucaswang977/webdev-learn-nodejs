@@ -4,7 +4,7 @@ import SliderItemContent from "./SliderItemContent";
 
 const Banner = () => {
   return (
-    <div className="px-4 py-7 lg:py-0 md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px] mx-auto">
+    <div className="mx-auto px-4 py-7 md:max-w-[750px] lg:max-w-[980px] lg:py-0 xl:max-w-[1200px] 2xl:max-w-[1350px]">
       <Slider>
         <SliderItem>
           <SliderItemContent

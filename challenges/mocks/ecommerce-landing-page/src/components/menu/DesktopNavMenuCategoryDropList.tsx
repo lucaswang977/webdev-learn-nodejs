@@ -9,9 +9,10 @@ const DesktopNavMenuCategoryDropList = ({ name }: { name: string }) => {
     <>
       <DesktopNavMenuItemTitle name={name} href="#" />
       <DesktopNavMenuDropdownListStyle styles="w-full">
-        <div className="flex gap-4">
+        <div className="flex gap-7 px-4">
           {dropdownMenuItems.map((v) => (
             <DesktopNavMenuCategoryDropdownListInnerList
+              key={v.title}
               title={v.title}
               items={v.items}
               img={v.img}

@@ -5,7 +5,7 @@ export const dropdownMenuItems = [
       { name: "desktop", url: "#" },
       { name: "laptop", url: "#" },
       { name: "camera", url: "#" },
-      { name: "camera", url: "#" },
+      { name: "camera1", url: "#" },
       { name: "headphone", url: "#" },
     ],
     img: {
@@ -42,7 +42,7 @@ export const dropdownMenuItems = [
     },
   },
   {
-    title: "electronics",
+    title: "electronic",
     items: [
       { name: "smart watch", url: "#" },
       { name: "smart TV", url: "#" },

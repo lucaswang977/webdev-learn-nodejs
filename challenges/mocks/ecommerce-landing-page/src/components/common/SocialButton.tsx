@@ -11,9 +11,9 @@ const SocialButton = ({
   href = "#",
 }: SocialButtonProps) => {
   return (
-    <li className={twMerge("bg-cultured", className)}>
-      <a href={href}>{children}</a>
-    </li>
+    <a className={twMerge("bg-cultured block", className)} href={href}>
+      {children}
+    </a>
   );
 };
 

@@ -10,26 +10,26 @@ import DropdownMenu from "@components/header/DropdownMenu";
 
 const HeaderTop = () => {
   return (
-    <div className="text-sonic-silver border-cultured border-b-[1px] w-full">
-      <div className="hidden xs:flex xs:justify-between xs:items-center px-4 text-xs uppercase py-[10px] max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px] mx-auto">
-        <ul className="hidden text-sonic-silver lg:flex justify-center gap-2 text-base">
+    <div className="text-sonic-silver border-cultured w-full border-b-[1px]">
+      <div className="xs:flex xs:justify-between xs:items-center mx-auto hidden max-w-[750px] px-4 py-[10px] text-xs uppercase lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
+        <ul className="text-sonic-silver hidden justify-center gap-2 text-base lg:flex">
           <li>
-            <SocialButton className="p-1 rounded-lg">
+            <SocialButton className="rounded-lg p-1">
               <IoLogoFacebook />
             </SocialButton>
           </li>
           <li>
-            <SocialButton className="p-1 rounded-lg">
+            <SocialButton className="rounded-lg p-1">
               <IoLogoTwitter />
             </SocialButton>
           </li>
           <li>
-            <SocialButton className="p-1 rounded-lg">
+            <SocialButton className="rounded-lg p-1">
               <IoLogoInstagram />
             </SocialButton>
           </li>
           <li>
-            <SocialButton className="p-1 rounded-lg">
+            <SocialButton className="rounded-lg p-1">
               <IoLogoLinkedin />
             </SocialButton>
           </li>
@@ -40,8 +40,13 @@ const HeaderTop = () => {
           <span className="font-normal"> This week Order Over - $55</span>
         </p>
         <div className="hidden sm:flex sm:gap-4">
-          <DropdownMenu list={["USD $", "EUR €"]} selectedIndex={0} />
           <DropdownMenu
+            name="currency-selector"
+            list={["USD $", "EUR €"]}
+            selectedIndex={0}
+          />
+          <DropdownMenu
+            name="language-selector"
             list={["English", "Español", "Français"]}
             selectedIndex={0}
           />
