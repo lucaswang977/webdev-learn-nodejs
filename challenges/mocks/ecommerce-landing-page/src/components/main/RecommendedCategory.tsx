@@ -2,7 +2,10 @@ import { recommendedCategories } from "@data/recommendedCategories";
 
 const RecommendedCategory = () => {
   return (
-    <div className="mx-auto mb-4 px-4 md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
+    <div
+      data-section="recommended-category"
+      className="mx-auto mb-4 px-4 md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]"
+    >
       <div className="scrollbar-style flex snap-x snap-mandatory flex-nowrap gap-[30px] overflow-hidden overflow-x-auto overflow-y-hidden">
         {recommendedCategories.map((v) => (
           <a

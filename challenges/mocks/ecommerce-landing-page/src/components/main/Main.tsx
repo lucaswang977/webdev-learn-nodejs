@@ -1,9 +1,15 @@
 import Banner from "./Banner";
 import RecommendedCategory from "./RecommendedCategory";
 
+type ProductListProps = {};
+
+const ProductList = (props: Props) => {
+  return <div></div>;
+};
+
 const Main = () => {
   return (
-    <div>
+    <div data-section="main">
       <Banner />
       <RecommendedCategory />
       <div data-section="product-container" className="">
