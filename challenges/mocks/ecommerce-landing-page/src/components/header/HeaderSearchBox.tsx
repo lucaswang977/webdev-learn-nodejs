@@ -2,7 +2,10 @@ import { IoSearchOutline } from "react-icons/io5";
 
 const HeaderSearchBox = () => {
   return (
-    <div className="relative sm:min-w-[300px] md:grow-1">
+    <div
+      data-section="header-searchbox"
+      className="relative sm:min-w-[300px] md:grow-1"
+    >
       <input
         name="search-input"
         type="text"

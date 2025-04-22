@@ -10,8 +10,11 @@ import DropdownMenu from "@components/header/DropdownMenu";
 
 const HeaderTop = () => {
   return (
-    <div className="text-sonic-silver border-cultured w-full border-b-[1px]">
-      <div className="xs:flex xs:justify-between xs:items-center mx-auto hidden max-w-[750px] px-4 py-[10px] text-xs uppercase lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
+    <div
+      data-section="header-top"
+      className="text-sonic-silver border-cultured xs:block hidden w-full border-b-[1px]"
+    >
+      <div className="xs:justify-between xs:items-center mx-auto flex max-w-[750px] px-4 py-[10px] text-xs uppercase lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
         <ul className="text-sonic-silver hidden justify-center gap-2 text-base lg:flex">
           <li>
             <SocialButton className="rounded-lg p-1">

@@ -10,7 +10,10 @@ import NavIcon from "@components/header/NavIcon";
 
 const HeaderUserAction = () => {
   return (
-    <div className="hidden lg:flex items-center gap-[15px] text-[35px] text-onyx">
+    <div
+      data-section="header-user-action"
+      className="text-onyx hidden items-center gap-[15px] text-[35px] lg:flex"
+    >
       <NavIcon icon={IoPersonOutline} style="text-[35px] p-2"></NavIcon>
       <NavIcon
         icon={IoHeartOutline}
@@ -28,8 +31,11 @@ const HeaderUserAction = () => {
 
 const HeaderMain = () => {
   return (
-    <div className="border-cultured border-b-[1px] w-full">
-      <div className="p-4 sm:flex sm:items-center sm:justify-between md:gap-[80px] md:max-w-[750px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px] mx-auto">
+    <div
+      data-section="header-main"
+      className="border-cultured w-full border-b-[1px]"
+    >
+      <div className="mx-auto p-4 sm:flex sm:items-center sm:justify-between md:max-w-[750px] md:gap-[80px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
         <HeaderLogo />
         <HeaderSearchBox />
         <HeaderUserAction />
