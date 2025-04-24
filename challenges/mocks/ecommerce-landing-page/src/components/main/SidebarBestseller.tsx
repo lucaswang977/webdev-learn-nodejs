@@ -10,7 +10,7 @@ const SidebarBestseller = () => {
       </p>
       <div>
         {productBestSellers.map((v) => (
-          <ProductWithStars data={v} />
+          <ProductWithStars key={v.title} data={v} />
         ))}
       </div>
     </div>

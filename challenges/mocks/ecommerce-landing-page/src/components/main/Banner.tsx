@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <div
       data-section="banner"
-      className="mx-auto my-7 px-4 md:max-w-[750px] lg:max-w-[980px] lg:py-0 xl:max-w-[1200px] 2xl:max-w-[1350px]"
+      className="mx-auto px-4 md:max-w-[750px] lg:max-w-[980px] lg:py-0 xl:max-w-[1200px] 2xl:max-w-[1350px]"
     >
       <Slider>
         <SliderItem>

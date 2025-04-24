@@ -8,7 +8,7 @@ const ProductContainer = () => {
   return (
     <div
       data-section="product-container"
-      className="flex flex-wrap justify-center gap-[20px]"
+      className="sm:flex sm:flex-wrap sm:justify-center sm:gap-[20px]"
     >
       <ProductList title="New Arrivals" products={productNewArrivals} />
       <ProductList title="Trending" products={productTrending} />

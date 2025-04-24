@@ -24,9 +24,10 @@ const MobileNavMenu = () => {
 
   return (
     <nav
+      data-section="mobile-nav-menu"
       className={twMerge(
-        "fixed top-0 z-10 h-screen w-full max-w-[320px] overflow-y-scroll overscroll-contain bg-white px-5 py-6 transition-all duration-500 ease-in-out shadow-normal",
-        isMenuOpen ? "translate-x-0" : "-translate-x-full invisible",
+        "shadow-normal fixed top-0 z-10 h-screen w-full max-w-[320px] overflow-y-scroll overscroll-contain bg-white px-5 py-6 transition-all duration-500 ease-in-out",
+        isMenuOpen ? "translate-x-0" : "invisible -translate-x-full",
       )}
     >
       <MenuTitle />

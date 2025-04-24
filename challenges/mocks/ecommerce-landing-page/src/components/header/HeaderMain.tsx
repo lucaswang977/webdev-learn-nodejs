@@ -33,7 +33,7 @@ const HeaderMain = () => {
   return (
     <div
       data-section="header-main"
-      className="border-cultured w-full border-b-[1px]"
+      className="border-cultured mb-4 w-full border-b-[1px] lg:mb-0"
     >
       <div className="mx-auto p-4 sm:flex sm:items-center sm:justify-between md:max-w-[750px] md:gap-[80px] lg:max-w-[980px] xl:max-w-[1200px] 2xl:max-w-[1350px]">
         <HeaderLogo />

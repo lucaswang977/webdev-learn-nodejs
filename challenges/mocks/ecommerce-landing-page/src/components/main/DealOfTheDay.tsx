@@ -27,14 +27,12 @@ const DealOfTheDayItem = ({ data }: DealOfTheDayItemProps) => {
   );
 };
 
-type Props = {};
-
-const DealOfTheDay = (props: Props) => {
+const DealOfTheDay = () => {
   return (
     <div>
       <ProductListTitle title="Deal Of The Day" />
       {productDealOfTheDay.map((v) => (
-        <DealOfTheDayItem data={v} />
+        <DealOfTheDayItem key={v.title} data={v} />
       ))}
     </div>
   );

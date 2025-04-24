@@ -11,9 +11,8 @@ const SidebarCategory = () => {
       <p className="mb-4 text-base font-semibold uppercase">category</p>
       <div className="flex flex-col gap-2 font-normal">
         {sidebarCategories.map((v) => (
-          <div className="w-full">
+          <div key={v.categoryTitle} className="w-full">
             <button
-              key={v.categoryTitle}
               className="flex w-full justify-between"
               onClick={() => {
                 if (opened === v.categoryTitle) setOpen(undefined);

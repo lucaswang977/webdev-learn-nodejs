@@ -16,9 +16,12 @@ type ProductItemProps = {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div className="border-cultured mb-2 flex w-full gap-[20px] rounded-lg border-[1px] p-4">
+    <div
+      data-section="product-item"
+      className="border-cultured mb-2 flex gap-[10px] rounded-lg border-[1px] p-4"
+    >
       <img src={product.imageSrc} alt={product.imageAlt} className="w-[60px]" />
-      <div className="max-w-[calc(100%-80px)]">
+      <div className="w-[calc(100%-90px)]">
         <p className="truncate text-sm font-semibold">{product.title}</p>
         <a
           href={product.categoryHref}
