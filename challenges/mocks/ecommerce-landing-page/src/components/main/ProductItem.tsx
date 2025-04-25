@@ -20,7 +20,9 @@ const ProductItem = ({ product }: ProductItemProps) => {
       data-section="product-item"
       className="border-cultured mb-2 flex gap-[10px] rounded-lg border-[1px] p-4"
     >
-      <img src={product.imageSrc} alt={product.imageAlt} className="w-[60px]" />
+      <a href="#" className="block max-w-[70px]">
+        <img src={product.imageSrc} alt={product.imageAlt} />
+      </a>
       <div className="w-[calc(100%-90px)]">
         <p className="truncate text-sm font-semibold">{product.title}</p>
         <a

@@ -1,6 +1,7 @@
 import Banner from "./Banner";
 import DealOfTheDay from "./DealOfTheDay";
 import ProductContainer from "./ProductContainer";
+import ProductNewList from "./ProductNewList";
 import RecommendedCategory from "./RecommendedCategory";
 import SidebarBestseller from "./SidebarBestseller";
 import SidebarCategory from "./SidebarCategory";
@@ -19,6 +20,7 @@ const Main = () => {
           <div>
             <ProductContainer />
             <DealOfTheDay />
+            <ProductNewList />
           </div>
         </div>
       </div>
