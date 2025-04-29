@@ -1,10 +1,4 @@
-import React, { ReactNode, useState } from "react";
-import {
-  IoBagAddOutline,
-  IoEyeOutline,
-  IoHeartOutline,
-  IoRepeatOutline,
-} from "react-icons/io5";
+import React, { useState } from "react";
 
 import RateStars from "@components/common/RateStars";
 import {
@@ -13,25 +7,8 @@ import {
 } from "@data/productNewProducts";
 import { twMerge } from "tailwind-merge";
 
+import ProductActionToolbar from "./ProductActionToolbar";
 import ProductListTitle from "./ProductListTitle";
-
-type ProductActionProps = {
-  focused: boolean;
-  children: ReactNode;
-};
-
-const ProductAction = ({ focused, children }: ProductActionProps) => {
-  return (
-    <button
-      className={twMerge(
-        "border-cultured rounded-md border-[1px] p-[5px] text-[20px] transition-all duration-200",
-        focused ? "bg-eerie-black text-white" : "text-sonic-silver bg-white",
-      )}
-    >
-      {children}
-    </button>
-  );
-};
 
 type ProductNewItemProps = {
   data: ProductNewItemType;
@@ -47,27 +24,15 @@ const ProductNewItem = ({
   setHovered,
 }: ProductNewItemProps) => {
   return (
-    <div className="border-cultured relative mb-4 w-full overflow-hidden rounded-xl border-[1px] p-4">
-      <div className="absolute top-2 right-2 z-5 flex flex-col gap-1">
-        <ProductAction focused={true}>
-          <IoHeartOutline />
-        </ProductAction>
-        <ProductAction focused={false}>
-          <IoEyeOutline />
-        </ProductAction>
-        <ProductAction focused={false}>
-          <IoRepeatOutline />
-        </ProductAction>
-        <ProductAction focused={false}>
-          <IoBagAddOutline />
-        </ProductAction>
-      </div>
-      <div
-        className="relative"
-        onMouseEnter={() => setHovered(index)}
-        onMouseLeave={() => setHovered(undefined)}
-        onClick={() => setHovered(index)}
-      >
+    <div
+      data-section="product-new-item"
+      className="border-cultured relative mb-4 w-full overflow-hidden rounded-xl border-[1px] p-4"
+      onMouseEnter={() => setHovered(index)}
+      onMouseLeave={() => setHovered(undefined)}
+      onClick={() => setHovered(index)}
+    >
+      <ProductActionToolbar visible={hovered} />
+      <div className="relative">
         <img
           className="z-1 h-full w-full"
           src={data.defaultImageSrc}
@@ -82,7 +47,9 @@ const ProductNewItem = ({
           alt={data.imageAlt}
         />
       </div>
-      <p className="text-salmon-pink mb-3 text-xs uppercase">{data.category}</p>
+      <p className="text-salmon-pink mt-5 mb-3 text-xs uppercase">
+        {data.category}
+      </p>
       <p className="text-sonic-silver mb-3 text-sm font-light">{data.title}</p>
       <RateStars rate={data.rating} />
       <span className="mt-3 flex gap-1">
@@ -113,17 +80,19 @@ const ProductNewItem = ({
 const ProductNewList = () => {
   const [hovered, setHovered] = useState<number | undefined>();
   return (
-    <div>
+    <div data-section="product-new-list">
       <ProductListTitle title="New Products" />
-      {productNewProducts.map((v, index) => (
-        <ProductNewItem
-          key={index}
-          data={v}
-          index={index}
-          hovered={hovered === index ? true : false}
-          setHovered={setHovered}
-        />
-      ))}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {productNewProducts.map((v, index) => (
+          <ProductNewItem
+            key={index}
+            data={v}
+            index={index}
+            hovered={hovered === index ? true : false}
+            setHovered={setHovered}
+          />
+        ))}
+      </div>
     </div>
   );
 };
